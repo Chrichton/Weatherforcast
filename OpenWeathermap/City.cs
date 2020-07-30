@@ -2,7 +2,7 @@
 namespace Backend.OpenWeathermap
 {
     /// <summary>
-    /// City returned from city.list.json
+    /// City from city.list.json
     /// </summary>
     public class City
     {
