@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Backend.OpenWeathermap
 {
@@ -19,7 +22,9 @@ namespace Backend.OpenWeathermap
 
         private static IEnumerable<City> ReadCitiesFromJSON()
         {
-            yield return new City { Id = 42, Country = "DE" };
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"OpenWeathermap\city.list.json");
+            List<City> cities = JsonConvert.DeserializeObject<List<City>>(File.ReadAllText(path));
+            return cities;
         }
     }
 }
