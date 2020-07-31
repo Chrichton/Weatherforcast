@@ -16,7 +16,7 @@ namespace Backend.OpenWeathermap
             new Lazy<Dictionary<string, IEnumerable<string>>>(() => ReadPlzOrteFromCsv());
         
         /// <summary>
-        /// Mapping from German Plz to Ort 
+        /// Mapping from German Plz to Orte 
         /// </summary>
         public static Dictionary<string, IEnumerable<string>> Dictionary => dictionary.Value;
 
