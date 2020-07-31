@@ -2,29 +2,35 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Backend.OpenWeathermap
 {
     /// <summary>
-    /// Access to all Cities and Locations of OpenWeathermap (city.list.json)
-    /// used by their API
+    /// Mapping from German Cities to their Id
+    /// Id is used by their API
+    /// Source: OpenWeathermap (city.list.json)
     /// </summary>
     public static class Cities
     {
-        private static Lazy<IEnumerable<City>> cities = 
-            new Lazy<IEnumerable<City>>(() => ReadCitiesFromJSON());
+        private static Lazy<Dictionary<string,int>> dictionary = 
+            new Lazy<Dictionary<string, int>>(() => ReadCitiesFromJSON());
         
         /// <summary>
-        /// Access to all cities
+        /// Mapping from Cityname to Id used by API
         /// </summary>
-        public static IEnumerable<City> All => cities.Value;
+        public static Dictionary<string, int> Dictionary => dictionary.Value;
 
-        private static IEnumerable<City> ReadCitiesFromJSON()
+        private static Dictionary<string, int> ReadCitiesFromJSON()
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"OpenWeathermap\city.list.json");
             List<City> cities = JsonConvert.DeserializeObject<List<City>>(File.ReadAllText(path));
-            return cities;
+
+            return cities
+                .Where(city => city.Country == "DE")  // Only the German cities are required
+                .GroupBy(city => city.Name)                 // There are more than one Cities with the same Name separated by exact location.
+                .ToDictionary(g => g.Key, g => g.First().Id); // I pick the first one. Should be close enough. In real life, I would ask the customer
         }
     }
 }
