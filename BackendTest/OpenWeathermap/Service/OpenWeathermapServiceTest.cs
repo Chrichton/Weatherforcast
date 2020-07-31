@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Xunit;
 
 namespace BackendTest.OpenWeathermap.Service
@@ -15,11 +16,13 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public async void TestMockGetWeatherforecast()
         {
-            using (var httpClient = new HttpClient(new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()))))
+            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()));
+            using (var httpClient = new HttpClient(messageHandler))
             {
                 var result = await new OpenWeathermapService(httpClient).GetWeatherforecast("Hamburg");
                 Assert.NotNull(result);
-                Assert.Equal("Hamburg", result.city.name);
+                Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
+                Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
             }
         }
 
@@ -31,6 +34,7 @@ namespace BackendTest.OpenWeathermap.Service
                 var result = await new OpenWeathermapService(httpClient).GetWeatherforecast("Hamburg");
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name);
+                Assert.Equal(2911298, result.city.id);
             }
         }
 
@@ -52,11 +56,15 @@ namespace BackendTest.OpenWeathermap.Service
     {
         private readonly string content;
 
+        public string idValue { get; set; }
         public MockHttpMessageHandler(string content) => this.content = content;
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
+            var dictionary = HttpUtility.ParseQueryString(request.RequestUri.Query);
+            idValue = dictionary["id"];
+
             return new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
