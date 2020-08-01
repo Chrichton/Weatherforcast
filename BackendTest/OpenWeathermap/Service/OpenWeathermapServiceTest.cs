@@ -3,7 +3,9 @@ using Backend.OpenWeathermap.Service;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NSubstitute;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -18,23 +20,36 @@ namespace BackendTest.OpenWeathermap.Service
     public class OpenWeathermapServiceTest
     {
         private ILogger<OpenWeathermapService> logger = Substitute.For<ILogger<OpenWeathermapService>>();
-        private IDictionary<string, int> cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
 
         [Fact]
-        public async void TestMockGetCurentWeatherforecast()
+        public async void TestGetCurentWeatherforecast()
         {
+            var cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
             var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()));
             using (var httpClient = new HttpClient(messageHandler))
             {
-                var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping).GetCurrentWeatherforecast("Hamburg");
+                var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping)
+                    .GetCurrentWeatherforecast("Hamburg");
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
                 Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
             }
         }
 
-        [Fact]
-        public async void TestLiveGetCurrentWeatherforecast()
+        [Fact, Description("UnkownOrt")]
+        public async void TestGetCurentWeatherforecastUnkownOrt()
+        {
+            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()));
+            using (var httpClient = new HttpClient(messageHandler))
+            {
+                await Assert.ThrowsAsync<ArgumentException>("ort", async () =>
+                     await new OpenWeathermapService(logger, httpClient, new Dictionary<string, int>())
+                         .GetCurrentWeatherforecast("Hamburg"));
+            }
+        }
+
+        [Fact, Description("LiveTest")]
+        public async void TestLiveGetCurrentWeatherforecast() // IntegrationTest should not be run on CI
         {
             using (var httpClient = new HttpClient())
             {
@@ -46,7 +61,7 @@ namespace BackendTest.OpenWeathermap.Service
         }
 
         [Fact]
-        public void TestDeserializeJSON()
+        public void TestDeserializeCurrentWeatherJSON()
         {
             var rootObject = JsonConvert.DeserializeObject<Rootobject>(File.ReadAllText(GetJsonPath()));
             Assert.NotNull(rootObject);
