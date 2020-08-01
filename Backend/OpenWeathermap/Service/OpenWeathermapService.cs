@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Backend.OpenWeathermap.Service
@@ -33,8 +32,8 @@ namespace Backend.OpenWeathermap.Service
             HttpResponseMessage responseMessage = await httpClient.GetAsync($"{baseUrl}&id={cityId}");
             responseMessage.EnsureSuccessStatusCode();
 
-            string json = await responseMessage.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<Rootobject>(json);
+            return await JsonSerializer.DeserializeAsync<Rootobject>(
+                await responseMessage.Content.ReadAsStreamAsync());
         }
     }
 }

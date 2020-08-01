@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Backend.OpenWeathermap
 {
@@ -25,7 +25,7 @@ namespace Backend.OpenWeathermap
         private static Dictionary<string, int> ReadCitiesFromJSON()
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"OpenWeathermap\city.list.json");
-            List<City> cities = JsonConvert.DeserializeObject<List<City>>(File.ReadAllText(path));
+            List<City> cities = JsonSerializer.Deserialize<List<City>>(File.ReadAllText(path));
 
             return cities
                 .Where(city => city.Country == "DE")  // Only the German cities are required

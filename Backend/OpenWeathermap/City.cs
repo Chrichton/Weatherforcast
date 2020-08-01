@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿
+using System.Text.Json.Serialization;
+
 namespace Backend.OpenWeathermap
 {
     /// <summary>
@@ -6,19 +8,19 @@ namespace Backend.OpenWeathermap
     /// </summary>
     public class City
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty(PropertyName = "name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "state")]
+        [JsonPropertyName("state")]
         public string State { get; set; }
 
-        [JsonProperty(PropertyName = "country")]
+        [JsonPropertyName("country")]
         public string Country { get; set; }
 
-        [JsonProperty(PropertyName = "coord")]
+        [JsonPropertyName("coord")]
         public Coordinate Coordinate { get; set; }
     }
 }

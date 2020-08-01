@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Backend.OpenWeathermap
 {
@@ -7,10 +7,10 @@ namespace Backend.OpenWeathermap
     /// </summary>
     public class Coordinate
     {
-        [JsonProperty(PropertyName = "lon")]
+        [JsonPropertyName("lon")]
         public float Longitude { get; set; }
 
-        [JsonProperty(PropertyName = "lat")]
+        [JsonPropertyName("lat")]
         public float Latitude { get; set; }
     }
 }
