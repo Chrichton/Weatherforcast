@@ -22,14 +22,14 @@ namespace BackendTest.OpenWeathermap.Service
         private ILogger<OpenWeathermapService> logger = Substitute.For<ILogger<OpenWeathermapService>>();
 
         [Fact]
-        public async void TestGetCurentWeatherforecast()
+        public async void TestGetWeatherforecast()
         {
             var cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
-            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()));
+            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
             using (var httpClient = new HttpClient(messageHandler))
             {
                 var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping)
-                    .GetCurrentWeatherforecast("Hamburg");
+                    .GetWeatherforecast("Hamburg");
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
                 Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
@@ -37,23 +37,23 @@ namespace BackendTest.OpenWeathermap.Service
         }
 
         [Fact, Description("UnkownOrt")]
-        public async void TestGetCurentWeatherforecastUnkownOrt()
+        public async void TestGetWeatherforecastUnkownOrt()
         {
-            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()));
+            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
             using (var httpClient = new HttpClient(messageHandler))
             {
                 await Assert.ThrowsAsync<ArgumentException>("ort", async () =>
                      await new OpenWeathermapService(logger, httpClient, new Dictionary<string, int>())
-                         .GetCurrentWeatherforecast("Hamburg"));
+                         .GetWeatherforecast("Hamburg"));
             }
         }
 
         [Fact, Description("LiveTest")]
-        public async void TestLiveGetCurrentWeatherforecast() // IntegrationTest should not be run on CI
+        public async void TestLiveGetWeatherforecast() // IntegrationTest should not be run on CI
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary).GetCurrentWeatherforecast("Hamburg");
+                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary).GetWeatherforecast("Hamburg");
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name);
                 Assert.Equal(2911298, result.city.id);
@@ -61,16 +61,16 @@ namespace BackendTest.OpenWeathermap.Service
         }
 
         [Fact]
-        public void TestDeserializeCurrentWeatherJSON()
+        public void TestDeserializeWeatherforecastJSON()
         {
-            var rootObject = JsonSerializer.Deserialize<Rootobject>(File.ReadAllText(GetJsonPath()));
+            var rootObject = JsonSerializer.Deserialize<Rootobject>(File.ReadAllText(GetWeatherForcastJsonPath()));
             Assert.NotNull(rootObject);
         }
 
-        private string GetJsonPath()
+        private string GetWeatherForcastJsonPath()
         {
             return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                @"OpenWeathermap\service\currentweather.json");
+                @"OpenWeathermap\service\weatherforecast.json");
         }
 
         private class MockHttpMessageHandler : HttpMessageHandler
