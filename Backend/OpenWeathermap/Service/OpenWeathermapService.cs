@@ -9,7 +9,7 @@ namespace Backend.OpenWeathermap.Service
 {
     public class OpenWeathermapService
     {
-        private HttpClient httpClient;
+        private readonly HttpClient httpClient;
 
         public OpenWeathermapService(HttpClient httpClient)
         {
@@ -19,7 +19,7 @@ namespace Backend.OpenWeathermap.Service
             this.httpClient = httpClient;
         }
 
-        public async Task<Rootobject> GetWeatherforecast(string ort)
+        public async Task<Rootobject> GetCurrentWeatherforecast(string ort)
         {
             if (ort == null)
                 throw new ArgumentNullException($"{nameof(ort)} must not be null");
@@ -38,4 +38,3 @@ namespace Backend.OpenWeathermap.Service
         }
     }
 }
-

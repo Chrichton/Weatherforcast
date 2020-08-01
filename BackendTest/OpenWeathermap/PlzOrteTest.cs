@@ -18,8 +18,6 @@ namespace BackendTest.OpenWeathermap
         [Fact]
         public void TestPlzOrt()
         {
-            // zu "55767" gehören 20 Orte
-
             IEnumerable<string> orte = PlzOrte.Dictionary.GetValueOrDefault("21037", null);
 
             Assert.NotNull(orte);
