@@ -1,9 +1,9 @@
-﻿using Backend.OpenWeathermap;
+﻿using Backend.Weatherforecast;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace BackendTest.OpenWeathermap
+namespace BackendTest.Weatherforecast
 {
     public class PlzOrteTest
     {

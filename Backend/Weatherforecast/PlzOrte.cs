@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Backend.OpenWeathermap
+namespace Backend.Weatherforecast
 {
     /// <summary>
     /// Access to a German Ort by Plz
@@ -25,8 +25,8 @@ namespace Backend.OpenWeathermap
             const int plzIndex = 2;
             const int ortIndex = 1;
 
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
-                @"OpenWeathermap\zuordnung_plz_ort.csv");
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                @"Weatherforecast\zuordnung_plz_ort.csv");
             
             return File.ReadAllText(path)
                 .Split(Environment.NewLine)
