@@ -1,7 +1,6 @@
 ﻿using Backend.OpenWeathermap;
 using Backend.OpenWeathermap.Service;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -63,7 +63,7 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public void TestDeserializeCurrentWeatherJSON()
         {
-            var rootObject = JsonConvert.DeserializeObject<Rootobject>(File.ReadAllText(GetJsonPath()));
+            var rootObject = JsonSerializer.Deserialize<Rootobject>(File.ReadAllText(GetJsonPath()));
             Assert.NotNull(rootObject);
         }
 
