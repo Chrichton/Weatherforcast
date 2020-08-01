@@ -12,9 +12,13 @@
 
   <ItemGroup>
     <None Remove="OpenWeathermap\currentweather.json" />
+    <None Remove="OpenWeathermap\Service\currentweather.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="OpenWeathermap\Service\currentweather.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="OpenWeathermap\Service\weatherforecast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

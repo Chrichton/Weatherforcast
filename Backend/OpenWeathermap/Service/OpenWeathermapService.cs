@@ -9,6 +9,10 @@ namespace Backend.OpenWeathermap.Service
 {
     public class OpenWeathermapService
     {
+        const string appId = "fcadd28326c90c3262054e0e6ca599cd";
+        const string language = "de";
+        const string units = "metric";
+
         private readonly ILogger<OpenWeathermapService> logger;
         private readonly HttpClient httpClient;
         private readonly IDictionary<string, int> ortToIdMapping;
@@ -27,13 +31,13 @@ namespace Backend.OpenWeathermap.Service
         }
 
         /// <summary>
-        /// Retrieves the Data for the 5 day weatherforecast
+        /// Retrieves the Data for the current weather
         /// </summary>
         /// <param name="ort">German City</param>
-        /// <returns>Forecast-Data</returns>
+        /// <returns>Current Weather-Data</returns>
         /// <exception cref="ArgumentNullException">When ort is null</exception>
         /// <exception cref="ArgumentException">When ort is unknown</exception>
-        public async Task<Rootobject> GetWeatherforecast(string ort)
+        public async Task<CurrentWeatherModel> GetCurrentWeather(string ort)
         {
             if (ort == null)
             {
@@ -41,10 +45,7 @@ namespace Backend.OpenWeathermap.Service
                 throw new ArgumentNullException($"{nameof(ort)} must not be null");
             }
 
-            const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
-            const string appId = "fcadd28326c90c3262054e0e6ca599cd";
-            const string language = "de";
-            const string units = "metric";
+            const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";
 
             int ortId;
             if (!ortToIdMapping.TryGetValue(ort, out ortId))
@@ -53,15 +54,18 @@ namespace Backend.OpenWeathermap.Service
                 throw new ArgumentException("Der Ort ist unbekannt", nameof(ort));
             }
 
-            string requestUri = $"{baseUrl}?APPID={appId}&lang={language}&units={units}&id={ortId}";
+            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={ortId}";
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri);
             responseMessage.EnsureSuccessStatusCode();
 
-            return await JsonSerializer.DeserializeAsync<Rootobject>(
+            return await JsonSerializer.DeserializeAsync<CurrentWeatherModel>(
                 await responseMessage.Content.ReadAsStreamAsync());
         }
 
-        public async Task<Rootobject> GetFutureWeatherforecast(string ort)
+        /// <returns>Forecast-Data</returns>
+        /// <exception cref="ArgumentNullException">When ort is null</exception>
+        /// <exception cref="ArgumentException">When ort is unknown</exception>
+        public async Task<WeatherforecastModel> GetWeatherforecast(string ort)
         {
             if (ort == null)
             {
@@ -70,22 +74,19 @@ namespace Backend.OpenWeathermap.Service
             }
 
             const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
-            const string appId = "fcadd28326c90c3262054e0e6ca599cd";
-            const string language = "de";
-            const string units = "metric";
 
             int ortId;
             if (!ortToIdMapping.TryGetValue(ort, out ortId))
             {
                 logger.LogError($"unknown {nameof(ort)} requested", ort);
-                throw new ArgumentException("ort unknown", nameof(ort));
+                throw new ArgumentException("Der Ort ist unbekannt", nameof(ort));
             }
 
-            string requestUri = $"{baseUrl}?APPID={appId}&lang={language}&units={units}&id={ortId}";
+            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={ortId}";
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri);
             responseMessage.EnsureSuccessStatusCode();
 
-            return await JsonSerializer.DeserializeAsync<Rootobject>(
+            return await JsonSerializer.DeserializeAsync<WeatherforecastModel>(
                 await responseMessage.Content.ReadAsStreamAsync());
         }
     }
