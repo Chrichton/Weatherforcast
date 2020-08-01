@@ -1,5 +1,9 @@
-﻿using Backend.OpenWeathermap.Service;
+﻿using Backend.OpenWeathermap;
+using Backend.OpenWeathermap.Service;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NSubstitute;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -13,13 +17,16 @@ namespace BackendTest.OpenWeathermap.Service
 {
     public class OpenWeathermapServiceTest
     {
+        private ILogger<OpenWeathermapService> logger = Substitute.For<ILogger<OpenWeathermapService>>();
+        private IDictionary<string, int> cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
+
         [Fact]
         public async void TestMockGetCurentWeatherforecast()
         {
             var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetJsonPath()));
             using (var httpClient = new HttpClient(messageHandler))
             {
-                var result = await new OpenWeathermapService(httpClient).GetCurrentWeatherforecast("Hamburg");
+                var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping).GetCurrentWeatherforecast("Hamburg");
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
                 Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
@@ -31,7 +38,7 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(httpClient).GetCurrentWeatherforecast("Hamburg");
+                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary).GetCurrentWeatherforecast("Hamburg");
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name);
                 Assert.Equal(2911298, result.city.id);
