@@ -55,11 +55,12 @@ namespace Backend.OpenWeathermap.Service
             }
 
             string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={ortId}";
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri);
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
             return await JsonSerializer.DeserializeAsync<CurrentWeatherModel>(
-                await responseMessage.Content.ReadAsStreamAsync());
+                await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                .ConfigureAwait(false);
         }
 
         /// <returns>Forecast-Data</returns>
@@ -83,11 +84,12 @@ namespace Backend.OpenWeathermap.Service
             }
 
             string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={ortId}";
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri);
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
             return await JsonSerializer.DeserializeAsync<WeatherforecastModel>(
-                await responseMessage.Content.ReadAsStreamAsync());
+                await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                .ConfigureAwait(false);
         }
     }
 }

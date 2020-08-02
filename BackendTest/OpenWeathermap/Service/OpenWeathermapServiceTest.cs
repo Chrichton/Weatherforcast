@@ -31,7 +31,8 @@ namespace BackendTest.OpenWeathermap.Service
             using (var httpClient = new HttpClient(messageHandler))
             {
                 var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping)
-                    .GetWeatherforecast("Hamburg");
+                    .GetWeatherforecast("Hamburg")
+                    .ConfigureAwait(false);
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
                 Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
@@ -46,7 +47,8 @@ namespace BackendTest.OpenWeathermap.Service
             {
                 await Assert.ThrowsAsync<ArgumentException>("ort", async () =>
                      await new OpenWeathermapService(logger, httpClient, new Dictionary<string, int>())
-                         .GetWeatherforecast("Hamburg"));
+                         .GetWeatherforecast("Hamburg").ConfigureAwait(false))
+                    .ConfigureAwait(false);
             }
         }
 
@@ -55,7 +57,9 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary).GetWeatherforecast("Hamburg");
+                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary)
+                    .GetWeatherforecast("Hamburg")
+                    .ConfigureAwait(false);
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.city.name);
                 Assert.Equal(2911298, result.city.id);
@@ -87,7 +91,8 @@ namespace BackendTest.OpenWeathermap.Service
             using (var httpClient = new HttpClient(messageHandler))
             {
                 var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping)
-                    .GetCurrentWeather("Hamburg");
+                    .GetCurrentWeather("Hamburg")
+                    .ConfigureAwait(false);
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.name); // Just shows, that the httpClient has been called
                 Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
@@ -102,7 +107,8 @@ namespace BackendTest.OpenWeathermap.Service
             {
                 await Assert.ThrowsAsync<ArgumentException>("ort", async () =>
                      await new OpenWeathermapService(logger, httpClient, new Dictionary<string, int>())
-                         .GetCurrentWeather("Hamburg"));
+                         .GetCurrentWeather("Hamburg").ConfigureAwait(false))
+                    .ConfigureAwait(false); 
             }
         }
 
@@ -111,7 +117,9 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary).GetCurrentWeather("Hamburg");
+                var result = await new OpenWeathermapService(logger, httpClient, Cities.Dictionary)
+                    .GetCurrentWeather("Hamburg")
+                    .ConfigureAwait(false); 
                 Assert.NotNull(result);
                 Assert.Equal("Hamburg", result.name);
                 Assert.Equal(2911298, result.id);
