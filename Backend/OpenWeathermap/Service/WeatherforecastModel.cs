@@ -28,7 +28,7 @@
 
     public class WeatherList
     {
-        public int dt { get; set; }
+        public long dt { get; set; }
         public int sea_level { get; set; }
         public int grnd_level { get; set; }
         public float temp_kf { get; set; }

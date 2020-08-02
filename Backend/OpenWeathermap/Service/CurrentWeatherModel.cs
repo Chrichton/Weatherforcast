@@ -9,7 +9,7 @@
         public int visibility { get; set; }
         public Wind wind { get; set; }
         public Clouds clouds { get; set; }
-        public int dt { get; set; }
+        public long dt { get; set; }
         public CurrentSys sys { get; set; }
         public int timezone { get; set; }
         public int id { get; set; }
