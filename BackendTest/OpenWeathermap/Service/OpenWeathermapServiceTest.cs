@@ -39,13 +39,13 @@ namespace BackendTest.OpenWeathermap.Service
             }
         }
 
-        [Fact, Description("UnkownOrt")]
-        public async void TestGetWeatherforecastUnkownOrt()
+        [Fact, Description("UnkownCity")]
+        public async void TestGetWeatherforecastUnkownCity()
         {
             var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
             using (var httpClient = new HttpClient(messageHandler))
             {
-                await Assert.ThrowsAsync<ArgumentException>("ort", async () =>
+                await Assert.ThrowsAsync<ArgumentException>("city", async () =>
                      await new OpenWeathermapService(logger, httpClient, new Dictionary<string, int>())
                          .GetWeatherforecast("Hamburg").ConfigureAwait(false))
                     .ConfigureAwait(false);
@@ -99,13 +99,13 @@ namespace BackendTest.OpenWeathermap.Service
             }
         }
 
-        [Fact, Description("UnkownOrt")]
-        public async void TestGetCurrentWeatherUnkownOrt()
+        [Fact, Description("UnkownCity")]
+        public async void TestGetCurrentWeatherUnkownCity()
         {
             var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
             using (var httpClient = new HttpClient(messageHandler))
             {
-                await Assert.ThrowsAsync<ArgumentException>("ort", async () =>
+                await Assert.ThrowsAsync<ArgumentException>("city", async () =>
                      await new OpenWeathermapService(logger, httpClient, new Dictionary<string, int>())
                          .GetCurrentWeather("Hamburg").ConfigureAwait(false))
                     .ConfigureAwait(false); 
