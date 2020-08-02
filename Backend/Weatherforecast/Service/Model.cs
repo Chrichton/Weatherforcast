@@ -18,6 +18,9 @@ namespace Backend.Weatherforecast.Service
 
     public class Weather
     {
+        [JsonPropertyName("Temperature")]
+        public float Temperature { get; set; }
+
         [JsonPropertyName("FeelsLikeTemperature")]
         public float FeelsLikeTemperature { get; set; }
 
@@ -29,6 +32,9 @@ namespace Backend.Weatherforecast.Service
 
         [JsonPropertyName("Humidity")]
         public int Humidity { get; set; }
+
+        [JsonPropertyName("Pressure")]
+        public int Pressure { get; set; }
 
         [JsonPropertyName("Windspeed")]
         public float Windspeed { get; set; }
