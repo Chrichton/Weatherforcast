@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,10 +18,12 @@ namespace Backend.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IMapper mapper;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IMapper mapper)
         {
             _logger = logger;
+            this.mapper = mapper;
         }
 
         [HttpGet]
