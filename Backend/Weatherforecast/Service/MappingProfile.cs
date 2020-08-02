@@ -22,10 +22,10 @@ namespace Backend.Weatherforecast.Service
                .ForMember(x => x.CloudDescription, o => o.MapFrom(y => y.description));
 
             CreateMap<CurrentWeatherModel, CurrentWeather>()
-                .ForMember(x => x.DateTime, o => o.MapFrom(y => FromMillisecondsSinceUnixEpoch(y.dt)));
+                .ForMember(x => x.DateTime, o => o.MapFrom(y => FromSecondsSinceUnixEpoch(y.dt)));
 
             CreateMap<WeatherList, ForecastWeather>()
-                .ForMember(x => x.DateTime, o => o.MapFrom(y => FromMillisecondsSinceUnixEpoch(y.dt)));
+                .ForMember(x => x.DateTime, o => o.MapFrom(y => FromSecondsSinceUnixEpoch(y.dt)));
         }
     }
 }

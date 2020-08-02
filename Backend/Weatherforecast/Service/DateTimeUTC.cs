@@ -7,7 +7,7 @@ namespace Backend.Weatherforecast.Service
     /// </summary>
     public static class DateTimeUTC
     {
-        public static DateTime FromMillisecondsSinceUnixEpoch(long seconds)
+        public static DateTime FromSecondsSinceUnixEpoch(long seconds)
         {
             return DateTimeOffset
                 .FromUnixTimeSeconds(seconds)

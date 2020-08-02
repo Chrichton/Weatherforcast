@@ -29,10 +29,10 @@ namespace BackendTest.Weatherforecast
                    .ForMember(x => x.CloudDescription, o => o.MapFrom(y => y.description));
 
                 c.CreateMap<CurrentWeatherModel, CurrentWeather>()
-                    .ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromMillisecondsSinceUnixEpoch(y.dt)));
+                    .ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
 
                 c.CreateMap<WeatherList, ForecastWeather>()
-                    .ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromMillisecondsSinceUnixEpoch(y.dt)));
+                    .ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
 
             });
 
@@ -42,7 +42,7 @@ namespace BackendTest.Weatherforecast
             //IMapper mapper = new MapperConfiguration(c =>
             //    c.AddProfile<MappingProfile>()).CreateMapper();
 
-            ForecastWeather result = mapper.Map<ForecastWeather>(TestUtilities.GetOpenWeathermapForcastJson());
+            var result = mapper.Map<WeatherforecastModel>(TestUtilities.GetOpenWeathermapForcastJson());
 
             Assert.NotNull(mapper);
         }
