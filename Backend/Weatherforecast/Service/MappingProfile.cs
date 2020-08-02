@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
-using static Backend.Weatherforecast.Service.DateTimeUTC;
+using System;
 
 namespace Backend.Weatherforecast.Service
 {
@@ -25,12 +25,17 @@ namespace Backend.Weatherforecast.Service
                .ForSourceMember(s => s.id, o => o.DoNotValidate())
                .ForSourceMember(s => s.main, o => o.DoNotValidate())
                .ForSourceMember(s => s.icon, o => o.DoNotValidate());
-            
-            var map1 = CreateMap<CurrentWeatherModel, CurrentWeather>();
+
+            var map1 = CreateMap<CurrentWeatherModel, CurrentWeather>()
+                .AfterMap((curModel, currWeather) => currWeather.DateTime = DateTime.Now); // TODO for debugging
             map1.ForAllMembers(opt => opt.Ignore());
             map1.ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
 
-            var map2 = CreateMap<WeatherList, ForecastWeather>();
+            CreateMap<WeatherforecastModel, ForecastWeather>()
+                .ForAllMembers(opt => opt.Ignore());
+
+            var map2 = CreateMap<WeatherList, ForecastWeather>()
+                .AfterMap((curModel, currWeather) => currWeather.DateTime = DateTime.Now); // TODO for debugging
             map2.ForAllMembers(opt => opt.Ignore());
             map2.ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
         }

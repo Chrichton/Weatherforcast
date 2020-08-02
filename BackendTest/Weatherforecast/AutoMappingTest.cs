@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
 using Backend.Weatherforecast.Service;
+using System.Text.Json;
 using Xunit;
 
 namespace BackendTest.Weatherforecast
@@ -16,8 +17,15 @@ namespace BackendTest.Weatherforecast
             IMapper mapper = cfg.CreateMapper();
             Assert.NotNull(mapper);
 
-            ForecastWeather result = mapper.Map<ForecastWeather>(TestUtilities.GetOpenWeathermapForcastJson());
-            Assert.NotNull(result);
+            CurrentWeatherModel currentModel = JsonSerializer.Deserialize<CurrentWeatherModel>(
+                TestUtilities.GetOpenWeathermapCurrentWeatherJson());
+            CurrentWeather current = mapper.Map<CurrentWeatherModel, CurrentWeather>(currentModel);
+            Assert.NotNull(current);
+
+            WeatherforecastModel forecastModel = JsonSerializer.Deserialize<WeatherforecastModel>(
+                TestUtilities.GetOpenWeathermapForcastJson());
+            ForecastWeather forecast = mapper.Map<WeatherforecastModel, ForecastWeather>(forecastModel);
+            Assert.NotNull(forecast);
         }
     }
 }
