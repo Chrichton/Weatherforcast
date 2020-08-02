@@ -7,23 +7,23 @@ using System.Reflection;
 namespace Backend.Weatherforecast
 {
     /// <summary>
-    /// Access to a German Ort by Plz
-    /// Source of the "zuordnung_plz_ort.csv": https://www.suche-postleitzahl.org/downloads
+    /// Access to a German city (Ort) by zipcode (Plz)
+    /// Source of "zuordnung_plz_ort.csv": https://www.suche-postleitzahl.org/downloads
     /// </summary>
-    public static class PlzOrte
+    public static class ZipcodeCities
     {
         private static Lazy<Dictionary<string,IEnumerable<string>>> dictionary =
-            new Lazy<Dictionary<string, IEnumerable<string>>>(() => ReadPlzOrteFromCsv());
+            new Lazy<Dictionary<string, IEnumerable<string>>>(() => ReadZipcodeCitiesFromCsv());
         
         /// <summary>
-        /// Mapping from German Plz to Orte 
+        /// Mapping from German zipcode to cities 
         /// </summary>
         public static Dictionary<string, IEnumerable<string>> Dictionary => dictionary.Value;
 
-        private static Dictionary<string, IEnumerable<string>> ReadPlzOrteFromCsv()
+        private static Dictionary<string, IEnumerable<string>> ReadZipcodeCitiesFromCsv()
         {
-            const int plzIndex = 2;
-            const int ortIndex = 1;
+            const int zipcodeIndex = 2;
+            const int cityIndex = 1;
 
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 @"Weatherforecast\zuordnung_plz_ort.csv");
@@ -32,10 +32,10 @@ namespace Backend.Weatherforecast
                 .Split(Environment.NewLine)
                 .Skip(1) // Skip Header
                 .Where(line => line != "") // Skip empty lines
-                .Select(csvLine =>         // Select plz and ort
+                .Select(csvLine =>         // Select zipcode and city
                 {
                     var column = csvLine.Split(",");
-                    return new KeyValuePair<string, string>(column[plzIndex], column[ortIndex]);
+                    return new KeyValuePair<string, string>(column[zipcodeIndex], column[cityIndex]);
                 })
                 .GroupBy(k => k.Key)
                 .ToDictionary(k => k.Key, k => k.Select(g => g.Value));
