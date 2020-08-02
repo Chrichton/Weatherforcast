@@ -11,27 +11,27 @@ namespace Backend.Weatherforecast.Service
         [JsonPropertyName("AverageHumidity")]
         public int AverageHumidity { get; set; }
 
-        Weather Current { get; set; }
+        CurrentWeather Current { get; set; }
 
-        Weather[] Forecast { get; set; }
+        ForecastWeather[] Forecast { get; set; }
     }
 
     public class Weather
     {
         [JsonPropertyName("FeelsLikeTemperature")]
-        public double FeelsLikeTemperature { get; set; }
+        public float FeelsLikeTemperature { get; set; }
 
         [JsonPropertyName("MinimumTemperature")]
-        public double MinimumTemperature { get; set; }
+        public float MinimumTemperature { get; set; }
 
         [JsonPropertyName("MaximumTemperature")]
-        public double MaximumTemperature { get; set; }
+        public float MaximumTemperature { get; set; }
 
         [JsonPropertyName("Humidity")]
         public int Humidity { get; set; }
 
         [JsonPropertyName("Windspeed")]
-        public int Windspeed { get; set; }
+        public float Windspeed { get; set; }
 
         [JsonPropertyName("WindDirection")]
         public int WindDirection { get; set; }
@@ -42,4 +42,10 @@ namespace Backend.Weatherforecast.Service
         [JsonPropertyName("DateTime")]
         public DateTime DateTime { get; set; }
     }
+
+    public class CurrentWeather: Weather
+    { }
+
+    public class ForecastWeather: Weather
+    { }
 }

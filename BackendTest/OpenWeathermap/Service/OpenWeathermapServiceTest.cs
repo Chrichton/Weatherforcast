@@ -27,7 +27,7 @@ namespace BackendTest.OpenWeathermap.Service
         public async void TestGetWeatherforecast()
         {
             var cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
-            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
+            var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
                 var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping)
@@ -42,7 +42,7 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact, Description("UnkownCity")]
         public async void TestGetWeatherforecastUnkownCity()
         {
-            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
+            var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
                 await Assert.ThrowsAsync<ArgumentException>("city", async () =>
@@ -69,14 +69,8 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public void TestDeserializeWeatherforecastJSON()
         {
-            var model = JsonSerializer.Deserialize<WeatherforecastModel>(File.ReadAllText(GetWeatherForcastJsonPath()));
+            var model = JsonSerializer.Deserialize<WeatherforecastModel>(TestUtilities.GetOpenWeathermapForcastJson());
             Assert.NotNull(model);
-        }
-
-        private string GetWeatherForcastJsonPath()
-        {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                @"OpenWeathermap\service\weatherforecast.json");
         }
 
         #endregion
@@ -87,7 +81,7 @@ namespace BackendTest.OpenWeathermap.Service
         public async void TestCurrentWeather()
         {
             var cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
-            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetCurrentWeatherJsonPath()));
+            var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
                 var result = await new OpenWeathermapService(logger, httpClient, cityToIntMapping)
@@ -102,7 +96,7 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact, Description("UnkownCity")]
         public async void TestGetCurrentWeatherUnkownCity()
         {
-            var messageHandler = new MockHttpMessageHandler(File.ReadAllText(GetWeatherForcastJsonPath()));
+            var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
                 await Assert.ThrowsAsync<ArgumentException>("city", async () =>
@@ -129,14 +123,8 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public void TestDeserializeCurrentWeatherJSON()
         {
-            var model = JsonSerializer.Deserialize<CurrentWeatherModel>(File.ReadAllText(GetCurrentWeatherJsonPath()));
+            var model = JsonSerializer.Deserialize<CurrentWeatherModel>(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
             Assert.NotNull(model);
-        }
-
-        private string GetCurrentWeatherJsonPath()
-        {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                @"OpenWeathermap\service\currentweather.json");
         }
 
         #endregion
