@@ -19,17 +19,12 @@ namespace Backend.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> logger;
-        private readonly IMapper mapper;
         private readonly IWeatherService weatherService;
-        private readonly IOpenWeathermapService openWeathermapService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IMapper mapper,
-            IWeatherService weatherService, IOpenWeathermapService openWeathermapService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService weatherService)
         {
             this.logger = logger;
-            this.mapper = mapper;
             this.weatherService = weatherService;
-            this.openWeathermapService = openWeathermapService;
         }
 
         [HttpGet]

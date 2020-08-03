@@ -12,13 +12,13 @@ namespace Backend.Weatherforecast.Service
         /// <returns>Current Weather-Data</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        Task<IEnumerable<string>> GetCitiesForZipCode(string zipCode);
+        public Task<IEnumerable<string>> GetCitiesForZipCode(string zipCode);
 
         /// <summary>
         /// Retrieves all cities for the supplied zipCode
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns>all cities for the supplied zipCode or emtpy when zipCode is unknown</returns>
-        Task<Model> GetWeather(string city);
+        public Task<Model> GetWeather(string city);
     }
 }
