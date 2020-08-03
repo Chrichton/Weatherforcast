@@ -5,15 +5,21 @@ namespace Backend.Weatherforecast.Service
 {
     public class Model
     {
+        public Model(Weather current, Weather[] forecast)
+        {
+            Current = current ?? throw new ArgumentNullException($"{nameof(current)} must not be null");
+            Forecast = forecast ?? throw new ArgumentNullException($"{nameof(forecast)} must not be null");
+        }
+
         [JsonPropertyName("AverageTemperature")]
         public double AverageTemperature { get; set; }
 
         [JsonPropertyName("AverageHumidity")]
         public int AverageHumidity { get; set; }
 
-        Weather Current { get; set; }
+        public Weather Current { get; }
 
-        Weather[] Forecast { get; set; }
+        public Weather[] Forecast { get; }
     }
 
     public class Weather

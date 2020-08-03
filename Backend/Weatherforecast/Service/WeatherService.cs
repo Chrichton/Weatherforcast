@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -31,17 +32,47 @@ namespace Backend.Weatherforecast.Service
         /// <exception cref="ArgumentException">When city is unknown</exception>
         public async Task<Model> GetWeather(string city)
         {
-            return await Task.FromResult(new Model());
+            Task<OpenWeatherMapCurrent> currentTask = openWeathermapService.GetCurrentWeather(city);
+            Task<OpenWeathermapForecast> forecastTask = openWeathermapService.GetWeatherforecast(city);
+
+            Task.WaitAll(currentTask, forecastTask);
+
+            OpenWeatherMapCurrent openWeatherMapCurrent = await currentTask;
+            OpenWeathermapForecast openWeatherMapForecast = await forecastTask;
+
+            Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
+            Weather[] forecast = mapper.Map<OpenWeathermapForecast, Weather[]>(openWeatherMapForecast);
+
+            var model = new Model(current, forecast);
+            model.AverageHumidity = CalculateAverageHumidity(model);
+            model.AverageTemperature = CalculateAverageTemperature(model);
+
+            return model;
         }
 
         /// <summary>
         /// Retrieves all cities for the supplied zipCode
         /// </summary>
         /// <param name="zipCode"></param>
-        /// <returns>all cities for the supplied zipCode or emtpy when zipCode is unknown</returns>
+        /// <returns>all cities for the supplied zipCode or emtpy when the zipCode is unknown</returns>
         public async Task<IEnumerable<string>> GetCitiesForZipCode(string zipCode)
         {
-            return await Task.FromResult(Enumerable.Empty<string>());
+            return await Task.FromResult(ZipcodeCities.Dictionary
+                .GetValueOrDefault(zipCode, Enumerable.Empty<string>()));
+        }
+
+        private int CalculateAverageHumidity(Model model)
+        {
+            return model.Forecast.Length == 0 
+                ? 0 
+                : model.Forecast.Sum(c => c.Humidity) / model.Forecast.Length; 
+        }
+
+        private double CalculateAverageTemperature(Model model)
+        {
+            return model.Forecast.Length == 0
+                ? 0
+                : model.Forecast.Sum(c => c.Temperature) / model.Forecast.Length;
         }
     }
 }
