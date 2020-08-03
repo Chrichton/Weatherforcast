@@ -8,7 +8,7 @@ namespace BackendTest
         public static string GetOpenWeathermapForcastJson()
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                @"OpenWeathermap\service\weatherforecast.json");
+                @"OpenWeathermap/service/weatherforecast.json");
 
             return File.ReadAllText(path);
         }
@@ -16,7 +16,7 @@ namespace BackendTest
         public static string GetOpenWeathermapCurrentWeatherJson()
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                @"OpenWeathermap\service\currentweather.json");
+                @"OpenWeathermap/service/currentweather.json");
 
             return File.ReadAllText(path);
         }

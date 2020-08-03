@@ -24,7 +24,7 @@ namespace BackendTest.Weatherforecast
 
             OpenWeathermapForecast forecastModel = JsonSerializer.Deserialize<OpenWeathermapForecast>(
                 TestUtilities.GetOpenWeathermapForcastJson());
-            Weather forecast = mapper.Map<OpenWeathermapForecast, Weather>(forecastModel);
+            Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(forecastModel.list);
             Assert.NotNull(forecast);
         }
     }
