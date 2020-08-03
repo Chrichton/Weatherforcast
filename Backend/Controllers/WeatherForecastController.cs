@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Backend.OpenWeathermap.Service;
+using Backend.Weatherforecast.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,13 +19,18 @@ namespace Backend.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherForecastController> logger;
         private readonly IMapper mapper;
+        private readonly IWeatherService weatherService;
+        private readonly IOpenWeathermapService openWeathermapService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IMapper mapper)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IMapper mapper,
+            IWeatherService weatherService, IOpenWeathermapService openWeathermapService)
         {
-            _logger = logger;
+            this.logger = logger;
             this.mapper = mapper;
+            this.weatherService = weatherService;
+            this.openWeathermapService = openWeathermapService;
         }
 
         [HttpGet]

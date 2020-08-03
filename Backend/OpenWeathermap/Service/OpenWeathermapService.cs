@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Backend.OpenWeathermap.Service
 {
-    public class OpenWeathermapService
+    public class OpenWeathermapService : IOpenWeathermapService
     {
         const string appId = "fcadd28326c90c3262054e0e6ca599cd";
         const string language = "de";
@@ -15,7 +15,7 @@ namespace Backend.OpenWeathermap.Service
 
         private readonly ILogger<OpenWeathermapService> logger;
         private readonly HttpClient httpClient;
-        private readonly IDictionary<string, int> cityToIdMapping;
+        private readonly ICityToIdProvider cityToIdMapping;
 
         /// <summary>
         /// Constructor
@@ -23,7 +23,7 @@ namespace Backend.OpenWeathermap.Service
         /// <param name="logger"></param>
         /// <param name="httpClient"></param>
         /// <param name="cityToIdMapping">The API needs a mapping from a city to its id</param>
-        public OpenWeathermapService(ILogger<OpenWeathermapService> logger, HttpClient httpClient, IDictionary<string,int> cityToIdMapping)
+        public OpenWeathermapService(ILogger<OpenWeathermapService> logger, HttpClient httpClient, ICityToIdProvider cityToIdMapping)
         {
             this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} must not be null");
             this.httpClient = httpClient ?? throw new ArgumentNullException($"{nameof(httpClient)} must not be null");
@@ -31,7 +31,7 @@ namespace Backend.OpenWeathermap.Service
         }
 
         /// <summary>
-        /// Retrieves the Data for the current weather
+        /// Retrieves the data for the current weather
         /// </summary>
         /// <param name="city">German City</param>
         /// <returns>Current Weather-Data</returns>
@@ -48,7 +48,7 @@ namespace Backend.OpenWeathermap.Service
             const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";
 
             int cityId;
-            if (!cityToIdMapping.TryGetValue(city, out cityId))
+            if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
                 logger.LogError($"unknown {nameof(city)} requested", city);
                 throw new ArgumentException("Der Ort ist unbekannt", nameof(city));
@@ -63,7 +63,11 @@ namespace Backend.OpenWeathermap.Service
                 .ConfigureAwait(false);
         }
 
-        /// <returns>Forecast-Data</returns>
+        /// <summary>
+        /// Retrieves the data for the weatherforecast
+        /// </summary>
+        /// <param name="city">German City</param>
+        /// <returns>data for the weaterforecast</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
         public async Task<OpenWeathermapForecast> GetWeatherforecast(string city)
@@ -77,7 +81,7 @@ namespace Backend.OpenWeathermap.Service
             const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
 
             int cityId;
-            if (!cityToIdMapping.TryGetValue(city, out cityId))
+            if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
                 logger.LogError($"unknown {nameof(city)} requested", city);
                 throw new ArgumentException("Der Ort ist unbekannt", nameof(city));
