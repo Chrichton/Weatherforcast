@@ -33,7 +33,7 @@ namespace Backend.Controllers
             return Ok(weatherService.GetWeather(city));
         }
 
-        [HttpGet("forecast/zipcode/{zipcode}")] //:int:length(5)
+        [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
         public IActionResult GetForecastByZipCode(int zipCode)
         {
             Task<IEnumerable<string>> result = weatherService.GetCitiesForZipCode(zipCode);
