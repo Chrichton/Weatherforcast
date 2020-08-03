@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
-using Backend.Weatherforecast.Service;
 using System.Text.Json;
 using Xunit;
 using Weather = Backend.Weatherforecast.Service.Weather;
