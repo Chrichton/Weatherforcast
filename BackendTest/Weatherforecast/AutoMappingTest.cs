@@ -3,6 +3,7 @@ using Backend.OpenWeathermap.Service;
 using Backend.Weatherforecast.Service;
 using System.Text.Json;
 using Xunit;
+using Weather = Backend.Weatherforecast.Service.Weather;
 
 namespace BackendTest.Weatherforecast
 {
@@ -19,12 +20,12 @@ namespace BackendTest.Weatherforecast
 
             OpenWeatherMapCurrent currentModel = JsonSerializer.Deserialize<OpenWeatherMapCurrent>(
                 TestUtilities.GetOpenWeathermapCurrentWeatherJson());
-            CurrentWeather current = mapper.Map<OpenWeatherMapCurrent, CurrentWeather>(currentModel);
+            Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(currentModel);
             Assert.NotNull(current);
 
             OpenWeathermapForecast forecastModel = JsonSerializer.Deserialize<OpenWeathermapForecast>(
                 TestUtilities.GetOpenWeathermapForcastJson());
-            ForecastWeather forecast = mapper.Map<OpenWeathermapForecast, ForecastWeather>(forecastModel);
+            Weather forecast = mapper.Map<OpenWeathermapForecast, Weather>(forecastModel);
             Assert.NotNull(forecast);
         }
     }

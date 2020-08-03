@@ -26,15 +26,15 @@ namespace Backend.Weatherforecast.Service
                .ForSourceMember(s => s.main, o => o.DoNotValidate())
                .ForSourceMember(s => s.icon, o => o.DoNotValidate());
 
-            var map1 = CreateMap<OpenWeatherMapCurrent, CurrentWeather>()
+            var map1 = CreateMap<OpenWeatherMapCurrent, Weather>()
                 .AfterMap((curModel, currWeather) => currWeather.DateTime = DateTime.Now); // TODO for debugging
             map1.ForAllMembers(opt => opt.Ignore());
             map1.ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
 
-            CreateMap<OpenWeathermapForecast, ForecastWeather>()
+            CreateMap<OpenWeathermapForecast, Weather>()
                 .ForAllMembers(opt => opt.Ignore());
 
-            var map2 = CreateMap<WeatherList, ForecastWeather>()
+            var map2 = CreateMap<WeatherList, Weather>()
                 .AfterMap((curModel, currWeather) => currWeather.DateTime = DateTime.Now); // TODO for debugging
             map2.ForAllMembers(opt => opt.Ignore());
             map2.ForMember(x => x.DateTime, o => o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));

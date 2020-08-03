@@ -11,9 +11,9 @@ namespace Backend.Weatherforecast.Service
         [JsonPropertyName("AverageHumidity")]
         public int AverageHumidity { get; set; }
 
-        CurrentWeather Current { get; set; }
+        Weather Current { get; set; }
 
-        ForecastWeather[] Forecast { get; set; }
+        Weather[] Forecast { get; set; }
     }
 
     public class Weather
@@ -48,10 +48,4 @@ namespace Backend.Weatherforecast.Service
         [JsonPropertyName("DateTime")]
         public DateTime DateTime { get; set; }
     }
-
-    public class CurrentWeather: Weather
-    { }
-
-    public class ForecastWeather: Weather
-    { }
 }
