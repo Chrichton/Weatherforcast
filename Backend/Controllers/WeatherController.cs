@@ -43,6 +43,18 @@ namespace Backend.Controllers
             return NotFound();
         }
 
+        /*
+        [HttpGet("forecast")]
+        public IActionResult ZipCode([FromQuery] int zipCode)
+        {
+            Task<IEnumerable<string>> result = weatherService.GetCitiesForZipCode(zipCode);
+            if (result.Result.Any())
+                return Ok(result);
+
+            return NotFound();
+        }
+        */
+
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
