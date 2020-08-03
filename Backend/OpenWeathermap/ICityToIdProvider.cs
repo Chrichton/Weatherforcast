@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Backend.OpenWeathermap.Service
+namespace Backend.OpenWeathermap
 {
     public interface ICityToIdProvider
     {

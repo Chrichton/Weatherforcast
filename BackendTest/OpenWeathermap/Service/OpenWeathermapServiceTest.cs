@@ -1,4 +1,5 @@
-﻿using Backend.OpenWeathermap.Service;
+﻿using Backend.OpenWeathermap;
+using Backend.OpenWeathermap.Service;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System;
