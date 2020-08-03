@@ -13,13 +13,16 @@ namespace Backend.Weatherforecast.Service
         private readonly ILogger<WeatherService> logger;
         private IMapper mapper;
         private IOpenWeathermapService openWeathermapService;
+        private readonly IZipCodeToCitiesProvider zipCodeToCitiesProvider;
 
         public WeatherService(ILogger<WeatherService> logger, IMapper mapper, 
-            IOpenWeathermapService openWeathermapService)
+            IOpenWeathermapService openWeathermapService, IZipCodeToCitiesProvider zipCodeToCitiesProvider)
         {
             this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} must not be null");
             this.mapper = mapper ?? throw new ArgumentNullException($"{nameof(mapper)} must not be null");
             this.openWeathermapService = openWeathermapService ?? throw new ArgumentNullException($"{nameof(openWeathermapService)} must not be null");
+            this.zipCodeToCitiesProvider = zipCodeToCitiesProvider ?? throw new ArgumentNullException($"{nameof(zipCodeToCitiesProvider)} must not be null");
+
         }
 
         /// <summary>
@@ -56,8 +59,11 @@ namespace Backend.Weatherforecast.Service
         /// <returns>all cities for the supplied zipCode or emtpy when the zipCode is unknown</returns>
         public async Task<IEnumerable<string>> GetCitiesForZipCode(int zipCode)
         {
-            return await Task.FromResult(ZipcodeCities.Dictionary
-                .GetValueOrDefault(zipCode, Enumerable.Empty<string>()));
+            IEnumerable<string> cities;
+            if (zipCodeToCitiesProvider.GetDictionary().TryGetValue(zipCode, out cities))
+                return await Task.FromResult(cities);
+
+            return await Task.FromResult(Enumerable.Empty<string>());
         }
 
         private int CalculateAverageHumidity(Model model)

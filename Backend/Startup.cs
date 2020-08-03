@@ -31,6 +31,7 @@ namespace Backend
             services.AddScoped<HttpClient>();
             services.AddScoped<ICityToIdProvider, CityToIdProvider>();
             services.AddScoped<IOpenWeathermapService, OpenWeathermapService>();
+            services.AddScoped<IZipCodeToCitiesProvider, ZipCodeToCitiesProvider>();
             services.AddScoped<IWeatherService, WeatherService>();
         }
 
