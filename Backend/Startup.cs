@@ -29,9 +29,9 @@ namespace Backend
             services.AddControllers();
 
             services.AddScoped<HttpClient>();
-            services.AddScoped<ICityToIdProvider, CityToIdProvider>();
+            services.AddSingleton<ICityToIdProvider, CityToIdProvider>();
             services.AddScoped<IOpenWeathermapService, OpenWeathermapService>();
-            services.AddScoped<IZipCodeToCitiesProvider, ZipCodeToCitiesProvider>();
+            services.AddSingleton<IZipCodeToCitiesProvider, ZipCodeToCitiesProvider>();
             services.AddScoped<IWeatherService, WeatherService>();
         }
 

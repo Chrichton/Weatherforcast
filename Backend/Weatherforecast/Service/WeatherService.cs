@@ -43,7 +43,7 @@ namespace Backend.Weatherforecast.Service
             OpenWeathermapForecast openWeatherMapForecast = await forecastTask;
 
             Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
-            Weather[] forecast = mapper.Map<OpenWeathermapForecast, Weather[]>(openWeatherMapForecast);
+            Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(openWeatherMapForecast.list);
 
             var model = new WeatherModel(current, forecast);
             model.AverageHumidity = CalculateAverageHumidity(model);
