@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
+using Backend.Weatherforecast.Common;
 
 namespace Backend.Weatherforecast.Service
 {

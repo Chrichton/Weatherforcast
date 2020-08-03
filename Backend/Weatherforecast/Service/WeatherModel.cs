@@ -12,10 +12,10 @@ namespace Backend.Weatherforecast.Service
         }
 
         [JsonPropertyName("AverageTemperature")]
-        public double AverageTemperature { get; set; }
+        public float AverageTemperature { get; set; }
 
         [JsonPropertyName("AverageHumidity")]
-        public int AverageHumidity { get; set; }
+        public float AverageHumidity { get; set; }
 
         public Weather Current { get; }
 

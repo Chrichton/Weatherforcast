@@ -46,8 +46,8 @@ namespace Backend.Weatherforecast.Service
             Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(openWeatherMapForecast.list);
 
             var model = new WeatherModel(current, forecast);
-            model.AverageHumidity = CalculateAverageHumidity(model);
-            model.AverageTemperature = CalculateAverageTemperature(model);
+            model.AverageHumidity = model.CalculateAverageHumidity();
+            model.AverageTemperature = model.CalculateAverageTemperature();
 
             return model;
         }
@@ -64,20 +64,6 @@ namespace Backend.Weatherforecast.Service
                 return await Task.FromResult(cities);
 
             return await Task.FromResult(Enumerable.Empty<string>());
-        }
-
-        private int CalculateAverageHumidity(WeatherModel model)
-        {
-            return model.Forecast.Length == 0 
-                ? 0 
-                : model.Forecast.Sum(c => c.Humidity) / model.Forecast.Length; 
-        }
-
-        private double CalculateAverageTemperature(WeatherModel model)
-        {
-            return model.Forecast.Length == 0
-                ? 0
-                : model.Forecast.Sum(c => c.Temperature) / model.Forecast.Length;
         }
     }
 }

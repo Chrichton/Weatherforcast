@@ -1,8 +1,8 @@
-﻿using Backend.Weatherforecast.Service;
+﻿using Backend.Weatherforecast.Common;
 using System;
 using Xunit;
 
-namespace BackendTest.Weatherforecast
+namespace BackendTest.Common
 {
     public class DateTimeUTCTest
     {

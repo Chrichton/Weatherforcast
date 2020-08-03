@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Backend.Weatherforecast.Service
+namespace Backend.Weatherforecast.Common
 {
     /// <summary>
     /// Code from: https://stackoverflow.com/questions/249760/how-can-i-convert-a-unix-timestamp-to-datetime-and-vice-versa
