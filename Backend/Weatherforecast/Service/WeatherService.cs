@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -55,7 +54,7 @@ namespace Backend.Weatherforecast.Service
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns>all cities for the supplied zipCode or emtpy when the zipCode is unknown</returns>
-        public async Task<IEnumerable<string>> GetCitiesForZipCode(string zipCode)
+        public async Task<IEnumerable<string>> GetCitiesForZipCode(int zipCode)
         {
             return await Task.FromResult(ZipcodeCities.Dictionary
                 .GetValueOrDefault(zipCode, Enumerable.Empty<string>()));

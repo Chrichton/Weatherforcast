@@ -12,15 +12,15 @@ namespace Backend.Weatherforecast
     /// </summary>
     public static class ZipcodeCities
     {
-        private static Lazy<Dictionary<string,IEnumerable<string>>> dictionary =
-            new Lazy<Dictionary<string, IEnumerable<string>>>(() => ReadZipcodeCitiesFromCsv());
+        private static Lazy<Dictionary<int,IEnumerable<string>>> dictionary =
+            new Lazy<Dictionary<int, IEnumerable<string>>>(() => ReadZipcodeCitiesFromCsv());
         
         /// <summary>
         /// Mapping from German zipcode to cities 
         /// </summary>
-        public static Dictionary<string, IEnumerable<string>> Dictionary => dictionary.Value;
+        public static Dictionary<int, IEnumerable<string>> Dictionary => dictionary.Value;
 
-        private static Dictionary<string, IEnumerable<string>> ReadZipcodeCitiesFromCsv()
+        private static Dictionary<int, IEnumerable<string>> ReadZipcodeCitiesFromCsv()
         {
             const int zipcodeIndex = 2;
             const int cityIndex = 1;
@@ -35,7 +35,7 @@ namespace Backend.Weatherforecast
                 .Select(csvLine =>         // Select zipcode and city
                 {
                     var column = csvLine.Split(",");
-                    return new KeyValuePair<string, string>(column[zipcodeIndex], column[cityIndex]);
+                    return new KeyValuePair<int, string>(int.Parse(column[zipcodeIndex]), column[cityIndex]);
                 })
                 .GroupBy(k => k.Key)
                 .ToDictionary(k => k.Key, k => k.Select(g => g.Value));

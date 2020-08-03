@@ -12,7 +12,7 @@ namespace Backend.Weatherforecast.Service
         /// <returns>Current Weather-Data</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        public Task<IEnumerable<string>> GetCitiesForZipCode(string zipCode);
+        public Task<IEnumerable<string>> GetCitiesForZipCode(int zipCode);
 
         /// <summary>
         /// Retrieves all cities for the supplied zipCode

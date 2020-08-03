@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using Backend.OpenWeathermap.Service;
 using Backend.Weatherforecast.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,21 +8,34 @@ using Microsoft.Extensions.Logging;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("")]
+    [Route("api/[controller]")]
+    public class WeatherController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> logger;
+        private readonly ILogger<WeatherController> logger;
         private readonly IWeatherService weatherService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService weatherService)
+        public WeatherController(ILogger<WeatherController> logger, IWeatherService weatherService)
         {
             this.logger = logger;
             this.weatherService = weatherService;
+        }
+
+        [HttpGet("forecast/city/{city:minlength(1)}")]
+        public IActionResult GetForecastByCity(string city)
+        {
+            return Ok(weatherService.GetWeather(city));
+        }
+
+        [HttpGet("forecast/zipcode/{zipcode}")] //:int:length(5)
+        public IActionResult GetForecastByZipCode(int zipCode)
+        {
+            return Ok(weatherService.GetCitiesForZipCode(zipCode));
         }
 
         [HttpGet]

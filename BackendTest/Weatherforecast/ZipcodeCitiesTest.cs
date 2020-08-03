@@ -10,7 +10,7 @@ namespace BackendTest.Weatherforecast
         [Fact]
         public void TestNoCity()
         {
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault("2103", null);
+            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(21037, null);
 
             Assert.Null(city);
         }
@@ -18,7 +18,7 @@ namespace BackendTest.Weatherforecast
         [Fact]
         public void TestZipcodeCity()
         {
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault("21037", null);
+            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(21037, null);
 
             Assert.NotNull(city);
             Assert.Single(city);
@@ -29,7 +29,7 @@ namespace BackendTest.Weatherforecast
         public void TestZipcodeCities()
         {
             // zu "55767" gehören 20 City
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault("55767", null);
+            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(55767, null);
 
             Assert.NotNull(city);
             Assert.Equal(20, city.Count());

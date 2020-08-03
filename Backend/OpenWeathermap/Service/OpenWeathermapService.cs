@@ -49,8 +49,8 @@ namespace Backend.OpenWeathermap.Service
             int cityId;
             if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
-                logger.LogError($"unknown {nameof(city)} requested", city);
-                throw new ArgumentException("Der Ort ist unbekannt", nameof(city));
+                logger.LogError($"unknown city: '{city}' requested", city);
+                throw new ArgumentException($"Der Ort '{city}' ist unbekannt", nameof(city));
             }
 
             string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
