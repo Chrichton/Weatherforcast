@@ -25,18 +25,28 @@ namespace Backend.Weatherforecast.Service
                .ForSourceMember(s => s.main, o => o.DoNotValidate())
                .ForSourceMember(s => s.icon, o => o.DoNotValidate());
 
-            var map1 = CreateMap<OpenWeatherMapCurrent, Weather>();
-            map1.ForAllMembers(opt => opt.Ignore());
-            map1.ForMember(x => x.DateTime, o => 
-                o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
 
-            CreateMap<OpenWeathermapForecast, Weather>()
-                .ForAllMembers(opt => opt.Ignore());
 
-            var map2 = CreateMap<WeatherList, Weather>();
-            map2.ForAllMembers(opt => opt.Ignore());
-            map2.ForMember(x => x.DateTime, o => 
-                o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
+            CreateMap<OpenWeatherMapCurrent, Weather>(MemberList.None)
+                .ForMember(x => x.DateTime, o =>
+                    o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)))
+                .ForMember(x => x.CloudDescription, o => o.MapFrom(y => y.weather[0].description))
+                .ForMember(x => x.FeelsLikeTemperature, o => o.MapFrom(y => y.main.feels_like))
+                .ForMember(x => x.Humidity, o => o.MapFrom(y => y.main.humidity))
+                .ForMember(x => x.MaximumTemperature, o => o.MapFrom(y => y.main.temp_max))
+                .ForMember(x => x.MinimumTemperature, o => o.MapFrom(y => y.main.temp_min))
+                
+                .ForMember(x => x.Pressure, o => o.MapFrom(y => y.main.pressure))
+                .ForMember(x => x.Temperature, o => o.MapFrom(y => y.main.temp))
+                .ForMember(x => x.WindDirection, o => o.MapFrom(y => y.wind.deg))
+                .ForMember(x => x.Windspeed, o => o.MapFrom(y => y.wind.speed));
+               
+
+            CreateMap<OpenWeathermapForecast, Weather>(MemberList.None);
+
+            CreateMap<WeatherList, Weather>(MemberList.None)
+                .ForMember(x => x.DateTime, o => 
+                    o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)));
         }
     }
 }
