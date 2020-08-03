@@ -32,7 +32,7 @@ namespace Backend.Weatherforecast.Service
         /// <returns>Current Weather-Data</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        public async Task<Model> GetWeather(string city)
+        public async Task<WeatherModel> GetWeather(string city)
         {
             Task<OpenWeatherMapCurrent> currentTask = openWeathermapService.GetCurrentWeather(city);
             Task<OpenWeathermapForecast> forecastTask = openWeathermapService.GetWeatherforecast(city);
@@ -45,7 +45,7 @@ namespace Backend.Weatherforecast.Service
             Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
             Weather[] forecast = mapper.Map<OpenWeathermapForecast, Weather[]>(openWeatherMapForecast);
 
-            var model = new Model(current, forecast);
+            var model = new WeatherModel(current, forecast);
             model.AverageHumidity = CalculateAverageHumidity(model);
             model.AverageTemperature = CalculateAverageTemperature(model);
 
@@ -66,14 +66,14 @@ namespace Backend.Weatherforecast.Service
             return await Task.FromResult(Enumerable.Empty<string>());
         }
 
-        private int CalculateAverageHumidity(Model model)
+        private int CalculateAverageHumidity(WeatherModel model)
         {
             return model.Forecast.Length == 0 
                 ? 0 
                 : model.Forecast.Sum(c => c.Humidity) / model.Forecast.Length; 
         }
 
-        private double CalculateAverageTemperature(Model model)
+        private double CalculateAverageTemperature(WeatherModel model)
         {
             return model.Forecast.Length == 0
                 ? 0

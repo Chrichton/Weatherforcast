@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Backend.Weatherforecast.Service
 {
-    public class Model
+    public class WeatherModel
     {
-        public Model(Weather current, Weather[] forecast)
+        public WeatherModel(Weather current, Weather[] forecast)
         {
             Current = current ?? throw new ArgumentNullException($"{nameof(current)} must not be null");
             Forecast = forecast ?? throw new ArgumentNullException($"{nameof(forecast)} must not be null");

@@ -22,7 +22,7 @@ namespace BackendTest.Weatherforecast.Service
         public async void TestGetWeather()
         {
             IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities);
-            Model result = await service.GetWeather("Hamburg").ConfigureAwait(false);
+            WeatherModel result = await service.GetWeather("Hamburg").ConfigureAwait(false);
 
             Assert.NotNull(result);
         }

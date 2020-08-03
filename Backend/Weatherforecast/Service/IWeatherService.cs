@@ -19,6 +19,6 @@ namespace Backend.Weatherforecast.Service
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns>all cities for the supplied zipCode or emtpy when zipCode is unknown</returns>
-        public Task<Model> GetWeather(string city);
+        public Task<WeatherModel> GetWeather(string city);
     }
 }
