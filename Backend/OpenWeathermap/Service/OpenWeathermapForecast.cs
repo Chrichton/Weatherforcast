@@ -1,6 +1,6 @@
 ﻿namespace Backend.OpenWeathermap.Service
 {
-    public class WeatherforecastModel
+    public class OpenWeathermapForecast
     {
         public string cod { get; set; }
         public int message { get; set; }

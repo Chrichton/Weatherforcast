@@ -69,7 +69,7 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public void TestDeserializeWeatherforecastJSON()
         {
-            var model = JsonSerializer.Deserialize<WeatherforecastModel>(TestUtilities.GetOpenWeathermapForcastJson());
+            var model = JsonSerializer.Deserialize<OpenWeathermapForecast>(TestUtilities.GetOpenWeathermapForcastJson());
             Assert.NotNull(model);
         }
 
@@ -123,7 +123,7 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public void TestDeserializeCurrentWeatherJSON()
         {
-            var model = JsonSerializer.Deserialize<CurrentWeatherModel>(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
+            var model = JsonSerializer.Deserialize<OpenWeatherMapCurrent>(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
             Assert.NotNull(model);
         }
 

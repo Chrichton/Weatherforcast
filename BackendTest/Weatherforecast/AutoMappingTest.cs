@@ -17,14 +17,14 @@ namespace BackendTest.Weatherforecast
             IMapper mapper = cfg.CreateMapper();
             Assert.NotNull(mapper);
 
-            CurrentWeatherModel currentModel = JsonSerializer.Deserialize<CurrentWeatherModel>(
+            OpenWeatherMapCurrent currentModel = JsonSerializer.Deserialize<OpenWeatherMapCurrent>(
                 TestUtilities.GetOpenWeathermapCurrentWeatherJson());
-            CurrentWeather current = mapper.Map<CurrentWeatherModel, CurrentWeather>(currentModel);
+            CurrentWeather current = mapper.Map<OpenWeatherMapCurrent, CurrentWeather>(currentModel);
             Assert.NotNull(current);
 
-            WeatherforecastModel forecastModel = JsonSerializer.Deserialize<WeatherforecastModel>(
+            OpenWeathermapForecast forecastModel = JsonSerializer.Deserialize<OpenWeathermapForecast>(
                 TestUtilities.GetOpenWeathermapForcastJson());
-            ForecastWeather forecast = mapper.Map<WeatherforecastModel, ForecastWeather>(forecastModel);
+            ForecastWeather forecast = mapper.Map<OpenWeathermapForecast, ForecastWeather>(forecastModel);
             Assert.NotNull(forecast);
         }
     }

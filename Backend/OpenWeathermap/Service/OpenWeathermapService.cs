@@ -37,7 +37,7 @@ namespace Backend.OpenWeathermap.Service
         /// <returns>Current Weather-Data</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        public async Task<CurrentWeatherModel> GetCurrentWeather(string city)
+        public async Task<OpenWeatherMapCurrent> GetCurrentWeather(string city)
         {
             if (city == null)
             {
@@ -58,7 +58,7 @@ namespace Backend.OpenWeathermap.Service
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
-            return await JsonSerializer.DeserializeAsync<CurrentWeatherModel>(
+            return await JsonSerializer.DeserializeAsync<OpenWeatherMapCurrent>(
                 await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 .ConfigureAwait(false);
         }
@@ -66,7 +66,7 @@ namespace Backend.OpenWeathermap.Service
         /// <returns>Forecast-Data</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        public async Task<WeatherforecastModel> GetWeatherforecast(string city)
+        public async Task<OpenWeathermapForecast> GetWeatherforecast(string city)
         {
             if (city == null)
             {
@@ -87,7 +87,7 @@ namespace Backend.OpenWeathermap.Service
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
-            return await JsonSerializer.DeserializeAsync<WeatherforecastModel>(
+            return await JsonSerializer.DeserializeAsync<OpenWeathermapForecast>(
                 await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 .ConfigureAwait(false);
         }
