@@ -5,8 +5,11 @@ namespace Backend.OpenWeathermap.Service
 {
     public class CityToIdProvider : ICityToIdProvider
     {
-        private IDictionary<string, int> dictionary;
+        private readonly IDictionary<string, int> dictionary;
 
+        /// <summary>
+        /// Used by Dependency Injection
+        /// </summary>
         public CityToIdProvider() => dictionary = Cities.Dictionary;
 
         public CityToIdProvider(IDictionary<string, int> dictionary)

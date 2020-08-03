@@ -1,14 +1,11 @@
-﻿using Backend.OpenWeathermap;
-using Backend.OpenWeathermap.Service;
+﻿using Backend.OpenWeathermap.Service;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,7 +55,7 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider(Cities.Dictionary))
+                var result = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider())
                     .GetWeatherforecast("Hamburg")
                     .ConfigureAwait(false);
                 Assert.NotNull(result);
@@ -113,7 +110,7 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider(Cities.Dictionary))
+                var result = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider())
                     .GetCurrentWeather("Hamburg")
                     .ConfigureAwait(false); 
                 Assert.NotNull(result);
