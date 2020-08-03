@@ -4,6 +4,7 @@ using Backend.Weatherforecast.Service;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace BackendTest.Weatherforecast.Service
@@ -30,6 +31,25 @@ namespace BackendTest.Weatherforecast.Service
                 await new WeatherService(logger, mapper, openWeathermapService)
                     .GetWeather("Heiko").ConfigureAwait(false))
                 .ConfigureAwait(false);
+        }
+
+        [Fact]
+        public async void TestGetCityByZipCode()
+        {
+            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService);
+            var cities = await service.GetCitiesForZipCode(21037);
+
+            Assert.Single(cities);
+            Assert.Equal("Hamburg", cities.Single());
+        }
+
+        [Fact]
+        public async void TestGetCityByZipCodeNoCity()
+        {
+            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService);
+            var cities = await service.GetCitiesForZipCode(2103);
+
+            Assert.Equal(new string[] {}, cities);
         }
     }
 }

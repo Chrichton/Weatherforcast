@@ -10,7 +10,7 @@ namespace BackendTest.Weatherforecast
         [Fact]
         public void TestNoCity()
         {
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(21037, null);
+            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(2103, null);
 
             Assert.Null(city);
         }

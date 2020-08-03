@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Backend.Weatherforecast.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,11 @@ namespace Backend.Controllers
         [HttpGet("forecast/zipcode/{zipcode}")] //:int:length(5)
         public IActionResult GetForecastByZipCode(int zipCode)
         {
-            return Ok(weatherService.GetCitiesForZipCode(zipCode));
+            Task<IEnumerable<string>> result = weatherService.GetCitiesForZipCode(zipCode);
+            if (result.Result.Any())
+                return Ok(result);
+
+            return NotFound();
         }
 
         [HttpGet]
