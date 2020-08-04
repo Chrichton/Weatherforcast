@@ -30,7 +30,15 @@ namespace Backend.Controllers
         [HttpGet("forecast/city/{city:minlength(1)}")]
         public IActionResult GetForecastByCity(string city)
         {
-            return Ok(weatherService.GetWeather(city));
+            try
+            {
+                return Ok(weatherService.GetWeather(city));
+            }
+            catch (ArgumentException)
+            {
+                return NotFound();
+            }
+            
         }
 
         [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
