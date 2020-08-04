@@ -1,7 +1,7 @@
 <template>
     <div>
-        <form>
-            <input type="text" name="city" placeholder="City"/>
+        <form @submit="selectCity">
+            <input type="text" v-model="city" name="city" placeholder="City"/>
             <input type="submit" value="Submit" class="btn"/>
         </form>
     </div>
@@ -9,7 +9,18 @@
 
 <script>
 export default {
-    name: "SelectCity"
+    name: "SelectCity",
+    data() {
+        return {
+            city: ''
+        }
+    },
+    methods: {
+        selectCity(e) {
+            e.preventDefault();
+            console.log(this.city);
+        }
+    }
 }
 </script>
 
