@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Backend.OpenWeathermap;
 using Backend.OpenWeathermap.Service;
 using Backend.Weatherforecast;
 using Backend.Weatherforecast.Service;
@@ -7,6 +8,8 @@ using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BackendTest.Weatherforecast.Service
@@ -21,19 +24,45 @@ namespace BackendTest.Weatherforecast.Service
         [Fact]
         public async void TestGetWeather()
         {
+            var openForecast = new OpenWeathermapForecast{ list = new WeatherList[] {} };
+      
+            openWeathermapService.GetWeatherforecast(Arg.Any<string>())
+                .Returns(Task.FromResult(openForecast));
+
+            mapper.Map<OpenWeatherMapCurrent, Backend.Weatherforecast.Service.Weather>(Arg.Any<OpenWeatherMapCurrent>())
+                .Returns(new Backend.Weatherforecast.Service.Weather());
+            
+            mapper.Map<WeatherList[], Backend.Weatherforecast.Service.Weather[]>(Arg.Any<WeatherList[]>())
+                .Returns(new Backend.Weatherforecast.Service.Weather[] 
+                { new Backend.Weatherforecast.Service.Weather { Humidity = 42, Temperature = 13 } });
+            
             IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities);
             WeatherModel result = await service.GetWeather("Hamburg").ConfigureAwait(false);
 
             Assert.NotNull(result);
+            Assert.Equal(42f, result.AverageHumidity);
+            Assert.Equal(13f, result.AverageTemperature);
         }
 
         [Fact]
         public async void TestGetWeatherNoCity()
         {
-            await Assert.ThrowsAsync<ArgumentException>("city", async () =>
+            var loggerOpenWeather = Substitute.For<ILogger<OpenWeathermapService>>();
+            var httpClient = Substitute.For<HttpClient>();
+            var cityToIdMapping = new CityToIdProvider(new Dictionary<string, int>());
+            openWeathermapService = new OpenWeathermapService(loggerOpenWeather, httpClient, cityToIdMapping);
+
+            try
+            {
                 await new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities)
-                    .GetWeather("Heiko").ConfigureAwait(false))
-                .ConfigureAwait(false);
+                    .GetWeather("Heiko").ConfigureAwait(false);
+                
+                Assert.True(false, "AggregateException should be thrown");
+            }
+            catch (AggregateException exception)
+            {
+                Assert.NotNull(exception.InnerException as ArgumentException);
+            };
         }
 
         [Fact]
