@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Weather />
+    <Weather v-bind:model="Model"/>
   </div>
 </template>
 
@@ -14,9 +14,9 @@ export default {
   },
   data() {
     return {
-      weather: {
+      Model: /*{
         Average: 42,
-        Forecast: [
+        Forecast: */[
           {
             Temperature: 15.87,
             FeelsLikeTemperature: 15.46,
@@ -54,7 +54,7 @@ export default {
             DateTime: "2020-07-30 21:00:00"
           }
         ]
-      }
+     // } 
     }
   }
 }

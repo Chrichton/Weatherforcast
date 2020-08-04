@@ -1,12 +1,15 @@
 <template>
     <div>
-        <h1>Weather</h1>
+        <div v-for="weather in model" :key="weather">
+            <h3>{{weather}}</h3>
+        </div>
     </div>    
 </template>
 
 <script>
 export default {
-   name: "Weather" 
+   name: "Weather",
+   props: ["model"]
 }
 </script>
 
