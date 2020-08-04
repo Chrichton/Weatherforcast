@@ -18,7 +18,7 @@ export default {
         Average: 42,
         Forecast: */[
           {
-            Temperature: 15.87,
+            Temperature: 14.31,
             FeelsLikeTemperature: 15.46,
             MinimumTemperature: 13.58,
             MaximumTemperature: 15.87,
@@ -30,7 +30,7 @@ export default {
             DateTime: "2020-07-30 21:00:00"
           },
           {
-            Temperature: 15.87,
+            Temperature: 14.31,
             FeelsLikeTemperature: 15.46,
             MinimumTemperature: 13.58,
             MaximumTemperature: 15.87,
@@ -42,7 +42,7 @@ export default {
             DateTime: "2020-07-30 21:00:00"
           },
           {
-            Temperature: 15.87,
+            Temperature: 14.31,
             FeelsLikeTemperature: 15.46,
             MinimumTemperature: 13.58,
             MaximumTemperature: 15.87,
