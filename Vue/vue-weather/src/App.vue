@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    {{weather}}
+    <Weather />
   </div>
 </template>
 
 <script>
+import Weather from './components/Weather';
 
 export default {
   name: 'App',
   components: {
-    
+    Weather
   },
   data() {
     return {
