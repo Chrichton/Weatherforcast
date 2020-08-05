@@ -2,7 +2,6 @@
 using Backend.OpenWeathermap.Service;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
