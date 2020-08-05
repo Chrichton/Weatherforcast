@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <SelectCity/>
+    <SelectCity v-on:load-weather="loadWeather"/>
     <Weather v-bind:model="Model"/>
   </div>
 </template>
@@ -62,8 +62,14 @@ export default {
         ]
      // } 
     }
+  },
+  methods: {
+    loadWeather (city) {
+        console.log(city);
+    }
   }
 }
+
 </script>
 
 <style>

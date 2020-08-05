@@ -18,7 +18,7 @@ export default {
     methods: {
         selectCity(e) {
             e.preventDefault();
-            console.log(this.city);
+            this.$emit('load-weather', this.city)
         }
     }
 }
