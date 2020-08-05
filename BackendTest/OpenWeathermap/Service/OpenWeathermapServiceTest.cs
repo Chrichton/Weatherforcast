@@ -29,12 +29,18 @@ namespace BackendTest.OpenWeathermap.Service
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
-                var result = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
                     .GetWeatherforecast("Hamburg")
                     .ConfigureAwait(false);
-                Assert.NotNull(result);
-                Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
-                Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
+
+                resultOpt
+                    .Some(result =>
+                    {
+                        Assert.NotNull(result);
+                        Assert.Equal("Hamburg", result.city.name); // Just shows, that the httpClient has been called
+                        Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
+                    })
+                    .None(() => Assert.False(true, "Test Failed"));
             }
         }
 
@@ -44,10 +50,12 @@ namespace BackendTest.OpenWeathermap.Service
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
-                await Assert.ThrowsAsync<ArgumentException>("city", async () =>
-                     await new OpenWeathermapService(logger, httpClient, new CityToIdProvider(new Dictionary<string, int>()))
-                         .GetWeatherforecast("Hamburg").ConfigureAwait(false))
-                    .ConfigureAwait(false);
+                var cityToIdProvider = new CityToIdProvider(new Dictionary<string, int>());
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
+                    .GetCurrentWeather("Hamburg").ConfigureAwait(false);
+
+                resultOpt
+                    .Some(_ => Assert.False(true, "Test Failed"));
             }
         }
 
@@ -56,12 +64,18 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider())
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider())
                     .GetWeatherforecast("Hamburg")
                     .ConfigureAwait(false);
-                Assert.NotNull(result);
-                Assert.Equal("Hamburg", result.city.name);
-                Assert.Equal(2911298, result.city.id);
+
+                resultOpt
+                    .Some(result =>
+                    {
+                        Assert.NotNull(result);
+                        Assert.Equal("Hamburg", result.city.name);
+                        Assert.Equal(2911298, result.city.id);
+                    })
+                    .None(() => Assert.False(true, "Test Failed"));
             }
         }
 
@@ -84,12 +98,18 @@ namespace BackendTest.OpenWeathermap.Service
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
-                var result = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
                     .GetCurrentWeather("Hamburg")
                     .ConfigureAwait(false);
-                Assert.NotNull(result);
-                Assert.Equal("Hamburg", result.name); // Just shows, that the httpClient has been called
-                Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
+
+                resultOpt
+                    .Some(result =>
+                    {
+                        Assert.NotNull(result);
+                        Assert.Equal("Hamburg", result.name); // Just shows, that the httpClient has been called
+                        Assert.Equal("2911298", messageHandler.idValue); // Shows that the service created a request with the correct id
+                    })
+                    .None(() => Assert.False(true, "Test Failed"));
             }
         }
 
@@ -99,10 +119,12 @@ namespace BackendTest.OpenWeathermap.Service
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
-                await Assert.ThrowsAsync<ArgumentException>("city", async () =>
-                     await new OpenWeathermapService(logger, httpClient, new CityToIdProvider(new Dictionary<string, int>()))
-                         .GetCurrentWeather("Hamburg").ConfigureAwait(false))
-                    .ConfigureAwait(false); 
+                var cityToIdProvider = new CityToIdProvider(new Dictionary<string, int>());
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
+                    .GetCurrentWeather("Hamburg").ConfigureAwait(false);
+
+                resultOpt
+                    .Some(_ => Assert.False(true, "Test Failed"));
             }
         }
 
@@ -111,12 +133,18 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var result = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider())
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, new CityToIdProvider())
                     .GetCurrentWeather("Hamburg")
-                    .ConfigureAwait(false); 
-                Assert.NotNull(result);
-                Assert.Equal("Hamburg", result.name);
-                Assert.Equal(2911298, result.id);
+                    .ConfigureAwait(false);
+
+                resultOpt
+                    .Some(result =>
+                    {
+                        Assert.NotNull(result);
+                        Assert.Equal("Hamburg", result.name);
+                        Assert.Equal(2911298, result.id);                    
+                    })
+                    .None(() => Assert.False(true, "Test Failed"));
             }
         }
 

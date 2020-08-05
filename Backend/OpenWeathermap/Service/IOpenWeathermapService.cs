@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using LanguageExt;
+using System.Threading.Tasks;
 
 namespace Backend.OpenWeathermap.Service
 {
@@ -8,18 +9,16 @@ namespace Backend.OpenWeathermap.Service
         /// Retrieves the data for the current weather
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>data for the current weather</returns>
+        /// <returns>Some(data) for the current weather. None, when the city is unknown</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
-        /// <exception cref="ArgumentException">When city is unknown</exception>
-        Task<OpenWeatherMapCurrent> GetCurrentWeather(string city);
+        public Task<Option<OpenWeatherMapCurrent>> GetCurrentWeather(string city);
 
         /// <summary>
         /// Retrieves the data for the weatherforecast
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>data for the weaterforecast</returns>
+        /// <returns>Some(data) for the current weather. None, when the city is unknown</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
-        /// <exception cref="ArgumentException">When city is unknown</exception>
-        Task<OpenWeathermapForecast> GetWeatherforecast(string city);
+        public Task<Option<OpenWeathermapForecast>> GetWeatherforecast(string city);
     }
 }

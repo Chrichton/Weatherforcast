@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LanguageExt;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Text.Json;
@@ -33,10 +34,9 @@ namespace Backend.OpenWeathermap.Service
         /// Retrieves the data for the current weather
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>Current Weather-Data</returns>
-        /// <exception cref="ArgumentNullException">When city is null</exception>
+        /// <returns>Some(data) for the current weather. None, when city is unknown</returns>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        public async Task<OpenWeatherMapCurrent> GetCurrentWeather(string city)
+        public async Task<Option<OpenWeatherMapCurrent>> GetCurrentWeather(string city)
         {
             if (city == null)
             {
@@ -49,8 +49,8 @@ namespace Backend.OpenWeathermap.Service
             int cityId;
             if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
-                logger.LogError($"unknown city: '{city}' requested", city);
-                throw new ArgumentException($"Der Ort '{city}' ist unbekannt", nameof(city));
+                logger.LogInformation($"unknown city: '{city}' requested", city);
+                return Option<OpenWeatherMapCurrent>.None;
             }
 
             string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
@@ -66,10 +66,9 @@ namespace Backend.OpenWeathermap.Service
         /// Retrieves the data for the weatherforecast
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>data for the weaterforecast</returns>
+        /// <returns>Some(data) for the current weather. None, when the city is unknown</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
-        /// <exception cref="ArgumentException">When city is unknown</exception>
-        public async Task<OpenWeathermapForecast> GetWeatherforecast(string city)
+        public async Task<Option<OpenWeathermapForecast>> GetWeatherforecast(string city)
         {
             if (city == null)
             {

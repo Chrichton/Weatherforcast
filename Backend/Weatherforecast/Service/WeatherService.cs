@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Backend.OpenWeathermap.Service;
+using LanguageExt;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -32,24 +33,34 @@ namespace Backend.Weatherforecast.Service
         /// <returns>Current Weather-Data</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         /// <exception cref="ArgumentException">When city is unknown</exception>
-        public async Task<WeatherModel> GetWeather(string city)
+        public async Task<Option<WeatherModel>> GetWeather(string city)
         {
-            Task<OpenWeatherMapCurrent> currentTask = openWeathermapService.GetCurrentWeather(city);
-            Task<OpenWeathermapForecast> forecastTask = openWeathermapService.GetWeatherforecast(city);
+            var currentTaskOption = openWeathermapService.GetCurrentWeather(city);
+            var forecastTaskOption = openWeathermapService.GetWeatherforecast(city);
 
-            Task.WaitAll(currentTask, forecastTask);
+            Task.WaitAll(currentTaskOption, forecastTaskOption);
 
-            OpenWeatherMapCurrent openWeatherMapCurrent = await currentTask;
-            OpenWeathermapForecast openWeatherMapForecast = await forecastTask;
+            Option<OpenWeatherMapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
+            Option<OpenWeathermapForecast> openWeatherMapForecastOption = await forecastTaskOption;
 
-            Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
-            Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(openWeatherMapForecast.list);
+            return openWeatherMapCurrentOption
+                .Some(openWeatherMapCurrent =>
+                {
+                    Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
+                    return openWeatherMapForecastOption
+                        .Some(openWeatherMapForecast =>
+                        {
+                            Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(openWeatherMapForecast.list);
 
-            var model = new WeatherModel(current, forecast);
-            model.AverageHumidity = model.CalculateAverageHumidity();
-            model.AverageTemperature = model.CalculateAverageTemperature();
+                            var model = new WeatherModel(current, forecast);
+                            model.AverageHumidity = model.CalculateAverageHumidity();
+                            model.AverageTemperature = model.CalculateAverageTemperature();
 
-            return model;
+                            return Option<WeatherModel>.Some(model);
+                        })
+                        .None(() => Option<WeatherModel>.None);
+                })
+                .None(() => Option<WeatherModel>.None);
         }
 
         /// <summary>

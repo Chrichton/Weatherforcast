@@ -3,6 +3,7 @@ using Backend.OpenWeathermap;
 using Backend.OpenWeathermap.Service;
 using Backend.Weatherforecast;
 using Backend.Weatherforecast.Service;
+using LanguageExt;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System;
@@ -24,8 +25,12 @@ namespace BackendTest.Weatherforecast.Service
         [Fact]
         public async void TestGetWeather()
         {
-            var openForecast = new OpenWeathermapForecast{ list = new WeatherList[] {} };
-      
+            var openForecast = Option<OpenWeathermapForecast>
+                .Some(new OpenWeathermapForecast{ list = new WeatherList[] {} });
+
+            openWeathermapService.GetCurrentWeather(Arg.Any<string>())
+                .Returns(Task.FromResult(Option<OpenWeatherMapCurrent>.Some(new OpenWeatherMapCurrent())));
+
             openWeathermapService.GetWeatherforecast(Arg.Any<string>())
                 .Returns(Task.FromResult(openForecast));
 
@@ -37,11 +42,16 @@ namespace BackendTest.Weatherforecast.Service
                 { new Backend.Weatherforecast.Service.Weather { Humidity = 42, Temperature = 13 } });
             
             IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities);
-            WeatherModel result = await service.GetWeather("Hamburg").ConfigureAwait(false);
+            var resultOpt = await service.GetWeather("Hamburg").ConfigureAwait(false);
 
-            Assert.NotNull(result);
-            Assert.Equal(42f, result.AverageHumidity);
-            Assert.Equal(13f, result.AverageTemperature);
+            resultOpt
+                .Some(result =>
+                {
+                    Assert.NotNull(result);
+                    Assert.Equal(42f, result.AverageHumidity);
+                    Assert.Equal(13f, result.AverageTemperature);
+                })
+                .None(() => Assert.False(true, "Test Failed"));
         }
 
         [Fact]

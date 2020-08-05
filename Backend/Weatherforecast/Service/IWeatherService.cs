@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LanguageExt;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Backend.Weatherforecast.Service
@@ -19,6 +20,6 @@ namespace Backend.Weatherforecast.Service
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns>all cities for the supplied zipCode or emtpy when zipCode is unknown</returns>
-        public Task<WeatherModel> GetWeather(string city);
+        public Task<Option<WeatherModel>> GetWeather(string city);
     }
 }
