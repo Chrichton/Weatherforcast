@@ -30,6 +30,8 @@ namespace Backend.Controllers
         [HttpGet("forecast/city/{city:minlength(1)}")]
         public IActionResult GetForecastByCity(string city)
         {
+            logger.LogInformation("GetForecastByCity", city);
+
             var weather = weatherService.GetWeather(city)
                 .MatchUnsafeAsync(weather => weather, () => null);
 
@@ -42,6 +44,8 @@ namespace Backend.Controllers
         [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
         public IActionResult GetForecastByZipCode(int zipCode)
         {
+            logger.LogInformation("GetForecastByZipCode", zipCode);
+
             Task<IEnumerable<string>> result = weatherService.GetCitiesForZipCode(zipCode);
             if (result.Result.Any())
                 return Ok(result);
@@ -64,6 +68,8 @@ namespace Backend.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            logger.LogInformation("Get");
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
