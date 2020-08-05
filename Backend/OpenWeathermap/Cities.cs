@@ -24,7 +24,7 @@ namespace Backend.OpenWeathermap
 
         private static Dictionary<string, int> ReadCitiesFromJSON()
         {
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"OpenWeathermap\city.list.json");
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"OpenWeathermap/city.list.json");
             List<City> cities = JsonSerializer.Deserialize<List<City>>(File.ReadAllText(path));
 
             return cities
