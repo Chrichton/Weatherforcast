@@ -26,7 +26,7 @@ namespace Backend.Weatherforecast
             const int cityIndex = 1;
 
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                @"Weatherforecast\zuordnung_plz_ort.csv");
+                @"Weatherforecast/zuordnung_plz_ort.csv");
             
             return File.ReadAllText(path)
                 .Split(Environment.NewLine)
