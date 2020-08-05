@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Backend.Weatherforecast.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -30,15 +31,13 @@ namespace Backend.Controllers
         [HttpGet("forecast/city/{city:minlength(1)}")]
         public IActionResult GetForecastByCity(string city)
         {
-            try
-            {
-                return Ok(weatherService.GetWeather(city));
-            }
-            catch (ArgumentException)
-            {
-                return NotFound();
-            }
-            
+            var weather = weatherService.GetWeather(city)
+                .MatchUnsafeAsync(weather => weather, () => null);
+
+            if (weather != null)
+                return Ok(weather);
+
+            return NotFound();
         }
 
         [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
