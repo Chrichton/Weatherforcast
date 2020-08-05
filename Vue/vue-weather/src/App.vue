@@ -9,7 +9,8 @@
 <script>
 import Header from './components/layout/Header';
 import Weather from './components/Weather';
-import SelectCity from './components/SelectCity'
+import SelectCity from './components/SelectCity';
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -66,6 +67,11 @@ export default {
   methods: {
     loadWeather (city) {
         console.log(city);
+
+        axios.get('https://jsonplaceholder.typicode.com/todos')
+        // .then(res => this.Model = res.data)
+        // .catch(err => console.log(err));
+        
     }
   }
 }
