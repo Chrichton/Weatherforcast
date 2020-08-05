@@ -6,11 +6,12 @@ namespace Backend.Weatherforecast.Service
 {
     public interface IWeatherService
     {
+        /// <summary>
         /// Retrieves the data for the weather
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>Some(data) for the current weather. None, when the city is unknown</returns>
-        /// <exception cref="ArgumentException">When city is unknown</exception>
+        /// <returns>Some(data) for the weather. None, when the city is unknown</returns>
+        /// <exception cref="ArgumentNullException">When city is null</exception>
         public Task<Option<WeatherModel>> GetWeather(string city);
 
         /// <summary>

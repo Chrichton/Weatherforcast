@@ -35,7 +35,6 @@ namespace Backend.OpenWeathermap.Service
         /// </summary>
         /// <param name="city">German City</param>
         /// <returns>Some(data) for the current weather. None, when city is unknown</returns>
-        /// <exception cref="ArgumentException">When city is unknown</exception>
         public async Task<Option<OpenWeatherMapCurrent>> GetCurrentWeather(string city)
         {
             if (city == null)
@@ -49,7 +48,7 @@ namespace Backend.OpenWeathermap.Service
             int cityId;
             if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
-                logger.LogInformation($"unknown city: '{city}' requested", city);
+                logger.LogWarning($"unknown city: '{city}' requested", city);
                 return Option<OpenWeatherMapCurrent>.None;
             }
 
@@ -66,7 +65,7 @@ namespace Backend.OpenWeathermap.Service
         /// Retrieves the data for the weatherforecast
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>Some(data) for the current weather. None, when the city is unknown</returns>
+        /// <returns>Some(data) for the weatherforecast. None, when the city is unknown</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
         public async Task<Option<OpenWeathermapForecast>> GetWeatherforecast(string city)
         {
@@ -81,8 +80,8 @@ namespace Backend.OpenWeathermap.Service
             int cityId;
             if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
-                logger.LogError($"unknown {nameof(city)} requested", city);
-                throw new ArgumentException("Der Ort ist unbekannt", nameof(city));
+                logger.LogWarning($"unknown {nameof(city)} requested", city);
+                return Option<OpenWeathermapForecast>.None;
             }
 
             string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";

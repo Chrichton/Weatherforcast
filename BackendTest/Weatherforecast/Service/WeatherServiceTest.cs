@@ -62,17 +62,10 @@ namespace BackendTest.Weatherforecast.Service
             var cityToIdMapping = new CityToIdProvider(new Dictionary<string, int>());
             openWeathermapService = new OpenWeathermapService(loggerOpenWeather, httpClient, cityToIdMapping);
 
-            try
-            {
-                await new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities)
-                    .GetWeather("Heiko").ConfigureAwait(false);
-                
-                Assert.True(false, "AggregateException should be thrown");
-            }
-            catch (AggregateException exception)
-            {
-                Assert.NotNull(exception.InnerException as ArgumentException);
-            };
+            var weatherOpt = await new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities)
+                .GetWeather("Heiko").ConfigureAwait(false);
+
+            Assert.Equal(Option<WeatherModel>.None, weatherOpt);
         }
 
         [Fact]

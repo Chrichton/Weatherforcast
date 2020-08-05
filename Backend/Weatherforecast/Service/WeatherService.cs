@@ -30,9 +30,8 @@ namespace Backend.Weatherforecast.Service
         /// Retrieves the data for the weather
         /// </summary>
         /// <param name="city">German City</param>
-        /// <returns>Current Weather-Data</returns>
+        /// <returns>Some(data) for the weather. None, when the city is unknown</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
-        /// <exception cref="ArgumentException">When city is unknown</exception>
         public async Task<Option<WeatherModel>> GetWeather(string city)
         {
             var currentTaskOption = openWeathermapService.GetCurrentWeather(city);

@@ -52,7 +52,8 @@ namespace BackendTest.OpenWeathermap.Service
             {
                 var cityToIdProvider = new CityToIdProvider(new Dictionary<string, int>());
                 var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
-                    .GetCurrentWeather("Hamburg").ConfigureAwait(false);
+                    .GetWeatherforecast("Hamburg")
+                    .ConfigureAwait(false);
 
                 resultOpt
                     .Some(_ => Assert.False(true, "Test Failed"));
