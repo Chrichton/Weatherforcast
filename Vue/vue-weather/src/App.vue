@@ -68,10 +68,9 @@ export default {
     loadWeather (city) {
         console.log(city);
 
-        axios.get('https://jsonplaceholder.typicode.com/todos')
-        // .then(res => this.Model = res.data)
-        // .catch(err => console.log(err));
-        
+        axios.get(process.env.VUE_APP_ROOT_API + 'city' + '/' +city)
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err));
     }
   }
 }
