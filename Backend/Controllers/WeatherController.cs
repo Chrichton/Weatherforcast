@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Weatherforecast.Service;
+using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,13 +28,25 @@ namespace Backend.Controllers
             this.weatherService = weatherService;
         }
 
-        [HttpGet("forecast/city/{city:minlength(1)}")]
+
+        // I decided not to use the query route "forecast?city=[city], 
+        // because I really like the minlength(3)-feature, 
+        // which I could not get to work with a query
+        [HttpGet("forecast/city/{city:minlength(3)}")]
         public IActionResult GetForecastByCity(string city)
         {
             logger.LogInformation("GetForecastByCity", city);
 
-            var weather = weatherService.GetWeather(city)
-                .MatchUnsafeAsync(weather => weather, () => null);
+            // Can I do this, without waiting for the result?
+            // TODO should be: 
+            /*
+            return weatherService.GetWeather(city).Result
+                .Match(weather => Ok(weather), () => NotFound());
+            */
+
+            Option<WeatherModel> weatherOpt = weatherService.GetWeather(city).Result;
+            WeatherModel weather = weatherOpt.MatchUnsafe(
+                weather => weather, () => null);
 
             if (weather != null)
                 return Ok(weather);
@@ -41,8 +54,11 @@ namespace Backend.Controllers
             return NotFound();
         }
 
+        // I decided not to use GetForecastByZipCode,
+        // because I don't want the user to be able to supply
+        // invalid-zip-codes
         [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
-        public IActionResult GetForecastByZipCode(int zipCode)
+        public IActionResult GetCitiesByZipCode(int zipCode)
         {
             logger.LogInformation("GetForecastByZipCode", zipCode);
 
@@ -53,6 +69,8 @@ namespace Backend.Controllers
             return NotFound();
         }
 
+
+        // That is the way I found to use a query-string
         /*
         [HttpGet("forecast")]
         public IActionResult ZipCode([FromQuery] int zipCode)
@@ -65,6 +83,7 @@ namespace Backend.Controllers
         }
         */
 
+        // My Test-Route for checking, if the controller is able to produce results
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
