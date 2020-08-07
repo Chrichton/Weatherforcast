@@ -2,8 +2,8 @@
   <div id="app">
     <Header/>
     <SelectCity v-on:load-weather="loadWeather"/>
-    <CurrentWeather v-bind:model="Model"/>
-    <Forecast v-bind:model="Model"/>
+    <CurrentWeather v-bind:model="Model.current"/>
+    <Forecast v-bind:model="Model.forecast"/>
     <History v-bind:historyData="historyData"/>
   </div>
 </template>
