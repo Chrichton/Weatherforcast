@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <SelectCity v-on:load-weather="loadWeather"/>
-    <CurrentWeather/>
+    <CurrentWeather v-bind:model="Model"/>
     <Forecast v-bind:model="Model"/>
     <History v-bind:historyData="historyData"/>
   </div>
@@ -31,7 +31,21 @@ export default {
   data() {
     return {
       Model: {
-        Average: 42,
+        AverageHumidity: 42,
+        AverageTemperature: 64.6,
+        current:
+          {
+            Temperature: 14.31,
+            FeelsLikeTemperature: 15.46,
+            MinimumTemperature: 13.58,
+            MaximumTemperature: 15.87,
+            Humidity: 76,
+            Pressure: 1020,
+            Windspeed: 1.46,
+            WindDirection: 251,
+            CloudDescription: "Bedeckt",
+            DateTime: "2020-07-30 21:00:00"
+          },
         forecast:[
           {
             Temperature: 14.31,
@@ -58,6 +72,18 @@ export default {
             DateTime: "2020-07-30 21:00:00"
           },
           {
+            Temperature: 14.31,
+            FeelsLikeTemperature: 15.46,
+            MinimumTemperature: 13.58,
+            MaximumTemperature: 15.87,
+            Humidity: 76,
+            Pressure: 1020,
+            Windspeed: 1.46,
+            WindDirection: 251,
+            CloudDescription: "Bedeckt",
+            DateTime: "2020-07-30 21:00:00"
+          },
+           {
             Temperature: 14.31,
             FeelsLikeTemperature: 15.46,
             MinimumTemperature: 13.58,

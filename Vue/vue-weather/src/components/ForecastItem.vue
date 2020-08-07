@@ -4,7 +4,7 @@
             {{forecast.Temperature}}
             {{forecast.MinimumTemperature}}
             {{forecast.MaximumTemperature}}
-
+            {{forecast.Humidity}}
         </p>
     </div>
 </template>
