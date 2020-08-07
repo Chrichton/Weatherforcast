@@ -74,16 +74,16 @@ export default {
       historyData: [],
     }
   },
-  methods: {
-     mounted() {
-      if (localStorage.getItem(historyDataKey)) {
-        try {
-          this.cats = JSON.parse(localStorage.getItem(historyDataKey));
-        } catch(e) {
-          localStorage.removeItem(historyDataKey);
-        }
+  mounted() {
+    if (localStorage.getItem(historyDataKey)) {
+      try {
+        this.historyData = JSON.parse(localStorage.getItem(historyDataKey));
+      } catch(e) {
+        localStorage.removeItem(historyDataKey);
       }
-    },
+    }
+  },
+  methods: {
     loadWeather (city) {
         console.log(city);
 
