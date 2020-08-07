@@ -2,28 +2,35 @@
   <div id="app">
     <Header/>
     <SelectCity v-on:load-weather="loadWeather"/>
-    <Weather v-bind:model="Model"/>
+    <CurrentWeather/>
+    <Forecast v-bind:model="Model"/>
+    <History/>
   </div>
 </template>
 
 <script>
 import Header from './components/layout/Header';
-import Weather from './components/Weather';
 import SelectCity from './components/SelectCity';
+import CurrentWeather from './components/CurrentWeather';
+import Forecast from './components/Forecast';
+import History from './components/History';
+
 import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
     Header,
-    Weather,
-    SelectCity
+    SelectCity,
+    CurrentWeather,
+    Forecast,
+    History
   },
   data() {
     return {
-      Model: /*{
+      Model: {
         Average: 42,
-        Forecast: */[
+        forecast:[
           {
             Temperature: 14.31,
             FeelsLikeTemperature: 15.46,
@@ -61,7 +68,7 @@ export default {
             DateTime: "2020-07-30 21:00:00"
           }
         ]
-     // } 
+      } 
     }
   },
   methods: {
