@@ -17,6 +17,8 @@ import History from './components/History';
 
 import axios from 'axios';
 
+const historyDataKey = 'historyData';
+
 export default {
   name: 'App',
   components: {
@@ -68,16 +70,49 @@ export default {
             DateTime: "2020-07-30 21:00:00"
           }
         ]
-      } 
+      },
+      historyData: [],
     }
   },
   methods: {
+     mounted() {
+      if (localStorage.getItem(historyDataKey)) {
+        try {
+          this.cats = JSON.parse(localStorage.getItem(historyDataKey));
+        } catch(e) {
+          localStorage.removeItem(historyDataKey);
+        }
+      }
+    },
     loadWeather (city) {
         console.log(city);
 
-        axios.get(process.env.VUE_APP_ROOT_API + 'city' + '/' +city)
-          .then(res => console.log(res.data))
+        axios.get(`${process.env.VUE_APP_ROOT_API}city/${city}`)
+          .then(res => 
+            {
+              console.log(res.data);
+              this.Model = res.data;
+              this.addHistory(city, 
+                res.data.AverageTemperature, res.data.AverageHumidity);
+            }
+          )
           .catch(err => console.log(err));
+    },
+    addHistory(city, temperature, humidity) {
+      console.log(city + ':' + temperature + ':' + humidity)
+
+      const historyItem = {
+          city: city,
+          temperature: temperature,
+          humidity: humidity
+      };
+
+      this.historyData.push(historyItem);
+      this.saveHistory();
+    },
+    saveHistory() {
+      const parsed = JSON.stringify(this.historyData);
+      localStorage.setItem(historyDataKey, parsed);
     }
   }
 }
