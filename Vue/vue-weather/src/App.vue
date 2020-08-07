@@ -4,7 +4,7 @@
     <SelectCity v-on:load-weather="loadWeather"/>
     <CurrentWeather/>
     <Forecast v-bind:model="Model"/>
-    <History/>
+    <History v-bind:historyData="historyData"/>
   </div>
 </template>
 
@@ -71,7 +71,18 @@ export default {
           }
         ]
       },
-      historyData: [],
+      historyData: [
+        {
+          city:"Hamburg", 
+          temperature: 23.96, 
+          humidity: 65.95
+        },
+        {
+          city: "Lübeck",
+          temperature: 24.3, 
+          humidity:42.42
+        }
+      ]
     }
   },
   mounted() {

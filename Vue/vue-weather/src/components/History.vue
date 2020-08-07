@@ -1,12 +1,21 @@
 <template>
-    <div>
-        <h1>History</h1>
-    </div>
+    <div> 
+        <h3>History</h3>
+        <div v-for="historyItem in historyData" :key="historyItem">
+            <HistoryItem v-bind:historyItem="historyItem"/>
+        </div>
+    </div>    
 </template>
 
 <script>
+import HistoryItem from './HistoryItem';
+
 export default {
-    
+   name: "History",
+   components: {
+       HistoryItem
+   },
+   props: ["historyData"]
 }
 </script>
 
