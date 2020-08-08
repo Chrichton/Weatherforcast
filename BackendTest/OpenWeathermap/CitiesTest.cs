@@ -10,7 +10,7 @@ namespace BackendTest.OpenWeathermap
         [Fact]
         public void TestGetGermanCities()
         {
-            Dictionary<string, int> cities = Cities.Dictionary;
+            Dictionary<string, int> cities = CitynamesToIds.Dictionary;
             Assert.True(cities.Count() > 0);
 
             Assert.Equal(2911298, cities["Hamburg"]);

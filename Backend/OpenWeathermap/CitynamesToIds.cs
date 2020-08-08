@@ -8,11 +8,11 @@ using System.Text.Json;
 namespace Backend.OpenWeathermap
 {
     /// <summary>
-    /// Mapping from German Cities to their Id
+    /// Mapping from German Citynames to their Id
     /// Id is used by their API
     /// Source: OpenWeathermap (city.list.json)
     /// </summary>
-    public static class Cities
+    public static class CitynamesToIds
     {
         private static Lazy<Dictionary<string,int>> dictionary = 
             new Lazy<Dictionary<string, int>>(() => ReadCitiesFromJSON());

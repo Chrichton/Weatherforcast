@@ -2,7 +2,7 @@
 
 namespace Backend.OpenWeathermap
 {
-    public interface ICityToIdProvider
+    public interface ICitynameToIdProvider
     {
         IDictionary<string, int> GetDictionary();
     }

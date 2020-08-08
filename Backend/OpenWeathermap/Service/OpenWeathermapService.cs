@@ -15,7 +15,7 @@ namespace Backend.OpenWeathermap.Service
 
         private readonly ILogger<OpenWeathermapService> logger;
         private readonly HttpClient httpClient;
-        private readonly ICityToIdProvider cityToIdMapping;
+        private readonly ICitynameToIdProvider cityToIdMapping;
 
         /// <summary>
         /// Constructor
@@ -23,7 +23,7 @@ namespace Backend.OpenWeathermap.Service
         /// <param name="logger"></param>
         /// <param name="httpClient"></param>
         /// <param name="cityToIdMapping">The API needs a mapping from a city to its id</param>
-        public OpenWeathermapService(ILogger<OpenWeathermapService> logger, HttpClient httpClient, ICityToIdProvider cityToIdMapping)
+        public OpenWeathermapService(ILogger<OpenWeathermapService> logger, HttpClient httpClient, ICitynameToIdProvider cityToIdMapping)
         {
             this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} must not be null");
             this.httpClient = httpClient ?? throw new ArgumentNullException($"{nameof(httpClient)} must not be null");

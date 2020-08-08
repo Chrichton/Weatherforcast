@@ -58,7 +58,7 @@ namespace BackendTest.Weatherforecast.Service
         {
             var loggerOpenWeather = Substitute.For<ILogger<OpenWeathermapService>>();
             var httpClient = Substitute.For<HttpClient>();
-            var cityToIdMapping = new CityToIdProvider(new Dictionary<string, int>());
+            var cityToIdMapping = new CityNameToIdProvider(new Dictionary<string, int>());
             openWeathermapService = new OpenWeathermapService(loggerOpenWeather, httpClient, cityToIdMapping);
 
             var weatherOpt = await new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities)
