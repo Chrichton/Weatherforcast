@@ -60,7 +60,7 @@ namespace Backend.OpenWeathermap.Service
                 await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 .ConfigureAwait(false);
         }
-
+ 
         /// <summary>
         /// Retrieves the data for the weatherforecast
         /// </summary>
@@ -83,6 +83,42 @@ namespace Backend.OpenWeathermap.Service
                 logger.LogWarning($"unknown {nameof(city)} requested", city);
                 return Option<OpenWeathermapForecast>.None;
             }
+
+            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
+            responseMessage.EnsureSuccessStatusCode();
+
+            return await JsonSerializer.DeserializeAsync<OpenWeathermapForecast>(
+                await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the data for the current weather
+        /// </summary>
+        /// <param name="cityId">German City</param>
+        /// <returns>Some(data) for the current weather. None, when cityId is unknown</returns>
+        public async Task<Option<OpenWeatherMapCurrent>> GetCurrentWeather(int cityId)
+        {
+            const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";
+
+            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
+            responseMessage.EnsureSuccessStatusCode();
+
+            return await JsonSerializer.DeserializeAsync<OpenWeatherMapCurrent>(
+                await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the data for the weatherforecast
+        /// </summary>
+        /// <param name="cityId">Id of the city</param>
+        /// <returns>Some(data) for the weatherforecast. None, when the cityId is unknown</returns>
+        public async Task<Option<OpenWeathermapForecast>> GetWeatherforecast(int cityId)
+        {
+            const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
 
             string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);

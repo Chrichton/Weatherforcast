@@ -11,7 +11,7 @@ namespace BackendTest.OpenWeathermap
         public void TestBerlin()
         {
             IEnumerable<KeyValuePair<string, int>> result = new CitynamesIdsProvider()
-                .GetCitynamesStartingWith("Berlin");
+                .GetCitynamesIdsStartingWith("Berlin");
 
             Assert.Equal(10, result.Count());
             Assert.Single(result.Where(pair => pair.Key == "Berlin")); // Berlin was there two times, with different ids
@@ -21,7 +21,7 @@ namespace BackendTest.OpenWeathermap
         public void TestNull()
         {
             IEnumerable<KeyValuePair<string, int>> result = new CitynamesIdsProvider()
-                .GetCitynamesStartingWith(null);
+                .GetCitynamesIdsStartingWith(null);
 
             Assert.Empty(result);
         }
@@ -30,7 +30,7 @@ namespace BackendTest.OpenWeathermap
         public void TestWhitespaces()
         {
             IEnumerable<KeyValuePair<string, int>> result = new CitynamesIdsProvider()
-                .GetCitynamesStartingWith("  ");
+                .GetCitynamesIdsStartingWith("  ");
 
             Assert.Empty(result);
         }

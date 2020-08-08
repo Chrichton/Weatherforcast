@@ -33,6 +33,41 @@ namespace Backend.Weatherforecast.Service
         /// <summary>
         /// Retrieves the data for the weather
         /// </summary>
+        /// <param name="cityId">Id of the city</param>
+        /// <returns>Some(data) for the weather. None, when the cityId is unknown</returns>
+        public async Task<Option<WeatherModel>> GetWeather(int cityId)
+        {
+            var currentTaskOption = openWeathermapService.GetCurrentWeather(cityId);
+            var forecastTaskOption = openWeathermapService.GetWeatherforecast(cityId);
+
+            Task.WaitAll(currentTaskOption, forecastTaskOption);
+
+            Option<OpenWeatherMapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
+            Option<OpenWeathermapForecast> openWeatherMapForecastOption = await forecastTaskOption;
+
+            return openWeatherMapCurrentOption
+                .Some(openWeatherMapCurrent =>
+                {
+                    Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
+                    return openWeatherMapForecastOption
+                        .Some(openWeatherMapForecast =>
+                        {
+                            Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(openWeatherMapForecast.list);
+
+                            var model = new WeatherModel(current, forecast);
+                            model.AverageHumidity = model.CalculateAverageHumidity();
+                            model.AverageTemperature = model.CalculateAverageTemperature();
+
+                            return Option<WeatherModel>.Some(model);
+                        })
+                        .None(() => Option<WeatherModel>.None);
+                })
+                .None(() => Option<WeatherModel>.None);
+        }
+
+        /// <summary>
+        /// Retrieves the data for the weather
+        /// </summary>
         /// <param name="city">German City</param>
         /// <returns>Some(data) for the weather. None, when the city is unknown</returns>
         /// <exception cref="ArgumentNullException">When city is null</exception>
@@ -67,17 +102,21 @@ namespace Backend.Weatherforecast.Service
         }
 
         /// <summary>
-        /// Retrieves all cities for the supplied zipCode
+        /// Retrieves all cities and their Ids for the supplied zipCode
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns>all cities for the supplied zipCode or emtpy when the zipCode is unknown</returns>
-        public async Task<IEnumerable<string>> GetCitiesForZipCode(int zipCode)
+        public async Task<IEnumerable<KeyValuePair<string, int>>> GetCitiesIdsForZipCode(int zipCode)
         {
             IEnumerable<string> cities;
             if (zipCodeToCitiesProvider.GetDictionary().TryGetValue(zipCode, out cities))
-                return await Task.FromResult(cities);
+            {
+                return await Task.FromResult(cities
+                    .Select(city => citynamesIdsProvider.GetCityNameIdForCity(city)))
+                    .BindT(cityOpt => cityOpt);
+            }
 
-            return await Task.FromResult(Enumerable.Empty<string>());
+            return await Task.FromResult(Enumerable.Empty<KeyValuePair<string, int>>());
         }
 
         /// <summary>
@@ -88,7 +127,7 @@ namespace Backend.Weatherforecast.Service
         public async Task<IEnumerable<KeyValuePair<string, int>>> GetCitiesStartingWith(string start)
         {
             return await Task.FromResult(citynamesIdsProvider
-                .GetCitynamesStartingWith(start));
+                .GetCitynamesIdsStartingWith(start));
         }
     }
 }

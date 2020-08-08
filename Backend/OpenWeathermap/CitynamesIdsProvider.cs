@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LanguageExt;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -17,12 +19,13 @@ namespace Backend.OpenWeathermap
                 .Distinct(new Comparer()) // There are Citynames (Berlin) with two different ids
                 .Select(city => new KeyValuePair<string, int>(city.Name, city.Id));
         }
+
         /// <summary>
         /// Returns all pairs of cityname and id where the citynames are starting with "start"
         /// </summary>
         /// <param name="start">start-string</param>
         /// <returns>all pairs of cityname and id where the citynames are starting with "start". Returns Empty, when city doesn't exist</ret
-        public IEnumerable<KeyValuePair<string, int>> GetCitynamesStartingWith(string start)
+        public IEnumerable<KeyValuePair<string, int>> GetCitynamesIdsStartingWith(string start)
         {
             if (string.IsNullOrWhiteSpace(start))
             {
@@ -31,6 +34,30 @@ namespace Backend.OpenWeathermap
 
             return citynames.Where(cityname => cityname.Key.StartsWith(start));
         }
+
+        /// <summary>
+        /// Returns cityname and id for the cityname
+        /// </summary>
+        /// <param name="cityname">cityname</param>
+        /// <returns>cityname and id for the citynames. Returns None, when city doesn't exist</ret
+        public Option<KeyValuePair<string, int>> GetCityNameIdForCity(string cityname)
+        {
+            if (string.IsNullOrWhiteSpace(cityname))
+            {
+                throw new ArgumentNullException($"{nameof(cityname)} must not be null");
+            }
+
+            KeyValuePair<string, int> result = citynames
+                .SingleOrDefault(name => name.Key == cityname);
+
+            if (result.Equals(default(KeyValuePair<string, int>)))
+            {
+                return Option<KeyValuePair<string, int>>.None;
+            }
+
+            return Option<KeyValuePair<string, int>>.Some(result);
+        }
+
 
         private class Comparer : IEqualityComparer<City>
         {

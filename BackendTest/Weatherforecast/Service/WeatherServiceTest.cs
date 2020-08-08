@@ -71,28 +71,32 @@ namespace BackendTest.Weatherforecast.Service
         }
 
         [Fact]
-        public async void TestGetCityByZipCode()
+        public async void TestGetCitiesIdsForZipCode()
         {
+            var kvHamburg = new KeyValuePair<string, int>("Hamburg", 11111);
+            citynamesIds.GetCityNameIdForCity("Hamburg")
+                .Returns(Option<KeyValuePair<string,int>>.Some(kvHamburg));
             var dictionary = new Dictionary<int, IEnumerable<string>> { { 21037, new[] { "Hamburg" } } };
             zipCodeToCities = new ZipCodeToCitiesProvider(dictionary);
             IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, 
                 zipCodeToCities, citynamesIds);
-            var cities = await service.GetCitiesForZipCode(21037);
+            var cities = await service.GetCitiesIdsForZipCode(21037);
 
             Assert.Single(cities);
-            Assert.Equal("Hamburg", cities.Single());
+            Assert.Equal("Hamburg", cities.Single().Key);
+            Assert.Equal(11111, cities.Single().Value);
         }
 
         [Fact]
-        public async void TestGetCityByZipCodeNoCity()
+        public async void TestGetCitiesIdsForZipCodeNoCity()
         {
             var dictionary = new Dictionary<int, IEnumerable<string>>();
             zipCodeToCities = new ZipCodeToCitiesProvider(dictionary);
             IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, 
                 zipCodeToCities, citynamesIds);
-            var cities = await service.GetCitiesForZipCode(21037);
+            var citiesIds = await service.GetCitiesIdsForZipCode(21037);
 
-            Assert.Equal(new string[] {}, cities);
+            Assert.Equal(new KeyValuePair<string,int>[] {}, citiesIds);
         }
     }
 }

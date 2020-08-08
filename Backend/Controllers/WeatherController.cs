@@ -37,8 +37,18 @@ namespace Backend.Controllers
         {
             logger.LogInformation(nameof(GetForecastByCity), city);
 
-            return await weatherService
-                .GetWeather(city)
+            return (await weatherService
+                .GetWeather(city))
+                .Match<ActionResult>(weather => Ok(weather), () => NotFound());
+        }
+
+        [HttpGet("forecast/id/{id}")]
+        public async Task<IActionResult> GetForecastById(int id)
+        {
+            logger.LogInformation(nameof(GetForecastById), id);
+
+            return (await weatherService
+                .GetWeather(id))
                 .Match<ActionResult>(weather => Ok(weather), () => NotFound());
         }
 
@@ -48,9 +58,11 @@ namespace Backend.Controllers
         [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
         public IActionResult GetCitiesForZipCode(int zipCode)
         {
-            logger.LogInformation("GetCitiesForZipCode", zipCode);
+            logger.LogInformation(nameof(GetCitiesForZipCode), zipCode);
 
-            Task<IEnumerable<string>> result = weatherService.GetCitiesForZipCode(zipCode);
+            Task<IEnumerable<KeyValuePair<string, int>>> 
+                result = weatherService.GetCitiesIdsForZipCode(zipCode);
+
             if (result.Result.Any())
                 return Ok(result);
 
@@ -60,7 +72,7 @@ namespace Backend.Controllers
         [HttpGet("forecast/cities/{cities:minlength(1)}")]
         public IActionResult GetCitiesStartingWith(string cities)
         {
-            logger.LogInformation("GetCitiesStartingWith", cities);
+            logger.LogInformation(nameof(GetCitiesStartingWith), cities);
 
             Task<IEnumerable<KeyValuePair<string, int>>> result = 
                 weatherService.GetCitiesStartingWith(cities);
