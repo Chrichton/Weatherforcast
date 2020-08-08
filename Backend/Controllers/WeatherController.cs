@@ -58,9 +58,9 @@ namespace Backend.Controllers
         // because I don't want the user to be able to supply
         // invalid-zip-codes
         [HttpGet("forecast/zipcode/{zipcode:length(5)}")]
-        public IActionResult GetCitiesByZipCode(int zipCode)
+        public IActionResult GetCitiesForZipCode(int zipCode)
         {
-            logger.LogInformation("GetForecastByZipCode", zipCode);
+            logger.LogInformation("GetCitiesForZipCode", zipCode);
 
             Task<IEnumerable<string>> result = weatherService.GetCitiesForZipCode(zipCode);
             if (result.Result.Any())
@@ -69,6 +69,18 @@ namespace Backend.Controllers
             return NotFound();
         }
 
+        [HttpGet("forecast/cities/{cities:minlength(1)}")]
+        public IActionResult GetCitiesStartingWith(string cities)
+        {
+            logger.LogInformation("GetCitiesStartingWith", cities);
+
+            Task<IEnumerable<KeyValuePair<string, int>>> result = 
+                weatherService.GetCitiesStartingWith(cities);
+            if (result.Result.Any())
+                return Ok(result);
+
+            return NotFound();
+        }
 
         // That is the way I found to use a query-string
         /*

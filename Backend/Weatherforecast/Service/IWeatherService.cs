@@ -21,5 +21,12 @@ namespace Backend.Weatherforecast.Service
         /// <returns>all cities for the supplied zipCode or emtpy when zipCode is unknown</returns>
         /// <summary>
         public Task<IEnumerable<string>> GetCitiesForZipCode(int zipCode);
+
+        /// <summary>
+        /// Retrieves all pairs of cityname and cityid for all citynames starting with "start"
+        /// </summary>
+        /// <param name="start">start-string</param>
+        /// <returns>all pairs of cityname and cityid for all citynames starting with "start". Empty, when city doesn't exist</returns>
+        public Task<IEnumerable<KeyValuePair<string,int>>> GetCitiesStartingWith(string start);
     }
 }

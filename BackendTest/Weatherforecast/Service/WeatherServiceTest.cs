@@ -20,6 +20,7 @@ namespace BackendTest.Weatherforecast.Service
         private IMapper mapper = Substitute.For<IMapper>();
         private IZipCodeToCitiesProvider zipCodeToCities = Substitute.For<IZipCodeToCitiesProvider>();
         private IOpenWeathermapService openWeathermapService = Substitute.For<IOpenWeathermapService>();
+        private ICitynamesIdsProvider citynamesIds = Substitute.For<ICitynamesIdsProvider>();
 
         [Fact]
         public async void TestGetWeather()
@@ -40,7 +41,8 @@ namespace BackendTest.Weatherforecast.Service
                 .Returns(new Backend.Weatherforecast.Service.Weather[] 
                 { new Backend.Weatherforecast.Service.Weather { Humidity = 42, Temperature = 13 } });
             
-            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities);
+            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, 
+                zipCodeToCities, citynamesIds);
             var resultOpt = await service.GetWeather("Hamburg").ConfigureAwait(false);
 
             resultOpt
@@ -61,7 +63,8 @@ namespace BackendTest.Weatherforecast.Service
             var cityToIdMapping = new CityNameToIdProvider(new Dictionary<string, int>());
             openWeathermapService = new OpenWeathermapService(loggerOpenWeather, httpClient, cityToIdMapping);
 
-            var weatherOpt = await new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities)
+            var weatherOpt = await new WeatherService(logger, mapper, openWeathermapService, 
+                zipCodeToCities, citynamesIds)
                 .GetWeather("Heiko").ConfigureAwait(false);
 
             Assert.Equal(Option<WeatherModel>.None, weatherOpt);
@@ -72,7 +75,8 @@ namespace BackendTest.Weatherforecast.Service
         {
             var dictionary = new Dictionary<int, IEnumerable<string>> { { 21037, new[] { "Hamburg" } } };
             zipCodeToCities = new ZipCodeToCitiesProvider(dictionary);
-            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities);
+            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, 
+                zipCodeToCities, citynamesIds);
             var cities = await service.GetCitiesForZipCode(21037);
 
             Assert.Single(cities);
@@ -84,7 +88,8 @@ namespace BackendTest.Weatherforecast.Service
         {
             var dictionary = new Dictionary<int, IEnumerable<string>>();
             zipCodeToCities = new ZipCodeToCitiesProvider(dictionary);
-            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, zipCodeToCities);
+            IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, 
+                zipCodeToCities, citynamesIds);
             var cities = await service.GetCitiesForZipCode(21037);
 
             Assert.Equal(new string[] {}, cities);

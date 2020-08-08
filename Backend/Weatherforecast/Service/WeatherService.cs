@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Backend.OpenWeathermap;
 using Backend.OpenWeathermap.Service;
 using LanguageExt;
 using Microsoft.Extensions.Logging;
@@ -15,15 +16,18 @@ namespace Backend.Weatherforecast.Service
         private IMapper mapper;
         private IOpenWeathermapService openWeathermapService;
         private readonly IZipCodeToCitiesProvider zipCodeToCitiesProvider;
+        private readonly ICitynamesIdsProvider citynamesIdsProvider;
 
         public WeatherService(ILogger<WeatherService> logger, IMapper mapper, 
-            IOpenWeathermapService openWeathermapService, IZipCodeToCitiesProvider zipCodeToCitiesProvider)
+            IOpenWeathermapService openWeathermapService, 
+            IZipCodeToCitiesProvider zipCodeToCitiesProvider,
+            ICitynamesIdsProvider citynamesIdsProvider)
         {
             this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} must not be null");
             this.mapper = mapper ?? throw new ArgumentNullException($"{nameof(mapper)} must not be null");
             this.openWeathermapService = openWeathermapService ?? throw new ArgumentNullException($"{nameof(openWeathermapService)} must not be null");
             this.zipCodeToCitiesProvider = zipCodeToCitiesProvider ?? throw new ArgumentNullException($"{nameof(zipCodeToCitiesProvider)} must not be null");
-
+            this.citynamesIdsProvider = citynamesIdsProvider ?? throw new ArgumentNullException($"{nameof(citynamesIdsProvider)} must not be null");
         }
 
         /// <summary>
@@ -74,6 +78,17 @@ namespace Backend.Weatherforecast.Service
                 return await Task.FromResult(cities);
 
             return await Task.FromResult(Enumerable.Empty<string>());
+        }
+
+        /// <summary>
+        /// Retrieves all pairs of cityname and cityid for all citynames starting with "start"
+        /// </summary>
+        /// <param name="start">start-string</param>
+        /// <returns>all pairs of cityname and cityid for all citynames starting with "start". Empty, when city doesn't exist</returns>
+        public async Task<IEnumerable<KeyValuePair<string, int>>> GetCitiesStartingWith(string start)
+        {
+            return await Task.FromResult(citynamesIdsProvider
+                .GetCitynamesStartingWith(start));
         }
     }
 }
