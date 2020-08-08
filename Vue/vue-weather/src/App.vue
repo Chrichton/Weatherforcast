@@ -1,14 +1,18 @@
 <template>
-  <div id="app">
-    <Header/>
-    <SelectCity v-on:load-weather="loadWeather"/>
-    <CurrentWeather v-bind:model="Model.current"/>
-    <Forecast v-bind:model="Model.forecast"/>
-    <History v-bind:historyData="historyData"/>
-  </div>
+  <v-app>
+    <div id="app">
+      <Header/>
+      <TestVuetify/>
+      <SelectCity v-on:load-weather="loadWeather"/>
+      <CurrentWeather v-bind:model="Model.current"/>
+      <Forecast v-bind:model="Model.forecast"/>
+      <History v-bind:historyData="historyData"/>
+    </div>
+  </v-app>
 </template>
 
 <script>
+import TestVuetify from './components/TestVuetify'
 import Header from './components/layout/Header';
 import SelectCity from './components/SelectCity';
 import CurrentWeather from './components/CurrentWeather';
@@ -22,6 +26,7 @@ const historyDataKey = 'historyData';
 export default {
   name: 'App',
   components: {
+    TestVuetify,
     Header,
     SelectCity,
     CurrentWeather,
@@ -69,7 +74,7 @@ export default {
             Windspeed: 1.46,
             WindDirection: 251,
             CloudDescription: "Bedeckt",
-            DateTime: "2020-07-30 21:00:00"
+            DateTime: "2020-07-30 21:00:01"
           },
           {
             Temperature: 14.31,
@@ -81,7 +86,7 @@ export default {
             Windspeed: 1.46,
             WindDirection: 251,
             CloudDescription: "Bedeckt",
-            DateTime: "2020-07-30 21:00:00"
+            DateTime: "2020-07-30 21:00:03"
           },
            {
             Temperature: 14.31,
@@ -93,7 +98,7 @@ export default {
             Windspeed: 1.46,
             WindDirection: 251,
             CloudDescription: "Bedeckt",
-            DateTime: "2020-07-30 21:00:00"
+            DateTime: "2020-07-30 21:00:04"
           }
         ]
       },
@@ -139,6 +144,7 @@ export default {
       console.log(city + ':' + temperature + ':' + humidity)
 
       const historyItem = {
+          id: this.$uuid.v4,
           city: city,
           temperature: temperature,
           humidity: humidity

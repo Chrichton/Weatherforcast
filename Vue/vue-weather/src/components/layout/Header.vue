@@ -1,7 +1,9 @@
 <template>
-    <header class="header">
-        <h1>ForecastList</h1>
-    </header>
+    <v-container>
+        <h2 class="headline font-weight-bold mb-3">
+            Header
+        </h2>
+    </v-container>
 </template>
 
 <script>
@@ -9,17 +11,3 @@ export default {
     name: "Header"
 }
 </script>
-
-<style scoped>
-    .header {
-        background: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-    }
-
-    .header a {
-        color: #fff;
-        padding-right: 5px;
-    }
-</style>
