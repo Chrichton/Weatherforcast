@@ -33,25 +33,13 @@ namespace Backend.Controllers
         // because I really like the minlength(3)-feature, 
         // which I could not get to work with a query
         [HttpGet("forecast/city/{city:minlength(3)}")]
-        public IActionResult GetForecastByCity(string city)
+        public async Task<IActionResult> GetForecastByCity(string city)
         {
-            logger.LogInformation("GetForecastByCity", city);
+            logger.LogInformation(nameof(GetForecastByCity), city);
 
-            // Can I do this, without waiting for the result?
-            // TODO should be: 
-            /*
-            return weatherService.GetWeather(city).Result
-                .Match(weather => Ok(weather), () => NotFound());
-            */
-
-            Option<WeatherModel> weatherOpt = weatherService.GetWeather(city).Result;
-            WeatherModel weather = weatherOpt.MatchUnsafe(
-                weather => weather, () => null);
-
-            if (weather != null)
-                return Ok(weather);
-
-            return NotFound();
+            return await weatherService
+                .GetWeather(city)
+                .Match<ActionResult>(weather => Ok(weather), () => NotFound());
         }
 
         // I decided not to use GetForecastByZipCode,
