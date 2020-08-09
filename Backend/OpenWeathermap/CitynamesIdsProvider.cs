@@ -23,10 +23,11 @@ namespace Backend.OpenWeathermap
                 .Select(city => new KeyValuePair<string, int>(city.Name, city.Id));
         }
 
-        public CitynamesIdsProvider(IEnumerable<KeyValuePair<string, int>> citynamesIds)
-        {
-            this.citynamesIds = citynamesIds ?? throw new ArgumentNullException($"{nameof(citynamesIds)} must not be null"); ;
-        }
+        // TODO wenn dieser Konstruktor vorhanden ist, wird er beim Startup injected. Warum??
+        //public CitynamesIdsProvider(IEnumerable<KeyValuePair<string, int>> citynamesIds)
+        //{
+        //    this.citynamesIds = citynamesIds ?? throw new ArgumentNullException($"{nameof(citynamesIds)} must not be null"); ;
+        //}
 
         /// <summary>
         /// Returns all pairs of cityname and id where the citynames are starting with "start"
