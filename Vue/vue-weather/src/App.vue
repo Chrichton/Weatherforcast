@@ -126,10 +126,10 @@ export default {
     }
   },
   methods: {
-    loadWeather (city) {
+    loadWeather (city, id) {
         console.log(city);
 
-        axios.get(`${process.env.VUE_APP_ROOT_API}city/${city}`)
+        axios.get(`${process.env.VUE_APP_ROOT_API}id/${id}`)
           .then(res => 
             {
               console.log(res.data);

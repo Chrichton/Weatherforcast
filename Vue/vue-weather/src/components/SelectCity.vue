@@ -4,15 +4,10 @@
     dark
   >
     <v-card-title class="headline red lighten-3">
-      Search for Public APIs
+      Suche Ort
     </v-card-title>
     <v-card-text>
-      Explore hundreds of free API's ready for consumption! For more information visit
-      <a
-        class="grey--text text--lighten-3"
-        href="https://github.com/toddmotto/public-apis"
-        target="_blank"
-      >the Github repository</a>.
+      Finde Orte
     </v-card-text>
     <v-card-text>
       <v-autocomplete
@@ -25,7 +20,7 @@
         hide-selected
         item-text="Description"
         item-value="API"
-        label="Public APIs"
+        label="Ort"
         placeholder="Start typing to Search"
         prepend-icon="mdi-database-search"
         return-object
@@ -75,15 +70,16 @@ export default {
             search: null,
         }),
     methods: {
-        selectCity(e) {
-            e.preventDefault();
-            this.$emit('load-weather', this.city)
+        selectCity() {
+            this.$emit('load-weather', this.id)
         }
     },
     computed: {
       fields () {
         if (!this.model) return []
 
+        this.$emit('load-weather', this.model.Key, this.model.Value)
+        
         return Object.keys(this.model).map(key => {
           return {
             key,
@@ -109,9 +105,16 @@ export default {
         // // Items have already been requested
         // if (this.isLoading) return
 
-        // this.isLoading = true
-
         if (this.search.length > 1) return
+
+        if (this.model != null)
+        {
+          this.model = null;
+          this.entries = [];
+          this.search = null;
+        }
+        
+        this.isLoading = true
 
         // Lazily load input items
         axios.get('http://vueweatherapi.azurewebsites.net/api/weather/forecast/cities/' + this.search)
@@ -127,19 +130,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-    form {
-        display: flex;
-    }
-
-    input[type="text"] {
-        flex: 10;
-        padding: 5px;
-    }
-
-    input[type="submit"] {
-        flex: 2;
-    }
-
-</style>
