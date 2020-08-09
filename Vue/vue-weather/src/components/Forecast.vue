@@ -1,24 +1,35 @@
 <template>
-    <div> 
-        <h3>Forecast</h3>
-        <div v-for="forecast in model" :key="forecast.DateTime">
-            <ForecastItem v-bind:forecast="forecast"/>
-        </div>
-    </div>    
+  <v-simple-table fixed-header height="300px" dense>
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th class="text-left">Datum</th>
+          <th class="text-left">Temperatur</th>
+          <th class="text-left">Temperatur (min)</th>
+          <th class="text-left">Temperatur (max)</th>
+          <th class="text-left">Feuchte</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in forcast" :key="item.DateTime">
+          <td>{{ item.DateTime }} </td>
+          <td>{{ item.Temperature }} Celsius</td>
+          <td>{{ item.MinimumTemperature }} Celsius</td>
+          <td>{{ item.MaximumTemperature }} Celsius</td>
+          <td>{{ item.Humidity }} %</td>
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
 </template>
 
 <script>
-import ForecastItem from './ForecastItem';
-
-export default {
-   name: "Weather",
-   components: {
-       ForecastItem
-   },
-   props: ["model"]
-}
+  export default {
+    props: ["model"],
+    data () {
+      return {
+        forcast: this.model
+      }
+    },
+  }
 </script>
-
-<style scoped>
-
-</style>
