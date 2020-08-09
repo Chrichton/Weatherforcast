@@ -23,7 +23,7 @@
     public class Coord
     {
         public float lat { get; set; }
-        public int lon { get; set; }
+        public float lon { get; set; }
     }
 
     public class WeatherList

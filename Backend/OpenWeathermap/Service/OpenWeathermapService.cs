@@ -52,7 +52,7 @@ namespace Backend.OpenWeathermap.Service
                 return Option<OpenWeatherMapCurrent>.None;
             }
 
-            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
+            Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
@@ -84,7 +84,7 @@ namespace Backend.OpenWeathermap.Service
                 return Option<OpenWeathermapForecast>.None;
             }
 
-            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
+            Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
@@ -102,7 +102,8 @@ namespace Backend.OpenWeathermap.Service
         {
             const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";
 
-            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
+            Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
+
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
@@ -120,7 +121,7 @@ namespace Backend.OpenWeathermap.Service
         {
             const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
 
-            string requestUri = $"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}";
+            Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
