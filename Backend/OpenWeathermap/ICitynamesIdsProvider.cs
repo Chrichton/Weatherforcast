@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Backend.OpenWeathermap
 {
+    /// <summary>
+    /// Information about cityNames and their ids
+    /// </summary>
     public interface ICitynamesIdsProvider
     {
         /// <summary>

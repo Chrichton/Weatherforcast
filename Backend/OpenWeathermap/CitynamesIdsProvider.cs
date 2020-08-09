@@ -6,18 +6,26 @@ using System.Linq;
 
 namespace Backend.OpenWeathermap
 {
+    /// <summary>
+    /// All cityNames with their ids
+    /// </summary>
     public class CitynamesIdsProvider : ICitynamesIdsProvider
     {
-        private readonly IEnumerable<KeyValuePair<string,int>> citynames;
+        private readonly IEnumerable<KeyValuePair<string,int>> citynamesIds;
 
         /// <summary>
         /// Used by Dependency Injection
         /// </summary>
         public CitynamesIdsProvider()
         {
-            citynames = Cities.All
+            citynamesIds = Cities.All
                 .Distinct(new Comparer()) // There are Citynames (Berlin) with two different ids
                 .Select(city => new KeyValuePair<string, int>(city.Name, city.Id));
+        }
+
+        public CitynamesIdsProvider(IEnumerable<KeyValuePair<string, int>> citynamesIds)
+        {
+            this.citynamesIds = citynamesIds ?? throw new ArgumentNullException($"{nameof(citynamesIds)} must not be null"); ;
         }
 
         /// <summary>
@@ -32,7 +40,7 @@ namespace Backend.OpenWeathermap
                 return Enumerable.Empty<KeyValuePair<string, int>>();
             }
 
-            return citynames.Where(cityname => cityname.Key.StartsWith(start));
+            return citynamesIds.Where(cityname => cityname.Key.StartsWith(start));
         }
 
         /// <summary>
@@ -47,7 +55,7 @@ namespace Backend.OpenWeathermap
                 throw new ArgumentNullException($"{nameof(cityname)} must not be null");
             }
 
-            KeyValuePair<string, int> result = citynames
+            KeyValuePair<string, int> result = citynamesIds
                 .SingleOrDefault(name => name.Key == cityname);
 
             if (result.Equals(default(KeyValuePair<string, int>)))

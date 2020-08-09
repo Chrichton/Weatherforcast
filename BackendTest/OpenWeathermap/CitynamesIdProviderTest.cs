@@ -5,7 +5,7 @@ using Xunit;
 
 namespace BackendTest.OpenWeathermap
 {
-    public class CitynamesProviderTest
+    public class CitynamesIdProviderTest
     {
         [Fact]
         public void TestBerlin()

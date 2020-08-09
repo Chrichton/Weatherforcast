@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace Backend.OpenWeathermap
 {
-    public class CityNameToIdProvider : ICitynameToIdProvider
+    public class CitynameToIdProvider : ICitynameToIdProvider
     {
         private readonly IDictionary<string, int> dictionary;
 
         /// <summary>
         /// Used by Dependency Injection
         /// </summary>
-        public CityNameToIdProvider() => dictionary = CitynamesToIds.Dictionary;
+        public CitynameToIdProvider() => dictionary = CitynamesToIds.Dictionary;
 
-        public CityNameToIdProvider(IDictionary<string, int> dictionary)
+        public CitynameToIdProvider(IDictionary<string, int> dictionary)
         {
             this.dictionary = dictionary ?? throw new ArgumentNullException($"{nameof(dictionary)} must not be null");
         }

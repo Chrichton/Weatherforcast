@@ -12,14 +12,14 @@ namespace BackendTest.OpenWeathermap
         [Fact]
         public void TestLiveProvider()
         {
-            Assert.Equal(2911298, new CityNameToIdProvider().GetDictionary()["Hamburg"]);
+            Assert.Equal(2911298, new CitynameToIdProvider().GetDictionary()["Hamburg"]);
         }
 
         [Fact]
         public void TestProvider()
         {
             var dict = new Dictionary<string, int> { { "Hamburg", 1} };
-            var provider = new CityNameToIdProvider(dict);
+            var provider = new CitynameToIdProvider(dict);
             Assert.Equal(1, provider.GetDictionary()["Hamburg"]);
 
             int id;

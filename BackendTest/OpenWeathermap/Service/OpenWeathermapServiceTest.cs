@@ -24,7 +24,7 @@ namespace BackendTest.OpenWeathermap.Service
         public async void TestGetWeatherforecast()
         {
             var cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
-            var cityToIdProvider = new CityNameToIdProvider(cityToIntMapping);
+            var cityToIdProvider = new CitynameToIdProvider(cityToIntMapping);
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
@@ -49,7 +49,7 @@ namespace BackendTest.OpenWeathermap.Service
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
-                var cityToIdProvider = new CityNameToIdProvider(new Dictionary<string, int>());
+                var cityToIdProvider = new CitynameToIdProvider(new Dictionary<string, int>());
                 var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
                     .GetWeatherforecast("Hamburg")
                     .ConfigureAwait(false);
@@ -64,7 +64,7 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var resultOpt = await new OpenWeathermapService(logger, httpClient, new CityNameToIdProvider())
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, new CitynameToIdProvider())
                     .GetWeatherforecast("Hamburg")
                     .ConfigureAwait(false);
 
@@ -94,7 +94,7 @@ namespace BackendTest.OpenWeathermap.Service
         public async void TestCurrentWeather()
         {
             var cityToIntMapping = new Dictionary<string, int> { { "Hamburg", 2911298 } };
-            var cityToIdProvider = new CityNameToIdProvider(cityToIntMapping);
+            var cityToIdProvider = new CitynameToIdProvider(cityToIntMapping);
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
@@ -119,7 +119,7 @@ namespace BackendTest.OpenWeathermap.Service
             var messageHandler = new MockHttpMessageHandler(TestUtilities.GetOpenWeathermapForcastJson());
             using (var httpClient = new HttpClient(messageHandler))
             {
-                var cityToIdProvider = new CityNameToIdProvider(new Dictionary<string, int>());
+                var cityToIdProvider = new CitynameToIdProvider(new Dictionary<string, int>());
                 var resultOpt = await new OpenWeathermapService(logger, httpClient, cityToIdProvider)
                     .GetCurrentWeather("Hamburg").ConfigureAwait(false);
 
@@ -133,7 +133,7 @@ namespace BackendTest.OpenWeathermap.Service
         {
             using (var httpClient = new HttpClient())
             {
-                var resultOpt = await new OpenWeathermapService(logger, httpClient, new CityNameToIdProvider())
+                var resultOpt = await new OpenWeathermapService(logger, httpClient, new CitynameToIdProvider())
                     .GetCurrentWeather("Hamburg")
                     .ConfigureAwait(false);
 
