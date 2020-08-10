@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <v-app> 
     <v-spacer id="app">
       <!-- <TestVuetify v-bind:model="Model.forecast"/> -->
       <v-container fluid>
           <v-row>
             <v-col cols="12">
-              <Header/>
+              <Header v-bind:city="city"/>
             </v-col>
           </v-row>
        
@@ -70,6 +70,7 @@ export default {
   },
   data() {
     return {
+      city: "Header",
       Model: {
         AverageHumidity: 42,
         AverageTemperature: 64.6,
@@ -168,6 +169,7 @@ export default {
           .then(res => 
             {
               console.log(res.data);
+              this.city = city;
               this.Model = res.data;
               this.addHistory(city, 
                 res.data.AverageTemperature, res.data.AverageHumidity);
