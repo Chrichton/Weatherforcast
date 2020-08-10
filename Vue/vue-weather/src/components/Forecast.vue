@@ -1,7 +1,7 @@
 <template>
   <v-card>
       <v-card-title>
-          <h5 class="Display-1">Forecast</h5>
+          <h5 class="Display-1">Vorhersage</h5>
       </v-card-title>
       <v-simple-table fixed-header height="300px" dense>
         <template v-slot:default>
