@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{ item.DateTime }} </td>
+        <td>{{ date }} </td>
         <td>{{ item.Temperature }} Celsius</td>
         <td>{{ item.MinimumTemperature }} Celsius</td>
         <td>{{ item.MaximumTemperature }} Celsius</td>
@@ -11,6 +11,11 @@
 <script>
 export default {
     name: "ForecastItem",
-    props: ["item"]
+    props: ["item"],
+    computed: {
+    date: function() {
+      return this.item.DateTime
+    }
+  },
 }
 </script>

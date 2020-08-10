@@ -2,7 +2,7 @@
   <v-app>
     <div id="app">
       <Header/>
-      <TestVuetify v-bind:model="Model.forecast"/>
+      <!-- <TestVuetify v-bind:model="Model.forecast"/> -->
       <SelectCity v-on:load-weather="loadWeather"/>
       <CurrentWeather v-bind:model="Model"/>
       <Forecast v-bind:model="Model.forecast"/>
