@@ -29,12 +29,12 @@ namespace BackendTest.Weatherforecast.Service
                 .Some(new OpenWeathermapForecast{ list = new WeatherList[] {} });
 
             openWeathermapService.GetCurrentWeather(Arg.Any<string>())
-                .Returns(Task.FromResult(Option<OpenWeatherMapCurrent>.Some(new OpenWeatherMapCurrent())));
+                .Returns(Task.FromResult(Option<OpenWeathermapCurrent>.Some(new OpenWeathermapCurrent())));
 
             openWeathermapService.GetWeatherforecast(Arg.Any<string>())
                 .Returns(Task.FromResult(openForecast));
 
-            mapper.Map<OpenWeatherMapCurrent, Backend.Weatherforecast.Service.Weather>(Arg.Any<OpenWeatherMapCurrent>())
+            mapper.Map<OpenWeathermapCurrent, Backend.Weatherforecast.Service.Weather>(Arg.Any<OpenWeathermapCurrent>())
                 .Returns(new Backend.Weatherforecast.Service.Weather());
             
             mapper.Map<WeatherList[], Backend.Weatherforecast.Service.Weather[]>(Arg.Any<WeatherList[]>())

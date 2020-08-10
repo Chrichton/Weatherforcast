@@ -9,7 +9,7 @@ namespace Backend.Weatherforecast.Service
         public MappingProfile()
         {
             // Current
-            CreateMap<OpenWeatherMapCurrent, Weather>(MemberList.Destination)
+            CreateMap<OpenWeathermapCurrent, Weather>(MemberList.Destination)
                 .ForMember(x => x.DateTime, o =>
                     o.MapFrom(y => DateTimeUTC.FromSecondsSinceUnixEpoch(y.dt)))
                 .ForMember(x => x.CloudDescription, o => o.MapFrom(y => y.weather[0].description))

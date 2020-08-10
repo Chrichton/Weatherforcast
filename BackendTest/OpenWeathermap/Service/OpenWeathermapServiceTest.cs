@@ -151,7 +151,7 @@ namespace BackendTest.OpenWeathermap.Service
         [Fact]
         public void TestDeserializeCurrentWeatherJSON()
         {
-            var model = JsonSerializer.Deserialize<OpenWeatherMapCurrent>(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
+            var model = JsonSerializer.Deserialize<OpenWeathermapCurrent>(TestUtilities.GetOpenWeathermapCurrentWeatherJson());
             Assert.NotNull(model);
         }
 

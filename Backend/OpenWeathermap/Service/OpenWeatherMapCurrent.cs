@@ -1,6 +1,6 @@
 ﻿namespace Backend.OpenWeathermap.Service
 {
-    public class OpenWeatherMapCurrent
+    public class OpenWeathermapCurrent
     {
         public Coord coord { get; set; }
         public Weather[] weather { get; set; }

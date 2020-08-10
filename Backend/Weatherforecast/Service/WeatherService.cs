@@ -42,13 +42,13 @@ namespace Backend.Weatherforecast.Service
 
             Task.WaitAll(currentTaskOption, forecastTaskOption);
 
-            Option<OpenWeatherMapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
+            Option<OpenWeathermapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
             Option<OpenWeathermapForecast> openWeatherMapForecastOption = await forecastTaskOption;
 
             return openWeatherMapCurrentOption
                 .Some(openWeatherMapCurrent =>
                 {
-                    Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
+                    Weather current = mapper.Map<OpenWeathermapCurrent, Weather>(openWeatherMapCurrent);
                     return openWeatherMapForecastOption
                         .Some(openWeatherMapForecast =>
                         {
@@ -78,13 +78,13 @@ namespace Backend.Weatherforecast.Service
 
             Task.WaitAll(currentTaskOption, forecastTaskOption);
 
-            Option<OpenWeatherMapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
+            Option<OpenWeathermapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
             Option<OpenWeathermapForecast> openWeatherMapForecastOption = await forecastTaskOption;
 
             return openWeatherMapCurrentOption
                 .Some(openWeatherMapCurrent =>
                 {
-                    Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(openWeatherMapCurrent);
+                    Weather current = mapper.Map<OpenWeathermapCurrent, Weather>(openWeatherMapCurrent);
                     return openWeatherMapForecastOption
                         .Some(openWeatherMapForecast =>
                         {

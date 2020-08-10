@@ -35,7 +35,7 @@ namespace Backend.OpenWeathermap.Service
         /// </summary>
         /// <param name="city">German City</param>
         /// <returns>Some(data) for the current weather. None, when city is unknown</returns>
-        public async Task<Option<OpenWeatherMapCurrent>> GetCurrentWeather(string city)
+        public async Task<Option<OpenWeathermapCurrent>> GetCurrentWeather(string city)
         {
             if (city == null)
             {
@@ -49,14 +49,14 @@ namespace Backend.OpenWeathermap.Service
             if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
             {
                 logger.LogWarning($"unknown city: '{city}' requested", city);
-                return Option<OpenWeatherMapCurrent>.None;
+                return Option<OpenWeathermapCurrent>.None;
             }
 
             Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
-            return await JsonSerializer.DeserializeAsync<OpenWeatherMapCurrent>(
+            return await JsonSerializer.DeserializeAsync<OpenWeathermapCurrent>(
                 await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 .ConfigureAwait(false);
         }
@@ -98,7 +98,7 @@ namespace Backend.OpenWeathermap.Service
         /// </summary>
         /// <param name="cityId">German City</param>
         /// <returns>Some(data) for the current weather. None, when cityId is unknown</returns>
-        public async Task<Option<OpenWeatherMapCurrent>> GetCurrentWeather(int cityId)
+        public async Task<Option<OpenWeathermapCurrent>> GetCurrentWeather(int cityId)
         {
             const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";
 
@@ -107,7 +107,7 @@ namespace Backend.OpenWeathermap.Service
             HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
             responseMessage.EnsureSuccessStatusCode();
 
-            return await JsonSerializer.DeserializeAsync<OpenWeatherMapCurrent>(
+            return await JsonSerializer.DeserializeAsync<OpenWeathermapCurrent>(
                 await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 .ConfigureAwait(false);
         }

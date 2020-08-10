@@ -18,9 +18,9 @@ namespace BackendTest.Weatherforecast
             Assert.NotNull(mapper);
 
             #region Current
-            OpenWeatherMapCurrent currentModel = JsonSerializer.Deserialize<OpenWeatherMapCurrent>(
+            OpenWeathermapCurrent currentModel = JsonSerializer.Deserialize<OpenWeathermapCurrent>(
                 TestUtilities.GetOpenWeathermapCurrentWeatherJson());
-            Weather current = mapper.Map<OpenWeatherMapCurrent, Weather>(currentModel);
+            Weather current = mapper.Map<OpenWeathermapCurrent, Weather>(currentModel);
 
             Assert.NotNull(current);
             Assert.Equal("Klarer Himmel", current.CloudDescription);
