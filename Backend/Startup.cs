@@ -39,11 +39,11 @@ namespace Backend
             services.AddControllers();
 
             services.AddScoped<HttpClient>();
-            services.AddSingleton<ICitynameToIdProvider, CitynameToIdProvider>();
+            services.AddSingleton<ICitynameToIdProvider>(new CitynameToIdProvider());
             services.AddScoped<IOpenWeathermapService, OpenWeathermapService>();
-            services.AddSingleton<IZipCodeToCitiesProvider, ZipCodeToCitiesProvider>();
+            services.AddSingleton<IZipCodeToCitiesProvider>(new ZipCodeToCitiesProvider());
             services.AddScoped<IWeatherService, WeatherService>();
-            services.AddSingleton<ICitynamesIdsProvider, CitynamesIdsProvider>();
+            services.AddSingleton<ICitynamesIdsProvider>(new CitynamesIdsProvider());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

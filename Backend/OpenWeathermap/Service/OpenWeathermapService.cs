@@ -39,7 +39,6 @@ namespace Backend.OpenWeathermap.Service
         {
             if (city == null)
             {
-                logger.LogError("{nameof(city)} was null");
                 throw new ArgumentNullException($"{nameof(city)} must not be null");
             }
 
@@ -71,8 +70,7 @@ namespace Backend.OpenWeathermap.Service
         {
             if (city == null)
             {
-                logger.LogError("{nameof(city)} was null");
-                throw new ArgumentNullException($"{nameof(city)} must not be null");
+                throw new ArgumentNullException(nameof(city));
             }
 
             const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
