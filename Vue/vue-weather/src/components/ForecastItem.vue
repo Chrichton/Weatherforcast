@@ -14,7 +14,16 @@ export default {
     props: ["item"],
     computed: {
     date: function() {
-      return this.item.DateTime
+        // const datetime = Date.parse(this.item.DateTime)
+        // console.log(datetime)
+
+        // const date = Date(this.item.DateTime)
+        // const year = date.getYear()
+        // console.log(year)
+
+        return this.item.DateTime
+        // return datetime.getYear + datetime.getMonth + datetime.getDay + " " 
+        //     + datetime.getHours + ":" + datetime.getMinutes + ":" + datetime.getSeconds;
     }
   },
 }
