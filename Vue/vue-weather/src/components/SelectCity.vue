@@ -20,17 +20,6 @@
       ></v-autocomplete>
     </v-card-text>
     <v-divider></v-divider>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn
-        :disabled="!model"
-        color="grey"
-        @click="model = null"
-      >
-        Clear
-        <v-icon right>mdi-close-circle</v-icon>
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
@@ -49,11 +38,6 @@ export default {
             model: null,
             search: null,
         }),
-    methods: {
-        selectCity() {
-            this.$emit('load-weather', this.id)
-        }
-    },
     computed: {
       fields () {
         if (!this.model) return []
@@ -82,19 +66,17 @@ export default {
         }
       },
       search () {
-        // Items have already been loaded
-        // if (this.items.length > 0) return
+        if (!this.search) return
 
-        // // Items have already been requested
-        // if (this.isLoading) return
-
-        if (this.search && this.search.length > 1) return
+       // if (this.search.length > 1) return  // TODO should be active. 
+                                              // Otherwise after every keystroke a request is made
+                                              // Unfortunately when active the searchtext is not cleared
+                                              // Did not find a way to clear it automatically
+                                              // Have to investigate
 
         if (this.model != null)
         {
           this.model = null;
-          this.entries = [];
-          this.search = null;
         }
         
         this.isLoading = true
@@ -102,7 +84,7 @@ export default {
         // Lazily load input items
         axios.get('http://vueweatherapi.azurewebsites.net/api/weather/forecast/cities/' + this.search)
           .then(res => {
-            this.count = 1500
+            this.count = res.data.result.length
             this.entries = res.data.result
           })
           .catch(err => {
