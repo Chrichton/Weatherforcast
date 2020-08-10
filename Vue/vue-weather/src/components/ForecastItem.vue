@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td>{{ date }} </td>
+        <td>{{ getDate }} </td>
         <td>{{ item.Temperature }} Celsius</td>
         <td>{{ item.MinimumTemperature }} Celsius</td>
         <td>{{ item.MaximumTemperature }} Celsius</td>
@@ -13,17 +13,15 @@ export default {
     name: "ForecastItem",
     props: ["item"],
     computed: {
-    date: function() {
-        // const datetime = Date.parse(this.item.DateTime)
-        // console.log(datetime)
+    getDate: function() {
+        const d = new Date(this.item.DateTime);
+        const hours = d.getHours();
+        const day = d.getDate();
+        const month = d.getMonth() + 1; //Months are zero based
+        const year = d.getFullYear();
+        const combinedDate = `${day}.${month}.${year} ${hours}:00`;
 
-        // const date = Date(this.item.DateTime)
-        // const year = date.getYear()
-        // console.log(year)
-
-        return this.item.DateTime
-        // return datetime.getYear + datetime.getMonth + datetime.getDay + " " 
-        //     + datetime.getHours + ":" + datetime.getMinutes + ":" + datetime.getSeconds;
+        return combinedDate;
     }
   },
 }
