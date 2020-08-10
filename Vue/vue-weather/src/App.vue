@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TestVuetify from './components/TestVuetify'
+// import TestVuetify from './components/TestVuetify'
 import Header from './components/layout/Header';
 import SelectCity from './components/SelectCity';
 import CurrentWeather from './components/CurrentWeather';
@@ -26,7 +26,6 @@ const historyDataKey = 'historyData';
 export default {
   name: 'App',
   components: {
-    TestVuetify,
     Header,
     SelectCity,
     CurrentWeather,

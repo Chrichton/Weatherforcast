@@ -14,14 +14,8 @@
               <th class="text-left">Feuchte</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="item in model" :key="item.DateTime">
-              <td>{{ item.DateTime }} </td>
-              <td>{{ item.Temperature }} Celsius</td>
-              <td>{{ item.MinimumTemperature }} Celsius</td>
-              <td>{{ item.MaximumTemperature }} Celsius</td>
-              <td>{{ item.Humidity }} %</td>
-            </tr>
+          <tbody v-for="item in model" :key="item.DateTime">
+              <ForcastItem v-bind:item = "item"/>
           </tbody>    
         </template>
       </v-simple-table>
@@ -29,7 +23,12 @@
 </template>
 
 <script>
+  import ForcastItem from './ForecastItem'
+
   export default {
+    components: {
+      ForcastItem
+    },
     props: ["model"]
   }
 </script>
