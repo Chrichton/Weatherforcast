@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in data" :key="item.City">
+            <tr v-for="item in historyData" :key="item.City">
             <td>{{ item.city }} </td>
             <td>{{ item.temperature }} Celsius</td>
             <td>{{ item.humidity }} %</td>
@@ -26,11 +26,6 @@
 
 <script>
   export default {
-    props: ["historyData"],
-    data () {
-      return {
-        data: this.historyData
-      }
-    },
+    props: ["historyData"]
   }
 </script>

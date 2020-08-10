@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in forcast" :key="item.DateTime">
+            <tr v-for="item in model" :key="item.DateTime">
               <td>{{ item.DateTime }} </td>
               <td>{{ item.Temperature }} Celsius</td>
               <td>{{ item.MinimumTemperature }} Celsius</td>
@@ -30,11 +30,6 @@
 
 <script>
   export default {
-    props: ["model"],
-    data () {
-      return {
-        forcast: this.model
-      }
-    },
+    props: ["model"]
   }
 </script>
