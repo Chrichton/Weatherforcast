@@ -4,9 +4,6 @@
       Suche Ort
     </v-card-title>
     <v-card-text>
-      Finde Orte
-    </v-card-text>
-    <v-card-text>
       <v-autocomplete
         v-model="model"
         :items="items"
@@ -17,7 +14,7 @@
         item-text="Description"
         item-value="API"
         label="Ort"
-        placeholder="Zum Suchen bitte Ort eingeben"
+        placeholder="Finde Orte"
         prepend-icon="mdi-database-search"
         return-object
       ></v-autocomplete>

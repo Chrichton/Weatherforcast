@@ -1,13 +1,49 @@
 <template>
   <v-app>
-    <div id="app">
-      <Header/>
+    <v-spacer id="app">
       <!-- <TestVuetify v-bind:model="Model.forecast"/> -->
-      <SelectCity v-on:load-weather="loadWeather"/>
-      <CurrentWeather v-bind:model="Model"/>
-      <Forecast v-bind:model="Model.forecast"/>
-      <History v-bind:historyData="historyData"/>
-    </div>
+      <v-container fluid>
+          <v-row>
+            <v-col cols="12">
+              <Header/>
+            </v-col>
+          </v-row>
+       
+        <v-row 
+          :key="1"
+          :justify="'center'"
+        >
+          <v-col
+            :key="1"
+            md="6"
+          >
+            <SelectCity v-on:load-weather="loadWeather"/>
+          </v-col>
+        </v-row>
+        <v-row 
+          :key="1"
+          :justify="'center'"
+        >
+          <v-col
+            :key="1"
+            md="8"
+          >
+            <CurrentWeather v-bind:model="Model"/>
+            </v-col>
+        </v-row>
+        <v-row>
+          <v-col md="8" lg="8"
+          >
+            <Forecast v-bind:model="Model.forecast"/>
+            
+          </v-col>
+          <v-col md="4" lg="4"
+          >
+          <History v-bind:historyData="historyData"/>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-spacer>
   </v-app>
 </template>
 
