@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            <h5 class="Display-1">Current Weather</h5>
+            <h5 class="Display-1">Aktuelles Wetter</h5>
         </v-card-title>
         <v-spacer>
             {{model.Temperature}} Celsius

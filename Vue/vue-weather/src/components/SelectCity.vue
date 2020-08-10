@@ -78,8 +78,6 @@ export default {
       fields () {
         if (!this.model) return []
 
-        this.$emit('load-weather', this.model.Key, this.model.Value)
-        
         return Object.keys(this.model).map(key => {
           return {
             key,
@@ -98,6 +96,11 @@ export default {
       },
     },
     watch: {
+      fields () {
+        if (this.model) {
+          this.$emit('load-weather', this.model.Key, this.model.Value)
+        }
+      },
       search () {
         // Items have already been loaded
         // if (this.items.length > 0) return
@@ -105,7 +108,7 @@ export default {
         // // Items have already been requested
         // if (this.isLoading) return
 
-        if (this.search.length > 1) return
+        if (this.search && this.search.length > 1) return
 
         if (this.model != null)
         {
