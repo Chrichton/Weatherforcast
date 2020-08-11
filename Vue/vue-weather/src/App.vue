@@ -10,7 +10,7 @@
        
         <v-row>
           <v-col md="6" lg="6">
-            <SelectCity v-on:load-weather="loadWeather"/>
+            <SearchCity v-on:load-weather="loadWeather"/>
           </v-col>
           <v-col md="6" lg="6">
             <SearchZipcode v-on:load-weather="loadWeather"/>
@@ -44,7 +44,7 @@
 <script>
 import Header from './components/layout/Header';
 import SearchZipcode from './components/SearchZipcode'
-import SelectCity from './components/SelectCity';
+import SearchCity from './components/SearchCity'
 import CurrentWeather from './components/CurrentWeather';
 import Forecast from './components/Forecast';
 import History from './components/History';
@@ -58,7 +58,7 @@ export default {
   components: {
     Header,
     SearchZipcode,
-    SelectCity,
+    SearchCity,
     CurrentWeather,
     Forecast,
     History

@@ -28,7 +28,7 @@
 import axios from 'axios';
 
 export default {
-    name: "SelectCity",
+    name: "SearchCity",
     data:() => ({
             city: '',
             id: 0,
