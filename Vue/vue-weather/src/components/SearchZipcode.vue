@@ -58,6 +58,10 @@
             const item = this.items.filter(item => item.city === city)
             const id = item[0].id
             this.$emit('load-weather', city, id)
+
+            this.$nextTick(() => {
+                this.model = null
+            })
         }
       },
       search () {
