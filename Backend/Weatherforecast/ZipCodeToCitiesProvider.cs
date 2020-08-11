@@ -14,7 +14,7 @@ namespace Backend.Weatherforecast
 
         public ZipCodeToCitiesProvider(IDictionary<int, IEnumerable<string>> dictionary)
         {
-            this.dictionary = dictionary ?? throw new ArgumentNullException($"{nameof(dictionary)} must not be null");
+            this.dictionary = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
         }
 
         public IDictionary<int, IEnumerable<string>> GetDictionary() => dictionary;

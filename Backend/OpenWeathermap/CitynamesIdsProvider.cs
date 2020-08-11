@@ -25,7 +25,7 @@ namespace Backend.OpenWeathermap
 
         public CitynamesIdsProvider(IEnumerable<KeyValuePair<string, int>> citynamesIds)
         {
-            this.citynamesIds = citynamesIds ?? throw new ArgumentNullException($"{nameof(citynamesIds)} must not be null"); ;
+            this.citynamesIds = citynamesIds ?? throw new ArgumentNullException(nameof(citynamesIds));
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Backend.OpenWeathermap
         {
             if (string.IsNullOrWhiteSpace(cityname))
             {
-                throw new ArgumentNullException($"{nameof(cityname)} must not be null");
+                throw new ArgumentNullException(nameof(cityname));
             }
 
             KeyValuePair<string, int> result = citynamesIds

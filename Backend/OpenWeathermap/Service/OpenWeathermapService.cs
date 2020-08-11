@@ -25,9 +25,9 @@ namespace Backend.OpenWeathermap.Service
         /// <param name="cityToIdMapping">The API needs a mapping from a city to its id</param>
         public OpenWeathermapService(ILogger<OpenWeathermapService> logger, HttpClient httpClient, ICitynameToIdProvider cityToIdMapping)
         {
-            this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} must not be null");
-            this.httpClient = httpClient ?? throw new ArgumentNullException($"{nameof(httpClient)} must not be null");
-            this.cityToIdMapping = cityToIdMapping ?? throw new ArgumentNullException($"{nameof(cityToIdMapping)} must not be null");
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            this.cityToIdMapping = cityToIdMapping ?? throw new ArgumentNullException(nameof(cityToIdMapping));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Backend.OpenWeathermap.Service
         {
             if (city == null)
             {
-                throw new ArgumentNullException($"{nameof(city)} must not be null");
+                throw new ArgumentNullException(nameof(city));
             }
 
             const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";

@@ -7,8 +7,8 @@ namespace Backend.Weatherforecast.Service
     {
         public WeatherModel(Weather current, Weather[] forecast)
         {
-            Current = current ?? throw new ArgumentNullException($"{nameof(current)} must not be null");
-            Forecast = forecast ?? throw new ArgumentNullException($"{nameof(forecast)} must not be null");
+            Current = current ?? throw new ArgumentNullException(nameof(current));
+            Forecast = forecast ?? throw new ArgumentNullException(nameof(forecast));
         }
 
         [JsonPropertyName("AverageTemperature")]

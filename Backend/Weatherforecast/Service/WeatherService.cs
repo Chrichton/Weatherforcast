@@ -23,11 +23,11 @@ namespace Backend.Weatherforecast.Service
             IZipCodeToCitiesProvider zipCodeToCitiesProvider,
             ICitynamesIdsProvider citynamesIdsProvider)
         {
-            this.logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} must not be null");
-            this.mapper = mapper ?? throw new ArgumentNullException($"{nameof(mapper)} must not be null");
-            this.openWeathermapService = openWeathermapService ?? throw new ArgumentNullException($"{nameof(openWeathermapService)} must not be null");
-            this.zipCodeToCitiesProvider = zipCodeToCitiesProvider ?? throw new ArgumentNullException($"{nameof(zipCodeToCitiesProvider)} must not be null");
-            this.citynamesIdsProvider = citynamesIdsProvider ?? throw new ArgumentNullException($"{nameof(citynamesIdsProvider)} must not be null");
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.openWeathermapService = openWeathermapService ?? throw new ArgumentNullException(nameof(openWeathermapService));
+            this.zipCodeToCitiesProvider = zipCodeToCitiesProvider ?? throw new ArgumentNullException(nameof(zipCodeToCitiesProvider));
+            this.citynamesIdsProvider = citynamesIdsProvider ?? throw new ArgumentNullException(nameof(citynamesIdsProvider));
         }
 
         /// <summary>

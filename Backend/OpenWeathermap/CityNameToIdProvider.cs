@@ -14,7 +14,7 @@ namespace Backend.OpenWeathermap
 
         public CitynameToIdProvider(IDictionary<string, int> dictionary)
         {
-            this.dictionary = dictionary ?? throw new ArgumentNullException($"{nameof(dictionary)} must not be null");
+            this.dictionary = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
         }
 
         public IDictionary<string, int> GetDictionary() => dictionary;
