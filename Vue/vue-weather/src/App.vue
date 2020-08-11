@@ -1,7 +1,6 @@
 <template>
   <v-app> 
     <v-spacer id="app">
-      <!-- <TestVuetify v-bind:model="Model.forecast"/> -->
       <v-container fluid>
           <v-row>
             <v-col cols="12">
@@ -9,15 +8,12 @@
             </v-col>
           </v-row>
        
-        <v-row 
-          :key="1"
-          :justify="'center'"
-        >
-          <v-col
-            :key="1"
-            md="6"
-          >
+        <v-row>
+          <v-col md="6" lg="6">
             <SelectCity v-on:load-weather="loadWeather"/>
+          </v-col>
+          <v-col md="6" lg="6">
+            <SearchZipcode v-on:load-weather="loadWeather"/>
           </v-col>
         </v-row>
         <v-row 
@@ -32,13 +28,11 @@
             </v-col>
         </v-row>
         <v-row>
-          <v-col md="8" lg="8"
-          >
+          <v-col md="8" lg="8">
             <Forecast v-bind:model="Model.forecast"/>
             
           </v-col>
-          <v-col md="4" lg="4"
-          >
+          <v-col md="4" lg="4">
           <History v-bind:historyData="historyData"/>
           </v-col>
         </v-row>
@@ -48,8 +42,8 @@
 </template>
 
 <script>
-// import TestVuetify from './components/TestVuetify'
 import Header from './components/layout/Header';
+import SearchZipcode from './components/SearchZipcode'
 import SelectCity from './components/SelectCity';
 import CurrentWeather from './components/CurrentWeather';
 import Forecast from './components/Forecast';
@@ -63,6 +57,7 @@ export default {
   name: 'App',
   components: {
     Header,
+    SearchZipcode,
     SelectCity,
     CurrentWeather,
     Forecast,
