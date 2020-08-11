@@ -61,6 +61,8 @@
 
             this.$nextTick(() => {
                 this.model = null
+                this.items = []
+                this.search = null
             })
         }
       },

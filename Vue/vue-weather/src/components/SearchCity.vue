@@ -66,6 +66,8 @@ export default {
 
           this.$nextTick(() => {
                 this.model = null
+                this.entries = []
+                this.search = null
           })
         }
       },
