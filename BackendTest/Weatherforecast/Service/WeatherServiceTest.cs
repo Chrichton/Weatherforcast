@@ -28,10 +28,10 @@ namespace BackendTest.Weatherforecast.Service
             var openForecast = Option<OpenWeathermapForecast>
                 .Some(new OpenWeathermapForecast{ list = new WeatherList[] {} });
 
-            openWeathermapService.GetCurrentWeather(Arg.Any<string>())
+            openWeathermapService.GetCurrentWeather(Arg.Any<int>())
                 .Returns(Task.FromResult(Option<OpenWeathermapCurrent>.Some(new OpenWeathermapCurrent())));
 
-            openWeathermapService.GetWeatherforecast(Arg.Any<string>())
+            openWeathermapService.GetWeatherforecast(Arg.Any<int>())
                 .Returns(Task.FromResult(openForecast));
 
             mapper.Map<OpenWeathermapCurrent, Backend.Weatherforecast.Service.Weather>(Arg.Any<OpenWeathermapCurrent>())
@@ -43,7 +43,7 @@ namespace BackendTest.Weatherforecast.Service
             
             IWeatherService service = new WeatherService(logger, mapper, openWeathermapService, 
                 zipCodeToCities, citynamesIds);
-            var resultOpt = await service.GetWeather("Hamburg").ConfigureAwait(false);
+            var resultOpt = await service.GetWeather(TestUtilities.CityIdHamburg).ConfigureAwait(false);
 
             resultOpt
                 .Some(result =>
@@ -58,14 +58,17 @@ namespace BackendTest.Weatherforecast.Service
         [Fact]
         public async void TestGetWeatherNoCity()
         {
-            var loggerOpenWeather = Substitute.For<ILogger<OpenWeathermapService>>();
-            var httpClient = Substitute.For<HttpClient>();
-            var cityToIdMapping = new CitynameToIdProvider(new Dictionary<string, int>());
-            openWeathermapService = new OpenWeathermapService(loggerOpenWeather, httpClient, cityToIdMapping);
+            openWeathermapService.GetCurrentWeather(Arg.Any<int>())
+                .Returns(Task.FromResult(Option<OpenWeathermapCurrent>.None));
+
+            var openForecast = Option<OpenWeathermapForecast>
+                .Some(new OpenWeathermapForecast { list = new WeatherList[] { } });
+            openWeathermapService.GetWeatherforecast(Arg.Any<int>())
+                .Returns(Task.FromResult(openForecast));
 
             var weatherOpt = await new WeatherService(logger, mapper, openWeathermapService, 
                 zipCodeToCities, citynamesIds)
-                .GetWeather("Heiko").ConfigureAwait(false);
+                .GetWeather(TestUtilities.CityIdHamburg).ConfigureAwait(false);
 
             Assert.Equal(Option<WeatherModel>.None, weatherOpt);
         }

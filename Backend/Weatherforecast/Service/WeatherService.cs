@@ -66,42 +66,6 @@ namespace Backend.Weatherforecast.Service
         }
 
         /// <summary>
-        /// Retrieves the data for the weather
-        /// </summary>
-        /// <param name="city">German City</param>
-        /// <returns>Some(data) for the weather. None, when the city is unknown</returns>
-        /// <exception cref="ArgumentNullException">When city is null</exception>
-        public async Task<Option<WeatherModel>> GetWeather(string city)
-        {
-            var currentTaskOption = openWeathermapService.GetCurrentWeather(city);
-            var forecastTaskOption = openWeathermapService.GetWeatherforecast(city);
-
-            Task.WaitAll(currentTaskOption, forecastTaskOption);
-
-            Option<OpenWeathermapCurrent> openWeatherMapCurrentOption = await currentTaskOption;
-            Option<OpenWeathermapForecast> openWeatherMapForecastOption = await forecastTaskOption;
-
-            return openWeatherMapCurrentOption
-                .Some(openWeatherMapCurrent =>
-                {
-                    Weather current = mapper.Map<OpenWeathermapCurrent, Weather>(openWeatherMapCurrent);
-                    return openWeatherMapForecastOption
-                        .Some(openWeatherMapForecast =>
-                        {
-                            Weather[] forecast = mapper.Map<WeatherList[], Weather[]>(openWeatherMapForecast.list);
-
-                            var model = new WeatherModel(current, forecast);
-                            model.AverageHumidity = model.CalculateAverageHumidity();
-                            model.AverageTemperature = model.CalculateAverageTemperature();
-
-                            return Option<WeatherModel>.Some(model);
-                        })
-                        .None(() => Option<WeatherModel>.None);
-                })
-                .None(() => Option<WeatherModel>.None);
-        }
-
-        /// <summary>
         /// Retrieves all cities and their Ids for the supplied zipCode
         /// </summary>
         /// <param name="zipCode"></param>

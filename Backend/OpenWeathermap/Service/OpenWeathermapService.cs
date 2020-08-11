@@ -33,67 +33,6 @@ namespace Backend.OpenWeathermap.Service
         /// <summary>
         /// Retrieves the data for the current weather
         /// </summary>
-        /// <param name="city">German City</param>
-        /// <returns>Some(data) for the current weather. None, when city is unknown</returns>
-        public async Task<Option<OpenWeathermapCurrent>> GetCurrentWeather(string city)
-        {
-            if (city == null)
-            {
-                throw new ArgumentNullException(nameof(city));
-            }
-
-            const string baseUrl = "http://api.openweathermap.org/data/2.5/weather";
-
-            int cityId;
-            if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
-            {
-                logger.LogWarning($"unknown city: '{city}' requested", city);
-                return Option<OpenWeathermapCurrent>.None;
-            }
-
-            Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
-            responseMessage.EnsureSuccessStatusCode();
-
-            return await JsonSerializer.DeserializeAsync<OpenWeathermapCurrent>(
-                await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                .ConfigureAwait(false);
-        }
- 
-        /// <summary>
-        /// Retrieves the data for the weatherforecast
-        /// </summary>
-        /// <param name="city">German City</param>
-        /// <returns>Some(data) for the weatherforecast. None, when the city is unknown</returns>
-        /// <exception cref="ArgumentNullException">When city is null</exception>
-        public async Task<Option<OpenWeathermapForecast>> GetWeatherforecast(string city)
-        {
-            if (city == null)
-            {
-                throw new ArgumentNullException(nameof(city));
-            }
-
-            const string baseUrl = "http://api.openweathermap.org/data/2.5/forecast";
-
-            int cityId;
-            if (!cityToIdMapping.GetDictionary().TryGetValue(city, out cityId))
-            {
-                logger.LogWarning($"unknown {nameof(city)} requested", city);
-                return Option<OpenWeathermapForecast>.None;
-            }
-
-            Uri requestUri = new Uri($"{baseUrl}?appid={appId}&lang={language}&units={units}&id={cityId}");
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri).ConfigureAwait(false);
-            responseMessage.EnsureSuccessStatusCode();
-
-            return await JsonSerializer.DeserializeAsync<OpenWeathermapForecast>(
-                await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves the data for the current weather
-        /// </summary>
         /// <param name="cityId">German City</param>
         /// <returns>Some(data) for the current weather. None, when cityId is unknown</returns>
         public async Task<Option<OpenWeathermapCurrent>> GetCurrentWeather(int cityId)

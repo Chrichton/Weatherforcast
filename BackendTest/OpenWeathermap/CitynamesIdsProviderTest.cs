@@ -14,7 +14,7 @@ namespace BackendTest.OpenWeathermap
             Option<KeyValuePair<string, int>> idOpt =
                 new CitynamesIdsProvider().GetCityNameIdForCity("Hamburg");
 
-            var expected = new KeyValuePair<string, int>("Hamburg", 2911298);
+            var expected = new KeyValuePair<string, int>("Hamburg", TestUtilities.CityIdHamburg);
 
             idOpt
                 .Some(id => Assert.Equal(expected, id))

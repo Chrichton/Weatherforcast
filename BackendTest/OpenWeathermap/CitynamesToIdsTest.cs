@@ -9,7 +9,7 @@ namespace BackendTest.OpenWeathermap
         [Fact]
         public void TestCityId()
         {
-            Assert.Equal(2911298, CitynamesToIds.Dictionary["Hamburg"]);
+            Assert.Equal(TestUtilities.CityIdHamburg, CitynamesToIds.Dictionary["Hamburg"]);
         }
 
         [Fact]

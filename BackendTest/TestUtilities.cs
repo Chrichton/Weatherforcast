@@ -9,5 +9,7 @@ namespace BackendTest
 
         public static string GetOpenWeathermapCurrentWeatherJson() =>
             File.ReadAllText(@"./OpenWeathermap/service/currentweather.json");
+
+        public static int CityIdHamburg => 2911298;
     }
 }

@@ -13,15 +13,6 @@ namespace Backend.Weatherforecast.Service
         /// <returns>Some(data) for the weather. None, when the cityId is unknown</returns>
         public Task<Option<WeatherModel>> GetWeather(int cityId);
 
-        /// TODO Löschen
-        /// <summary>
-        /// Retrieves the data for the weather
-        /// </summary>
-        /// <param name="city">German City</param>
-        /// <returns>Some(data) for the weather. None, when the city is unknown</returns>
-        /// <exception cref="ArgumentNullException">When city is null</exception>
-        public Task<Option<WeatherModel>> GetWeather(string city);
-
         /// <summary>
         /// Retrieves all cities and their Ids for the supplied zipCode
         /// </summary>
