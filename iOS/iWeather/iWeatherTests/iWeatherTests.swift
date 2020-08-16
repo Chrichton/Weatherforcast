@@ -34,6 +34,20 @@ class iWeatherTests: XCTestCase {
         XCTAssertEqual(29.46, viewModel.forecast[0].Temperature)
     }
 
+    func testDecodeCity() throws {
+        let jsonFilename = Bundle(for: type(of: self))
+            .path(forResource: "cities", ofType: "json")!
+        
+        let data = NSData(contentsOfFile: jsonFilename)! as Data
+        let cities = try JSONDecoder().decode([City].self, from: data)
+        
+        XCTAssertEqual(20, cities.count)
+        
+        let city = cities[0]
+        XCTAssertEqual("Abentheuer", city.Key)
+        XCTAssertEqual(2959841, city.Value)
+    }
+    
 //    func testPerformanceExample() throws {
 //        // This is an example of a performance test case.
 //        self.measure {

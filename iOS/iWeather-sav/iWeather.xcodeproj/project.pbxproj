@@ -15,6 +15,7 @@
 		FF0C8F2924E8F7C800DF96A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF0C8F2724E8F7C800DF96A5 /* LaunchScreen.storyboard */; };
 		FF0C8F3124E904F500DF96A5 /* WeatherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C8F3024E904F500DF96A5 /* WeatherStore.swift */; };
 		FF0C8F3324E905EB00DF96A5 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C8F3224E905EB00DF96A5 /* WeatherViewModel.swift */; };
+		FFE2EAD324E9926800CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD224E9926800CBBC32 /* City.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		FF0C8F2A24E8F7C800DF96A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF0C8F3024E904F500DF96A5 /* WeatherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStore.swift; sourceTree = "<group>"; };
 		FF0C8F3224E905EB00DF96A5 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		FFE2EAD124E98FFF00CBBC32 /* iWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iWeather.entitlements; sourceTree = "<group>"; };
+		FFE2EAD224E9926800CBBC32 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,7 @@
 		FF0C8F1B24E8F7C700DF96A5 /* iWeather */ = {
 			isa = PBXGroup;
 			children = (
+				FFE2EAD124E98FFF00CBBC32 /* iWeather.entitlements */,
 				FF0C8F1C24E8F7C700DF96A5 /* AppDelegate.swift */,
 				FF0C8F1E24E8F7C700DF96A5 /* SceneDelegate.swift */,
 				FF0C8F2024E8F7C700DF96A5 /* ContentView.swift */,
@@ -68,6 +72,7 @@
 				FF0C8F2A24E8F7C800DF96A5 /* Info.plist */,
 				FF0C8F2424E8F7C800DF96A5 /* Preview Content */,
 				FF0C8F3024E904F500DF96A5 /* WeatherStore.swift */,
+				FFE2EAD224E9926800CBBC32 /* City.swift */,
 				FF0C8F3224E905EB00DF96A5 /* WeatherViewModel.swift */,
 			);
 			path = iWeather;
@@ -154,6 +159,7 @@
 			files = (
 				FF0C8F3324E905EB00DF96A5 /* WeatherViewModel.swift in Sources */,
 				FF0C8F1D24E8F7C700DF96A5 /* AppDelegate.swift in Sources */,
+				FFE2EAD324E9926800CBBC32 /* City.swift in Sources */,
 				FF0C8F1F24E8F7C700DF96A5 /* SceneDelegate.swift in Sources */,
 				FF0C8F3124E904F500DF96A5 /* WeatherStore.swift in Sources */,
 				FF0C8F2124E8F7C700DF96A5 /* ContentView.swift in Sources */,
@@ -292,6 +298,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iWeather/iWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iWeather/Preview Content\"";
 				DEVELOPMENT_TEAM = MDYGK73495;
@@ -303,6 +310,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.gaebler.goes.iWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -312,6 +320,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iWeather/iWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iWeather/Preview Content\"";
 				DEVELOPMENT_TEAM = MDYGK73495;
@@ -323,6 +332,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.gaebler.goes.iWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -15,12 +15,24 @@ class WeatherStore: ObservableObject {
     @Published private var weather = WeatherViewModel()
     
     init() {
+        
+    }
+    
+    func setCityId(_ cityId: Int) {
         cancellable = URLSession.shared.dataTaskPublisher(for: URL(fileURLWithPath: ""))
         .map { $0.data }
         .decode(type: WeatherViewModel.self, decoder: JSONDecoder())
         .replaceError(with: WeatherViewModel())
         .sink(receiveValue: { weatherViewModel in
-            self.weather = WeatherViewModel()
+            self.weather = weatherViewModel
         })
+    }
+    
+    func getCities(startingWith: String) -> [City] {
+        return []
+    }
+    
+    func getCities(forZipcode: String) -> [City] {
+        return []
     }
 }
