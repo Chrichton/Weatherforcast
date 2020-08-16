@@ -28,6 +28,10 @@ class iWeatherTests: XCTestCase {
     
         XCTAssertEqual(20.973751, viewModel.AverageTemperature)
         XCTAssertEqual(70.225, viewModel.AverageHumidity)
+        
+        XCTAssertEqual(30.01, viewModel.current.Temperature)
+        XCTAssertEqual(40, viewModel.forecast.count)
+        XCTAssertEqual(29.46, viewModel.forecast[0].Temperature)
     }
 
 //    func testPerformanceExample() throws {
