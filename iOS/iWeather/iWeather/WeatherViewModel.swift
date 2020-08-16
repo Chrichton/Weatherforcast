@@ -10,7 +10,7 @@ import Foundation
 
 class WeatherViewModel: Decodable {
     var AverageTemperature: Float = 0.0
-    var AverageHuminity: Float = 0.0
+    var AverageHumidity: Float = 0.0
 //    var Current: Weather = Weather()
 //    var Forecast: [Weather] = []
     

@@ -19,16 +19,22 @@ class iWeatherTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testDecodeWeatherViewModel() throws {
+        let jsonFilename = Bundle(for: type(of: self))
+            .path(forResource: "weather", ofType: "json")!
+        
+        let data = NSData(contentsOfFile: jsonFilename)! as Data
+        let viewModel = try JSONDecoder().decode(WeatherViewModel.self, from: data)
+    
+        XCTAssertEqual(20.973751, viewModel.AverageTemperature)
+        XCTAssertEqual(70.225, viewModel.AverageHumidity)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+//    func testPerformanceExample() throws {
+//        // This is an example of a performance test case.
+//        self.measure {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
 
 }
