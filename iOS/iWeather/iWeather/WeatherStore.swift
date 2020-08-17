@@ -14,23 +14,23 @@ class WeatherStore : ObservableObject {
     
     private var cancellable: AnyCancellable?
     
-    init() {
-        let url = URL(fileURLWithPath: "")
-        self.cancellable = URLSession.shared.dataTaskPublisher(for: url)
-            .map{ $0.data }
-            .decode(type: WeatherViewModel.self, decoder: JSONDecoder())
-            .replaceError(with: WeatherViewModel())
-        .sink(receiveValue: { weatherViewModel in
-            self.weatherViewModel = weatherViewModel
-        })
+    init(cityId: Int?) {
+        if let cityId = cityId {
+            setCityId(cityId)
+        }
     }
     
     func setCityId(_ cityId: Int) {
-        cancellable = URLSession.shared.dataTaskPublisher(for: URL(fileURLWithPath: ""))
+        let urlString = "https://vueweatherapi.azurewebsites.net/api/weather/forecast/id/\(cityId)"
+        let url = URL(string: urlString)!
+        
+        cancellable = URLSession.shared.dataTaskPublisher(for: url)
         .map { $0.data }
         .decode(type: WeatherViewModel.self, decoder: JSONDecoder())
-        .replaceError(with: WeatherViewModel())
-        .sink(receiveValue: { weatherViewModel in
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { error in
+            print(error)
+        }, receiveValue: { weatherViewModel in
             self.weatherViewModel = weatherViewModel
         })
     }
