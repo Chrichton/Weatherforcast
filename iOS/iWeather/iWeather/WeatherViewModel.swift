@@ -8,8 +8,11 @@
 
 import Foundation
 
-class Weather: Decodable {
+class Weather: Decodable, Identifiable {
+    var id: String { get { return DateTime } }
+    
     var Temperature: Float = 0.0
+    var DateTime: String = ""
 }
 
 class WeatherViewModel: Decodable {

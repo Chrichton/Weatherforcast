@@ -12,9 +12,15 @@ import Combine
 class WeatherStore : ObservableObject {
     @Published var weatherViewModel: WeatherViewModel = WeatherViewModel()
     
+    private var cityId: Int?
     private var cancellable: AnyCancellable?
     
     init(cityId: Int?) {
+        self.cityId = cityId
+        refresh()
+    }
+    
+    func refresh() -> Void {
         if let cityId = cityId {
             setCityId(cityId)
         }
