@@ -18,7 +18,8 @@ struct ContentView: View {
     
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .center) {
+            Text("Stadt: \(LocalStorage.GetCurrentCityName())")
             Text("Datum: \(isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")")
             Text("Mittlere Temperatur: " +
                 String(format: "%.1f Celsius", weatherStore.weatherViewModel.AverageTemperature))
@@ -48,13 +49,14 @@ struct ContentView: View {
     }
     
     private func isoDateToTime(isoDateString: String) -> String? {
-        guard let date = isoDateFormatter.date(from: isoDateString) else { return nil }
-        return timeFormatter.string(from: date)
-    }
+           guard let date = isoDateFormatter.date(from: isoDateString) else { return nil }
+           return timeFormatter.string(from: date)
+       }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(weatherStore: WeatherStore(cityId: nil))
+        ContentView(weatherStore: WeatherStore(cityId: nil, cityName: nil))
     }
 }

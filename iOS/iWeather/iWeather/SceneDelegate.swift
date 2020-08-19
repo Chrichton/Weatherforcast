@@ -20,10 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        UserDefaults.standard.set(2911298, forKey: "CityId")
-        
-        let cityId = UserDefaults.standard.object(forKey: "CityId") as? Int
-        let contentView = ContentView(weatherStore: WeatherStore(cityId: cityId))
+        let cityIdHamburg = 2911298
+        LocalStorage.set(cityId: cityIdHamburg)
+        LocalStorage.add(cityId: cityIdHamburg, cityName: "Hamburg")
+    
+        let cityId = LocalStorage.getCurrentCityId()
+        let cityName = LocalStorage.GetCurrentCityName()
+        let contentView = ContentView(weatherStore: WeatherStore(cityId: cityId, cityName: cityName))
         
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

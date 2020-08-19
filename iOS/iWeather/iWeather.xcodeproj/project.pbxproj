@@ -16,6 +16,9 @@
 		FF0C8F9624E93BE400DF96A5 /* iWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C8F9524E93BE400DF96A5 /* iWeatherTests.swift */; };
 		FF0C8FA124E93BE400DF96A5 /* iWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C8FA024E93BE400DF96A5 /* iWeatherUITests.swift */; };
 		FF2129D324EBC91400B6A366 /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = FF2129D224EBC91400B6A366 /* SwiftUIRefresh */; };
+		FF3402F024ECEB3500160DC7 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */; };
+		FF3402F124ECEB3500160DC7 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */; };
+		FF3402F324ECEDB400160DC7 /* LocalStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402F224ECEDB400160DC7 /* LocalStorageTests.swift */; };
 		FFE2EAD524E993E700CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD424E993E700CBBC32 /* City.swift */; };
 		FFE2EAD624E993E700CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD424E993E700CBBC32 /* City.swift */; };
 		FFE2EAD824E9950A00CBBC32 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE2EAD724E9950A00CBBC32 /* cities.json */; };
@@ -59,6 +62,8 @@
 		FF0C8FA024E93BE400DF96A5 /* iWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iWeatherUITests.swift; sourceTree = "<group>"; };
 		FF0C8FA224E93BE400DF96A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF0C8FAE24E93D9800DF96A5 /* iWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iWeather.entitlements; sourceTree = "<group>"; };
+		FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		FF3402F224ECEDB400160DC7 /* LocalStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageTests.swift; sourceTree = "<group>"; };
 		FFE2EAD424E993E700CBBC32 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		FFE2EAD724E9950A00CBBC32 /* cities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		FFEB224F24E943F4002D16E4 /* WeatherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStore.swift; sourceTree = "<group>"; };
@@ -126,6 +131,7 @@
 				FFEB224F24E943F4002D16E4 /* WeatherStore.swift */,
 				FFE2EAD424E993E700CBBC32 /* City.swift */,
 				FFEB225124E9440D002D16E4 /* WeatherViewModel.swift */,
+				FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */,
 			);
 			path = iWeather;
 			sourceTree = "<group>";
@@ -145,6 +151,7 @@
 				FF0C8F9724E93BE400DF96A5 /* Info.plist */,
 				FFEB225424E949CA002D16E4 /* weather.json */,
 				FFE2EAD724E9950A00CBBC32 /* cities.json */,
+				FF3402F224ECEDB400160DC7 /* LocalStorageTests.swift */,
 			);
 			path = iWeatherTests;
 			sourceTree = "<group>";
@@ -300,6 +307,7 @@
 			files = (
 				FFEB225224E9440D002D16E4 /* WeatherViewModel.swift in Sources */,
 				FF0C8F7F24E93BE300DF96A5 /* AppDelegate.swift in Sources */,
+				FF3402F024ECEB3500160DC7 /* LocalStorage.swift in Sources */,
 				FFE2EAD524E993E700CBBC32 /* City.swift in Sources */,
 				FF0C8F8124E93BE300DF96A5 /* SceneDelegate.swift in Sources */,
 				FFEB225024E943F4002D16E4 /* WeatherStore.swift in Sources */,
@@ -312,7 +320,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF0C8F9624E93BE400DF96A5 /* iWeatherTests.swift in Sources */,
+				FF3402F324ECEDB400160DC7 /* LocalStorageTests.swift in Sources */,
 				FFEB225324E9440D002D16E4 /* WeatherViewModel.swift in Sources */,
+				FF3402F124ECEB3500160DC7 /* LocalStorage.swift in Sources */,
 				FFE2EAD624E993E700CBBC32 /* City.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

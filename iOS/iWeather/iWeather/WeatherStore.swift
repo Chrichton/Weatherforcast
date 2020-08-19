@@ -12,21 +12,24 @@ import Combine
 class WeatherStore : ObservableObject {
     @Published var weatherViewModel: WeatherViewModel = WeatherViewModel()
     
-    private var cityId: Int?
+    private var currentCityId: Int?
+    private var currentCityName: String?
     private var cancellable: AnyCancellable?
     
-    init(cityId: Int?) {
-        self.cityId = cityId
+    init(cityId: Int?, cityName: String?) {
+        currentCityId = cityId
+        currentCityName = cityName
         refresh()
     }
     
     func refresh() -> Void {
-        if let cityId = cityId {
-            setCityId(cityId)
+        if let cityId = currentCityId,
+            let cityName = currentCityName {
+                set(cityId: cityId, cityName: cityName)
         }
     }
     
-    func setCityId(_ cityId: Int) {
+    func set(cityId: Int, cityName: String) {
         let urlString = "https://vueweatherapi.azurewebsites.net/api/weather/forecast/id/\(cityId)"
         let url = URL(string: urlString)!
         
@@ -38,6 +41,7 @@ class WeatherStore : ObservableObject {
             print(error)
         }, receiveValue: { weatherViewModel in
             self.weatherViewModel = weatherViewModel
+            LocalStorage.add(cityId: cityId, cityName: cityName)
         })
     }
     
