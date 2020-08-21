@@ -38,9 +38,8 @@ namespace Backend
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
-            services.AddScoped<HttpClient>();
+            services.AddHttpClient<IOpenWeathermapService, OpenWeathermapService>();
             services.AddSingleton<ICitynameToIdProvider>(new CitynameToIdProvider());
-            services.AddScoped<IOpenWeathermapService, OpenWeathermapService>();
             services.AddSingleton<IZipCodeToCitiesProvider>(new ZipCodeToCitiesProvider());
             services.AddScoped<IWeatherService, WeatherService>();
             services.AddSingleton<ICitynamesIdsProvider>(new CitynamesIdsProvider());
