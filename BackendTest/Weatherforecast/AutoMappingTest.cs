@@ -33,6 +33,7 @@ namespace BackendTest.Weatherforecast
             Assert.Equal(15.71, current.Temperature, 2);
             Assert.Equal(110, current.WindDirection);
             Assert.Equal(3.1, current.Windspeed, 1);
+            Assert.Equal("01d", current.Icon);
             #endregion
 
             #region Forecast
@@ -54,6 +55,20 @@ namespace BackendTest.Weatherforecast
             Assert.Equal(15.87, forecast.Temperature, 2);
             Assert.Equal(272, forecast.WindDirection);
             Assert.Equal(1.32, forecast.Windspeed, 2);
+            Assert.Equal("04n", forecast.Icon);
+
+            forecast = forecasts[4];
+            Assert.Equal("Ein paar Wolken", forecast.CloudDescription);
+            Assert.Equal(new System.DateTime(2020, 7, 31, 9, 0, 0), forecast.DateTime);
+            Assert.Equal(20.47, forecast.FeelsLikeTemperature, 2);
+            Assert.Equal(59, forecast.Humidity);
+            Assert.Equal(21.05, forecast.MaximumTemperature, 2);
+            Assert.Equal(21.05, forecast.MinimumTemperature, 2);
+            Assert.Equal(1020, forecast.Pressure);
+            Assert.Equal(21.05, forecast.Temperature, 2);
+            Assert.Equal(327, forecast.WindDirection);
+            Assert.Equal(2.03, forecast.Windspeed, 2);
+            Assert.Equal("02d", forecast.Icon);
             #endregion
         }
     }

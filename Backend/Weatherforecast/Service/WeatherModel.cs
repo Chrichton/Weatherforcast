@@ -53,5 +53,8 @@ namespace Backend.Weatherforecast.Service
 
         [JsonPropertyName("DateTime")]
         public DateTime DateTime { get; set; }
+
+        [JsonPropertyName("Icon")]
+        public string Icon { get; set; }
     }
 }

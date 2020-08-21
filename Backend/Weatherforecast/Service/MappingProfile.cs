@@ -20,7 +20,8 @@ namespace Backend.Weatherforecast.Service
                 .ForMember(x => x.Pressure, o => o.MapFrom(y => y.main.pressure))
                 .ForMember(x => x.Temperature, o => o.MapFrom(y => y.main.temp))
                 .ForMember(x => x.WindDirection, o => o.MapFrom(y => y.wind.deg))
-                .ForMember(x => x.Windspeed, o => o.MapFrom(y => y.wind.speed));
+                .ForMember(x => x.Windspeed, o => o.MapFrom(y => y.wind.speed))
+                .ForMember(x => x.Icon, o => o.MapFrom(y => y.weather[0].icon));
 
             // Forecast
             CreateMap<WeatherList, Weather>(MemberList.Destination)
@@ -34,7 +35,8 @@ namespace Backend.Weatherforecast.Service
                 .ForMember(x => x.Pressure, o => o.MapFrom(y => y.main.pressure))
                 .ForMember(x => x.Temperature, o => o.MapFrom(y => y.main.temp))
                 .ForMember(x => x.WindDirection, o => o.MapFrom(y => y.wind.deg))
-                .ForMember(x => x.Windspeed, o => o.MapFrom(y => y.wind.speed));
+                .ForMember(x => x.Windspeed, o => o.MapFrom(y => y.wind.speed))
+                .ForMember(x => x.Icon, o => o.MapFrom(y => y.weather[0].icon));
         }
     }
 }
