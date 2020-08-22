@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -20,7 +19,7 @@ namespace BackendTest.Weatherforecast.Service
         private IMapper mapper = Substitute.For<IMapper>();
         private IZipCodeToCitiesProvider zipCodeToCities = Substitute.For<IZipCodeToCitiesProvider>();
         private IOpenWeathermapService openWeathermapService = Substitute.For<IOpenWeathermapService>();
-        private ICitynamesIdsProvider citynamesIds = Substitute.For<ICitynamesIdsProvider>();
+        private ICitynamesIds citynamesIds = Substitute.For<ICitynamesIds>();
 
         [Fact]
         public async void TestGetWeather()

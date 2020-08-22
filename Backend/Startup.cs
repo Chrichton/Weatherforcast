@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
 
 namespace Backend
 {
@@ -35,14 +34,15 @@ namespace Backend
                     });
             });
 
+            services.Configure<CitiesSettings>(Configuration.GetSection("Cities"));
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
             services.AddHttpClient<IOpenWeathermapService, OpenWeathermapService>();
-            services.AddSingleton<ICitynameToIdProvider>(new CitynameToIdProvider());
+            services.AddSingleton<ICitynameToId, CitynameToId>();
             services.AddSingleton<IZipCodeToCitiesProvider>(new ZipCodeToCitiesProvider());
             services.AddScoped<IWeatherService, WeatherService>();
-            services.AddSingleton<ICitynamesIdsProvider>(new CitynamesIdsProvider());
+            services.AddSingleton<ICitynamesIds, CitynamesIds>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

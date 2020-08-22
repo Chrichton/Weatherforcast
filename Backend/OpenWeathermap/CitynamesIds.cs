@@ -1,4 +1,5 @@
 ﻿using LanguageExt;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,23 +10,24 @@ namespace Backend.OpenWeathermap
     /// <summary>
     /// All cityNames with their ids
     /// </summary>
-    public class CitynamesIdsProvider : ICitynamesIdsProvider
+    public class CitynamesIds : ICitynamesIds
     {
         private readonly IEnumerable<KeyValuePair<string,int>> citynamesIds;
 
         /// <summary>
         /// Used by Dependency Injection
+        /// <param name="options">allows to configure the path of the cities.json via appsettings.json</param>
+        /// <exception cref="ArgumentNullException">when options == null</exception>
+        /// <exception cref="ArgumentException">when IsNullOrWhiteSpace(options.Value.Path)</exception>
         /// </summary>
-        public CitynamesIdsProvider()
+        public CitynamesIds(IOptions<CitiesSettings> options)
         {
-            citynamesIds = Cities.All
+            if (options == null) 
+                throw new ArgumentNullException(nameof(options));
+
+            citynamesIds = new Cities(options.Value).All
                 .Distinct(new Comparer()) // There are Citynames (Berlin) with two different ids
                 .Select(city => new KeyValuePair<string, int>(city.Name, city.Id));
-        }
-
-        public CitynamesIdsProvider(IEnumerable<KeyValuePair<string, int>> citynamesIds)
-        {
-            this.citynamesIds = citynamesIds ?? throw new ArgumentNullException(nameof(citynamesIds));
         }
 
         /// <summary>

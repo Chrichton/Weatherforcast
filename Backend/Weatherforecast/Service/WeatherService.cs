@@ -16,19 +16,19 @@ namespace Backend.Weatherforecast.Service
         private IMapper mapper;
         private IOpenWeathermapService openWeathermapService;
         private readonly IZipCodeToCitiesProvider zipCodeToCitiesProvider;
-        private readonly ICitynamesIdsProvider citynamesIdsProvider;
+        private readonly ICitynamesIds citynamesIdsProvider;
 
-        public WeatherService(ILogger<WeatherService> logger, IMapper mapper, 
-            IOpenWeathermapService openWeathermapService, 
+        public WeatherService(ILogger<WeatherService> logger, IMapper mapper,
+            IOpenWeathermapService openWeathermapService,
             IZipCodeToCitiesProvider zipCodeToCitiesProvider,
-            ICitynamesIdsProvider citynamesIdsProvider)
+            ICitynamesIds citynamesIdsProvider)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             this.openWeathermapService = openWeathermapService ?? throw new ArgumentNullException(nameof(openWeathermapService));
             this.zipCodeToCitiesProvider = zipCodeToCitiesProvider ?? throw new ArgumentNullException(nameof(zipCodeToCitiesProvider));
             this.citynamesIdsProvider = citynamesIdsProvider ?? throw new ArgumentNullException(nameof(citynamesIdsProvider));
-        }
+         }
 
         /// <summary>
         /// Retrieves the data for the weather

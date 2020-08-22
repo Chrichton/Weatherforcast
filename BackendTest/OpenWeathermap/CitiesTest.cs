@@ -1,5 +1,4 @@
-﻿using Backend.OpenWeathermap;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 
 namespace BackendTest.OpenWeathermap
@@ -9,13 +8,13 @@ namespace BackendTest.OpenWeathermap
         [Fact]
         public void TestCitiesCount()
         {
-            Assert.Equal(28786, Cities.All.Count());
+            Assert.Equal(28786, TestUtilities.Cities.All.Count());
         }
 
         [Fact]
-        public void TestGermanyCitiesOnly()
+        public void TestGermanCitiesOnly()
         {
-            Assert.Empty(Cities.All.Where(city => city.Country != "DE"));
+            Assert.Empty(TestUtilities.Cities.All.Where(city => city.Country != "DE"));
         }
     }
 }

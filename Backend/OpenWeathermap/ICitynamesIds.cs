@@ -1,4 +1,5 @@
-﻿using LanguageExt;
+﻿
+using LanguageExt;
 using System.Collections.Generic;
 
 namespace Backend.OpenWeathermap
@@ -6,7 +7,7 @@ namespace Backend.OpenWeathermap
     /// <summary>
     /// Information about cityNames and their ids
     /// </summary>
-    public interface ICitynamesIdsProvider
+    public interface ICitynamesIds
     {
         /// <summary>
         /// Returns all pairs of cityname and id where the citynames are starting with "start"
