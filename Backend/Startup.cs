@@ -35,12 +35,13 @@ namespace Backend
             });
 
             services.Configure<CitiesSettings>(Configuration.GetSection("Cities"));
+            services.Configure<ZipcodeToCitiesSetting>(Configuration.GetSection("ZipcodeToCities"));
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
             services.AddHttpClient<IOpenWeathermapService, OpenWeathermapService>();
             services.AddSingleton<ICitynameToId, CitynameToId>();
-            services.AddSingleton<IZipCodeToCitiesProvider>(new ZipCodeToCitiesProvider());
+            services.AddSingleton<IZipcodeToCitiesProvider, ZipcodeToCitiesProvider>();
             services.AddScoped<IWeatherService, WeatherService>();
             services.AddSingleton<ICitynamesIds, CitynamesIds>();
         }

@@ -15,19 +15,19 @@ namespace Backend.Weatherforecast.Service
         private readonly ILogger<WeatherService> logger;
         private IMapper mapper;
         private IOpenWeathermapService openWeathermapService;
-        private readonly IZipCodeToCitiesProvider zipCodeToCitiesProvider;
+        private readonly IZipcodeToCitiesProvider zipCodeToCitiesProvider;
         private readonly ICitynamesIds citynamesIdsProvider;
 
         public WeatherService(ILogger<WeatherService> logger, IMapper mapper,
             IOpenWeathermapService openWeathermapService,
-            IZipCodeToCitiesProvider zipCodeToCitiesProvider,
-            ICitynamesIds citynamesIdsProvider)
+            IZipcodeToCitiesProvider zipcodeToCitiesProvider,
+            ICitynamesIds citynamesIds)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             this.openWeathermapService = openWeathermapService ?? throw new ArgumentNullException(nameof(openWeathermapService));
-            this.zipCodeToCitiesProvider = zipCodeToCitiesProvider ?? throw new ArgumentNullException(nameof(zipCodeToCitiesProvider));
-            this.citynamesIdsProvider = citynamesIdsProvider ?? throw new ArgumentNullException(nameof(citynamesIdsProvider));
+            this.zipCodeToCitiesProvider = zipcodeToCitiesProvider ?? throw new ArgumentNullException(nameof(zipcodeToCitiesProvider));
+            this.citynamesIdsProvider = citynamesIds ?? throw new ArgumentNullException(nameof(citynamesIds));
          }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Backend.Weatherforecast.Service
         public async Task<IEnumerable<KeyValuePair<string, int>>> GetCitiesIdsForZipCode(int zipCode)
         {
             IEnumerable<string> cities;
-            if (zipCodeToCitiesProvider.GetDictionary().TryGetValue(zipCode, out cities))
+            if (zipCodeToCitiesProvider.Dictionary.TryGetValue(zipCode, out cities))
             {
                 return await Task.FromResult(cities
                     .Select(city => citynamesIdsProvider.GetCityNameIdForCity(city)))

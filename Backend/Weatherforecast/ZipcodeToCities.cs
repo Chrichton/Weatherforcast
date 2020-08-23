@@ -10,24 +10,39 @@ namespace Backend.Weatherforecast
     /// Access to a German city (Ort) by zipcode (Plz)
     /// Source of "zuordnung_plz_ort.csv": https://www.suche-postleitzahl.org/downloads
     /// </summary>
-    public static class ZipcodeCities
+    public class ZipcodeToCities
     {
-        private static Lazy<Dictionary<int,IEnumerable<string>>> dictionary =
-            new Lazy<Dictionary<int, IEnumerable<string>>>(() => ReadZipcodeCitiesFromCsv());
-        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="zipcodeCitiesSetting">allows to configure the path to the zuordnung_plz_ort.csv</param>
+        /// <exception cref="ArgumentNullException">when zipcodeCitiesSetting == null</exception>
+        /// <exception cref="ArgumentException">when IsNullOrWhiteSpace(zipcodeCitiesSetting.Path)</exception>
+        public ZipcodeToCities(ZipcodeToCitiesSetting zipcodeCitiesSetting)
+        {
+            if (zipcodeCitiesSetting == null)
+                throw new ArgumentNullException(nameof(zipcodeCitiesSetting));
+
+            if (string.IsNullOrWhiteSpace(zipcodeCitiesSetting.Path))
+                throw new ArgumentException("Path must not be nullOrWhitespace");
+
+            Dictionary = ReadZipcodeCitiesFromCsv(zipcodeCitiesSetting);
+        }
+
         /// <summary>
         /// Mapping from German zipcode to cities 
         /// </summary>
-        public static Dictionary<int, IEnumerable<string>> Dictionary => dictionary.Value;
+        public Dictionary<int, IEnumerable<string>> Dictionary { get; }
 
-        private static Dictionary<int, IEnumerable<string>> ReadZipcodeCitiesFromCsv()
+        private static Dictionary<int, IEnumerable<string>> ReadZipcodeCitiesFromCsv(
+            ZipcodeToCitiesSetting settings)
         {
             const int zipcodeIndex = 2;
             const int cityIndex = 1;
 
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                @"Weatherforecast/zuordnung_plz_ort.csv");
-            
+                settings.Path);
+
             return File.ReadAllText(path)
                 .Split(Environment.NewLine)
                 .Skip(1) // Skip Header

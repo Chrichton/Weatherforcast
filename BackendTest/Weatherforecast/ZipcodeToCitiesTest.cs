@@ -5,12 +5,12 @@ using Xunit;
 
 namespace BackendTest.Weatherforecast
 {
-    public class ZipcodeCitiesTest
+    public class ZipcodeToCitiesTest
     {
         [Fact]
         public void TestNoCity()
         {
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(2103, null);
+            IEnumerable<string> city = TestUtilities.ZipcodeToCities.Dictionary.GetValueOrDefault(2103, null);
 
             Assert.Null(city);
         }
@@ -18,7 +18,7 @@ namespace BackendTest.Weatherforecast
         [Fact]
         public void TestZipcodeCity()
         {
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(21037, null);
+            IEnumerable<string> city = TestUtilities.ZipcodeToCities.Dictionary.GetValueOrDefault(21037, null);
 
             Assert.NotNull(city);
             Assert.Single(city);
@@ -28,8 +28,8 @@ namespace BackendTest.Weatherforecast
         [Fact]
         public void TestZipcodeCities()
         {
-            // zu "55767" gehören 20 City
-            IEnumerable<string> city = ZipcodeCities.Dictionary.GetValueOrDefault(55767, null);
+            Dictionary<int, IEnumerable<string>> dict = TestUtilities.ZipcodeToCities.Dictionary;
+            IEnumerable<string> city = dict.GetValueOrDefault(TestUtilities.PlzWith20Cities, null);
 
             Assert.NotNull(city);
             Assert.Equal(20, city.Count());

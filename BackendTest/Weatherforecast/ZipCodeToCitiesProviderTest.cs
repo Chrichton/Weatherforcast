@@ -1,47 +1,33 @@
-﻿using Backend.Weatherforecast;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace BackendTest.Weatherforecast
 {
-    public class ZipCodeToCitiesProviderTest
+    public class ZipcodeToCitiesProviderTest
     {
         [Fact]
         public void TestLiveProvider()
         {
-            IEnumerable<string> result = new ZipCodeToCitiesProvider().GetDictionary()[21037];
-            Assert.Single(new ZipCodeToCitiesProvider().GetDictionary()[21037]);
+            IEnumerable<string> result = TestUtilities.ZipcodeToCitiesProvider.Dictionary[21037];
+            Assert.Single(result);
             Assert.Equal("Hamburg", result.Single());
         }
 
         [Fact]
         public void TestId()
         {
-            var dictionary = new Dictionary<int, IEnumerable<string>>
-            {
-                { 1, new [] { "Ort1", "Ort2"} }
-            };
+            IEnumerable<string> result = 
+                TestUtilities.ZipcodeToCitiesProvider.Dictionary[TestUtilities.PlzWith20Cities];
 
-            var provider = new ZipCodeToCitiesProvider(dictionary);
-            IEnumerable<string> result = provider.GetDictionary()[1];
-
-            Assert.Equal(2, result.Count());
-            Assert.Equal("Ort1", result.First());
+            Assert.Equal(20, result.Count());
+            Assert.Equal("Abentheuer", result.First());
         }
 
         [Fact]
         public void TestUnknownId()
         {
-            var dictionary = new Dictionary<int, IEnumerable<string>>
-            {
-                { 1, new [] { "Ort1", "Ort2"} }
-            };
-
-            var provider = new ZipCodeToCitiesProvider(dictionary);
-
-            IEnumerable<string> value;
-            if (provider.GetDictionary().TryGetValue(2, out value))
+            if (TestUtilities.ZipcodeToCitiesProvider.Dictionary.TryGetValue(2, out _))
             {
                 Assert.False(true, "Test Failed");
             }      
