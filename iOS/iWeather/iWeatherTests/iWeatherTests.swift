@@ -26,12 +26,14 @@ class iWeatherTests: XCTestCase {
         let data = NSData(contentsOfFile: jsonFilename)! as Data
         let viewModel = try JSONDecoder().decode(WeatherViewModel.self, from: data)
     
-        XCTAssertEqual(20.973751, viewModel.AverageTemperature)
-        XCTAssertEqual(70.225, viewModel.AverageHumidity)
+        XCTAssertEqual(14.634, viewModel.AverageTemperature)
+        XCTAssertEqual(82.275, viewModel.AverageHumidity)
         
-        XCTAssertEqual(30.01, viewModel.current.Temperature)
+        XCTAssertEqual("2020-08-24T04:00:14Z", viewModel.current.DateTime)
+        XCTAssertEqual(13.89, viewModel.current.Temperature)
         XCTAssertEqual(40, viewModel.forecast.count)
-        XCTAssertEqual(29.46, viewModel.forecast[0].Temperature)
+        XCTAssertEqual(14.0, viewModel.forecast[0].Temperature)
+        XCTAssertEqual("10d", viewModel.forecast[0].Icon)
     }
 
     func testDecodeCity() throws {

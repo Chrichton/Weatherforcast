@@ -13,6 +13,7 @@ class Weather: Decodable, Identifiable {
     
     var Temperature: Float = 0.0
     var DateTime: String = ""
+    var Icon: String = ""
 }
 
 class WeatherViewModel: Decodable {
