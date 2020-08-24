@@ -29,7 +29,7 @@ struct ContentView: View {
                 HStack {
                     Text(String(format: "Feuchte: %i%%",
                         weatherStore.weatherViewModel.current.Humidity))
-                    Text(String(format: "Wind: %.0f km/h",
+                    Text(String(format: "Wind: %.f km/h",
                         mPerSecondToKmPerHour(weatherStore.weatherViewModel.current.Windspeed)))
                     Text(String(format: "Druck: %i bar",
                         weatherStore.weatherViewModel.current.Pressure))
