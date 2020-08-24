@@ -14,7 +14,7 @@ struct ContentView: View {
     
     @State private var isShowing = false
     private let isoDateFormatter = DateFormatter()
-    private let timeFormatter = DateFormatter()
+    private let localtimeFormatter = DateFormatter()
     
 
     var body: some View {
@@ -24,7 +24,7 @@ struct ContentView: View {
             Text("Mittlere Temperatur: " +
                 String(format: "%.1f Celsius", weatherStore.weatherViewModel.AverageTemperature))
             Text("Mittlere Feuchte: " +
-                String(format: "%.1f", weatherStore.weatherViewModel.AverageHumidity))
+                String(format: "%.1f %%", weatherStore.weatherViewModel.AverageHumidity))
             Text("Temperatur: " +
                 String(format: "%.1f Celsius", weatherStore.weatherViewModel.current.Temperature))
             List(weatherStore.weatherViewModel.forecast) { forecastModel in
@@ -44,14 +44,18 @@ struct ContentView: View {
     
     init(weatherStore: WeatherStore) {
         self.weatherStore = weatherStore
+        isoDateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         isoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        timeFormatter.dateFormat = "dd.MM HH:mm"
+        
+        localtimeFormatter.timeZone = NSTimeZone.local
+        localtimeFormatter.dateFormat = "dd.MM HH:mm"
     }
     
     private func isoDateToTime(isoDateString: String) -> String? {
-           guard let date = isoDateFormatter.date(from: isoDateString) else { return nil }
-           return timeFormatter.string(from: date)
-       }
+        guard let utcDate = isoDateFormatter.date(from: isoDateString) else { return nil }
+
+        return localtimeFormatter.string(from: utcDate)
+    }
 
 }
 
