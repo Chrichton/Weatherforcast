@@ -23,7 +23,7 @@ struct ContentView: View {
             VStack(alignment: .center) {
                 HStack {
                     URLImage(URL(string: getUrlFor(icon: weatherStore.weatherViewModel.current.Icon))!)
-                    Text(String(format: "%.1f°",
+                    Text(String(format: "%.1f°C",
                         weatherStore.weatherViewModel.current.Temperature))
                 }
                 HStack {
@@ -37,7 +37,7 @@ struct ContentView: View {
                 List(weatherStore.weatherViewModel.forecast) { forecastModel in
                     HStack{
                         Text(self.isoDateToTime(isoDateString: forecastModel.DateTime) ?? "")
-                        Text(String(format: "%.1f°", forecastModel.Temperature))
+                        Text(String(format: "%.1f°C", forecastModel.Temperature))
                         URLImage(URL(string: "https://openweathermap.org/img/wn/\(forecastModel.Icon).png")!)
                             .padding(.leading, 20)
                     }
