@@ -21,28 +21,24 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .center) {
-                URLImage(URL(string: getUrlFor(icon: weatherStore.weatherViewModel.current.Icon))!,
-                    placeholder: {_ in
-                        Image(systemName: "circle")
-                        .resizable()
-                        .frame(width: 160.0, height: 120.0)
-                    }).frame(width: 160, height: 120)
-                Text("Datum: \(isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")")
-                Text(String(format: "Temperatur: %.1f Celsius",
-                            weatherStore.weatherViewModel.current.Temperature))
-                Text(String(format: "Mittlere Temperatur: %.1f Celsius",
-                            weatherStore.weatherViewModel.AverageTemperature))
-                Text(String(format: "Mittlere Temperatur: %.1f Celsius",
-                            weatherStore.weatherViewModel.AverageTemperature))
-                Text(String(format: "Mittlere Feuchte: %.1f %%",
-                            weatherStore.weatherViewModel.AverageHumidity))
+                HStack {
+                    URLImage(URL(string: getUrlFor(icon: weatherStore.weatherViewModel.current.Icon))!)
+                    Text(String(format: "%.1f°",
+                        weatherStore.weatherViewModel.current.Temperature))
+                }
+//                Text("\(isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")")
+//                Text(String(format: "Mittlere Temperatur: %.1f°",
+//                            weatherStore.weatherViewModel.AverageTemperature))
+//                Text(String(format: "Mittlere Temperatur: %.1f°",
+//                            weatherStore.weatherViewModel.AverageTemperature))
+//                Text(String(format: "Mittlere Feuchte: %.1f %%",
+//                            weatherStore.weatherViewModel.AverageHumidity))
                 List(weatherStore.weatherViewModel.forecast) { forecastModel in
                     HStack{
                         Text(self.isoDateToTime(isoDateString: forecastModel.DateTime) ?? "")
-                        Text(String(format: "%.1f Celsius", forecastModel.Temperature))
+                        Text(String(format: "%.1f°", forecastModel.Temperature))
                         URLImage(URL(string: "https://openweathermap.org/img/wn/\(forecastModel.Icon).png")!)
-                            .padding(.leading, 40)
-                        .frame(width: 16, height: 12)
+                            .padding(.leading, 20)
                     }
                 }
                 .pullToRefresh(isShowing: $isShowing) {
@@ -51,7 +47,7 @@ struct ContentView: View {
                         self.isShowing = false
                     }
                 }
-            } .navigationBarTitle(Text(LocalStorage.GetCurrentCityName()), displayMode: .inline)
+            } .navigationBarTitle(Text(LocalStorage.GetCurrentCityName() + " " + (isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")), displayMode: .inline)
         }
     }
     
@@ -65,7 +61,12 @@ struct ContentView: View {
     }
     
     private func getUrlFor(icon: String) -> String {
-        "https://openweathermap.org/img/wn/\(icon)@2x.png"
+        // When request fails because of empty icon at start of the app
+        // The following request with the correct icon doesn't update the Image
+        
+        let icon = icon == "" ? "03d" : icon
+        
+        return "https://openweathermap.org/img/wn/\(icon)@2x.png"
     }
     
     private func isoDateToTime(isoDateString: String) -> String? {
