@@ -29,8 +29,8 @@ struct ContentView: View {
                 HStack {
                     Text(String(format: "Feuchte: %i%%",
                         weatherStore.weatherViewModel.current.Humidity))
-                    Text(String(format: "Wind: %.1f m/s",
-                        weatherStore.weatherViewModel.current.Windspeed))
+                    Text(String(format: "Wind: %.0f km/h",
+                        mPerSecondToKmPerHour(weatherStore.weatherViewModel.current.Windspeed)))
                     Text(String(format: "Druck: %i bar",
                         weatherStore.weatherViewModel.current.Pressure))
                 }
@@ -76,6 +76,9 @@ struct ContentView: View {
         return localtimeFormatter.string(from: utcDate)
     }
 
+    private func mPerSecondToKmPerHour(_ mPerSecond: Float) -> Float {
+        mPerSecond * 3.6
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
