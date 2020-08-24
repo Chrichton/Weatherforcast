@@ -26,13 +26,14 @@ struct ContentView: View {
                     Text(String(format: "%.1f°",
                         weatherStore.weatherViewModel.current.Temperature))
                 }
-//                Text("\(isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")")
-//                Text(String(format: "Mittlere Temperatur: %.1f°",
-//                            weatherStore.weatherViewModel.AverageTemperature))
-//                Text(String(format: "Mittlere Temperatur: %.1f°",
-//                            weatherStore.weatherViewModel.AverageTemperature))
-//                Text(String(format: "Mittlere Feuchte: %.1f %%",
-//                            weatherStore.weatherViewModel.AverageHumidity))
+                HStack {
+                    Text(String(format: "Feuchte: %i%%",
+                        weatherStore.weatherViewModel.current.Humidity))
+                    Text(String(format: "Wind: %.1f m/s",
+                        weatherStore.weatherViewModel.current.Windspeed))
+                    Text(String(format: "Druck: %i bar",
+                        weatherStore.weatherViewModel.current.Pressure))
+                }
                 List(weatherStore.weatherViewModel.forecast) { forecastModel in
                     HStack{
                         Text(self.isoDateToTime(isoDateString: forecastModel.DateTime) ?? "")
