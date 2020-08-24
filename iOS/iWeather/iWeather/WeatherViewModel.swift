@@ -12,8 +12,17 @@ class Weather: Decodable, Identifiable {
     var id: String { get { return DateTime } }
     
     var Temperature: Float = 0.0
+    var FeelsLikeTemperature: Float = 0.0
+    var MinimumTemperature: Float = 0.0
+    var MaximumTemperature: Float = 0.0
+    var Humidity: Int = 0
+    var Pressure: Int = 0
+    var Windspeed: Float = 0.0
+    var WindDirection: Int = 0
+    var CloudDescription: String = ""
     var DateTime: String = ""
     var Icon: String = ""
+    
 }
 
 class WeatherViewModel: Decodable {

@@ -29,13 +29,19 @@ class iWeatherTests: XCTestCase {
         XCTAssertEqual(14.634, viewModel.AverageTemperature)
         XCTAssertEqual(82.275, viewModel.AverageHumidity)
         
-        XCTAssertEqual("2020-08-24T04:00:14Z", viewModel.current.DateTime)
         XCTAssertEqual(13.89, viewModel.current.Temperature)
+        XCTAssertEqual(13.86, viewModel.current.FeelsLikeTemperature)
+        XCTAssertEqual(12.78, viewModel.current.MinimumTemperature)
+        XCTAssertEqual(14.44, viewModel.current.MaximumTemperature)
+        XCTAssertEqual(100, viewModel.current.Humidity)
+        XCTAssertEqual(1011, viewModel.current.Pressure)
+        XCTAssertEqual(1.79, viewModel.current.Windspeed)
+        XCTAssertEqual(180, viewModel.current.WindDirection)
+        XCTAssertEqual("Überwiegend bewölkt", viewModel.current.CloudDescription)
+        XCTAssertEqual("2020-08-24T04:00:14Z", viewModel.current.DateTime)
         XCTAssertEqual("04n", viewModel.current.Icon)
         
         XCTAssertEqual(40, viewModel.forecast.count)
-        XCTAssertEqual(14.0, viewModel.forecast[0].Temperature)
-        XCTAssertEqual("10d", viewModel.forecast[0].Icon)
     }
 
     func testDecodeCity() throws {
