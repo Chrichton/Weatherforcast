@@ -19,6 +19,7 @@
 		FF3402F024ECEB3500160DC7 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */; };
 		FF3402F124ECEB3500160DC7 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */; };
 		FF3402F324ECEDB400160DC7 /* LocalStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402F224ECEDB400160DC7 /* LocalStorageTests.swift */; };
+		FF69CDBB24F378D800F8B09C /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = FF69CDBA24F378D800F8B09C /* URLImage */; };
 		FFE2EAD524E993E700CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD424E993E700CBBC32 /* City.swift */; };
 		FFE2EAD624E993E700CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD424E993E700CBBC32 /* City.swift */; };
 		FFE2EAD824E9950A00CBBC32 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE2EAD724E9950A00CBBC32 /* cities.json */; };
@@ -76,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF69CDBB24F378D800F8B09C /* URLImage in Frameworks */,
 				FF2129D324EBC91400B6A366 /* SwiftUIRefresh in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +185,7 @@
 			name = iWeather;
 			packageProductDependencies = (
 				FF2129D224EBC91400B6A366 /* SwiftUIRefresh */,
+				FF69CDBA24F378D800F8B09C /* URLImage */,
 			);
 			productName = iWeather;
 			productReference = FF0C8F7B24E93BE300DF96A5 /* iWeather.app */;
@@ -258,6 +261,7 @@
 			mainGroup = FF0C8F7224E93BE300DF96A5;
 			packageReferences = (
 				FF2129D124EBC91400B6A366 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
+				FF69CDB924F378D800F8B09C /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = FF0C8F7C24E93BE300DF96A5 /* Products */;
 			projectDirPath = "";
@@ -654,6 +658,14 @@
 				minimumVersion = 0.0.3;
 			};
 		};
+		FF69CDB924F378D800F8B09C /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.19;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -661,6 +673,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FF2129D124EBC91400B6A366 /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
 			productName = SwiftUIRefresh;
+		};
+		FF69CDBA24F378D800F8B09C /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF69CDB924F378D800F8B09C /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

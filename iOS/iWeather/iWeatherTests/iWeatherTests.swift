@@ -31,6 +31,8 @@ class iWeatherTests: XCTestCase {
         
         XCTAssertEqual("2020-08-24T04:00:14Z", viewModel.current.DateTime)
         XCTAssertEqual(13.89, viewModel.current.Temperature)
+        XCTAssertEqual("04n", viewModel.current.Icon)
+        
         XCTAssertEqual(40, viewModel.forecast.count)
         XCTAssertEqual(14.0, viewModel.forecast[0].Temperature)
         XCTAssertEqual("10d", viewModel.forecast[0].Icon)
