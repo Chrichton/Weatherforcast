@@ -24,8 +24,8 @@ enum LocalStorage {
         return ""
     }
     
-    static func set(cityId: Int?) {
-        if let cityId = cityId {
+    static func set(currentCityId: Int?) {
+        if let cityId = currentCityId {
             UserDefaults.standard.set(cityId, forKey: CityIdKey)
         } else {
             UserDefaults.standard.removeObject(forKey: CityIdKey)

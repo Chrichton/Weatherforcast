@@ -11,11 +11,10 @@ import Combine
 
 class WeatherStore : ObservableObject {
     @Published var weatherViewModel: WeatherViewModel = WeatherViewModel.empty()
+    @Published var currentCityName: String?
     
-    var weatherClient: WeatherClientProtocol
-    
+    private var weatherClient: WeatherClientProtocol
     private var currentCityId: Int?
-    private var currentCityName: String?
     private var cancellable: AnyCancellable?
     
     init(cityId: Int?, cityName: String?, weatherClient: WeatherClientProtocol) {
@@ -29,18 +28,23 @@ class WeatherStore : ObservableObject {
     func refresh() -> Void {
         if let cityId = currentCityId,
             let cityName = currentCityName {
-                set(cityId: cityId, cityName: cityName)
+                set(currentCityId: cityId, currentCityName: cityName)
         }
     }
     
-    func set(cityId: Int, cityName: String) {
-        cancellable = weatherClient.weather(cityId: cityId)
+    func set(currentCityId: Int, currentCityName: String) {
+        cancellable = weatherClient.weather(cityId: currentCityId)
         .sink(receiveCompletion: { error in
             print(error)
         }, receiveValue: { weatherViewModel in
             self.weatherViewModel = weatherViewModel
-            LocalStorage.add(cityId: cityId, cityName: cityName)
+            LocalStorage.set(currentCityId: currentCityId)
         })
+    }
+    
+    // Adds cityId, cityName to favorites
+    func add(cityId: Int, cityName: String) {
+        LocalStorage.add(cityId: cityId, cityName: cityName)
     }
     
     func getCities(startingWith: String) -> [City] {

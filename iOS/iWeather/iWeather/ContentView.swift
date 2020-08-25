@@ -48,7 +48,7 @@ struct ContentView: View {
                         self.isShowing = false
                     }
                 }
-            } .navigationBarTitle(Text(LocalStorage.GetCurrentCityName() + " " + (isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")), displayMode: .inline)
+            } .navigationBarTitle(Text("\(weatherStore.currentCityName ?? "") \(isoDateToTime(isoDateString: weatherStore.weatherViewModel.current.DateTime) ?? "")"), displayMode: .inline)
         }
     }
     
