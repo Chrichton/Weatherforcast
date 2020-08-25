@@ -44,7 +44,7 @@ struct ContentView: View {
                 }
                 .pullToRefresh(isShowing: $isShowing) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.weatherStore.refresh() // TODO reference-cycle
+                        self.weatherStore.refresh()
                         self.isShowing = false
                     }
                 }
@@ -64,7 +64,7 @@ struct ContentView: View {
     private func getUrlFor(icon: String) -> String {
         // When request fails because of empty icon at start of the app
         // The following request with the correct icon doesn't update the Image
-        
+        // icon "03d" is a neutral icon and serves as a preview, as long as the actual data isn't retrieved
         let icon = icon == "" ? "03d" : icon
         
         return "https://openweathermap.org/img/wn/\(icon)@2x.png"
