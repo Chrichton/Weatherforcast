@@ -20,6 +20,9 @@
 		FF3402F124ECEB3500160DC7 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */; };
 		FF3402F324ECEDB400160DC7 /* LocalStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3402F224ECEDB400160DC7 /* LocalStorageTests.swift */; };
 		FF69CDBB24F378D800F8B09C /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = FF69CDBA24F378D800F8B09C /* URLImage */; };
+		FF84577624F520210051C68E /* WeatherClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF84577524F520210051C68E /* WeatherClientProtocol.swift */; };
+		FF84577824F520CD0051C68E /* WeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF84577724F520CD0051C68E /* WeatherClient.swift */; };
+		FF84577A24F527F70051C68E /* MockWeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF84577924F527F70051C68E /* MockWeatherClient.swift */; };
 		FFE2EAD524E993E700CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD424E993E700CBBC32 /* City.swift */; };
 		FFE2EAD624E993E700CBBC32 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE2EAD424E993E700CBBC32 /* City.swift */; };
 		FFE2EAD824E9950A00CBBC32 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE2EAD724E9950A00CBBC32 /* cities.json */; };
@@ -65,6 +68,9 @@
 		FF0C8FAE24E93D9800DF96A5 /* iWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iWeather.entitlements; sourceTree = "<group>"; };
 		FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		FF3402F224ECEDB400160DC7 /* LocalStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageTests.swift; sourceTree = "<group>"; };
+		FF84577524F520210051C68E /* WeatherClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherClientProtocol.swift; sourceTree = "<group>"; };
+		FF84577724F520CD0051C68E /* WeatherClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherClient.swift; sourceTree = "<group>"; };
+		FF84577924F527F70051C68E /* MockWeatherClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherClient.swift; sourceTree = "<group>"; };
 		FFE2EAD424E993E700CBBC32 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		FFE2EAD724E9950A00CBBC32 /* cities.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		FFEB224F24E943F4002D16E4 /* WeatherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStore.swift; sourceTree = "<group>"; };
@@ -134,6 +140,9 @@
 				FFE2EAD424E993E700CBBC32 /* City.swift */,
 				FFEB225124E9440D002D16E4 /* WeatherViewModel.swift */,
 				FF3402EF24ECEB3500160DC7 /* LocalStorage.swift */,
+				FF84577524F520210051C68E /* WeatherClientProtocol.swift */,
+				FF84577724F520CD0051C68E /* WeatherClient.swift */,
+				FF84577924F527F70051C68E /* MockWeatherClient.swift */,
 			);
 			path = iWeather;
 			sourceTree = "<group>";
@@ -311,11 +320,14 @@
 			files = (
 				FFEB225224E9440D002D16E4 /* WeatherViewModel.swift in Sources */,
 				FF0C8F7F24E93BE300DF96A5 /* AppDelegate.swift in Sources */,
+				FF84577824F520CD0051C68E /* WeatherClient.swift in Sources */,
+				FF84577A24F527F70051C68E /* MockWeatherClient.swift in Sources */,
 				FF3402F024ECEB3500160DC7 /* LocalStorage.swift in Sources */,
 				FFE2EAD524E993E700CBBC32 /* City.swift in Sources */,
 				FF0C8F8124E93BE300DF96A5 /* SceneDelegate.swift in Sources */,
 				FFEB225024E943F4002D16E4 /* WeatherStore.swift in Sources */,
 				FF0C8F8324E93BE300DF96A5 /* ContentView.swift in Sources */,
+				FF84577624F520210051C68E /* WeatherClientProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

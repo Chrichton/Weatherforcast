@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
         let cityId = LocalStorage.getCurrentCityId()
         let cityName = LocalStorage.GetCurrentCityName()
-        let contentView = ContentView(weatherStore: WeatherStore(cityId: cityId, cityName: cityName))
+        let contentView = ContentView(weatherStore: WeatherStore(cityId: cityId, cityName: cityName, weatherClient: WeatherClient()))
         
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

@@ -8,29 +8,29 @@
 
 import Foundation
 
-class Weather: Decodable, Identifiable {
-    var id: String { get { return DateTime } }
+struct WeatherViewModel: Decodable {
+    var AverageTemperature: Float
+    var AverageHumidity: Float
+    var current: Weather
+    var forecast: [Weather]
     
-    var Temperature: Float = 0.0
-    var FeelsLikeTemperature: Float = 0.0
-    var MinimumTemperature: Float = 0.0
-    var MaximumTemperature: Float = 0.0
-    var Humidity: Int = 0
-    var Pressure: Int = 0
-    var Windspeed: Float = 0.0
-    var WindDirection: Int = 0
-    var CloudDescription: String = ""
-    var DateTime: String = ""
-    var Icon: String = ""
+    struct Weather: Decodable, Identifiable {
+        var id: String { get { return DateTime } }
+        
+        var Temperature: Float
+        var FeelsLikeTemperature: Float
+        var MinimumTemperature: Float
+        var MaximumTemperature: Float
+        var Humidity: Int
+        var Pressure: Int
+        var Windspeed: Float
+        var WindDirection: Int
+        var CloudDescription: String
+        var DateTime: String
+        var Icon: String
+    }
     
-}
-
-class WeatherViewModel: Decodable {
-    var AverageTemperature: Float = 0.0
-    var AverageHumidity: Float = 0.0
-    var current: Weather = Weather()
-    var forecast: [Weather] = []
-    
-    init() {
+    static func empty() -> WeatherViewModel {
+        WeatherViewModel(AverageTemperature: 0.0, AverageHumidity: 0.0, current: Weather(Temperature: 0.0, FeelsLikeTemperature: 0.0, MinimumTemperature: 0.0, MaximumTemperature: 0.0, Humidity: 0, Pressure: 0, Windspeed: 0.0, WindDirection: 0, CloudDescription: "", DateTime: "", Icon: ""), forecast: [])
     }
 }

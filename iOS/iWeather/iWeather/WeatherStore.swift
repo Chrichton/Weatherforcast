@@ -10,15 +10,19 @@ import Foundation
 import Combine
 
 class WeatherStore : ObservableObject {
-    @Published var weatherViewModel: WeatherViewModel = WeatherViewModel()
+    @Published var weatherViewModel: WeatherViewModel = WeatherViewModel.empty()
+    
+    var weatherClient: WeatherClientProtocol
     
     private var currentCityId: Int?
     private var currentCityName: String?
     private var cancellable: AnyCancellable?
     
-    init(cityId: Int?, cityName: String?) {
+    init(cityId: Int?, cityName: String?, weatherClient: WeatherClientProtocol) {
         currentCityId = cityId
         currentCityName = cityName
+        self.weatherClient = weatherClient
+        
         refresh()
     }
     
@@ -30,13 +34,7 @@ class WeatherStore : ObservableObject {
     }
     
     func set(cityId: Int, cityName: String) {
-        let urlString = "https://vueweatherapi.azurewebsites.net/api/weather/forecast/id/\(cityId)"
-        let url = URL(string: urlString)!
-        
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
-        .map { $0.data }
-        .decode(type: WeatherViewModel.self, decoder: JSONDecoder())
-        .receive(on: DispatchQueue.main)
+        cancellable = weatherClient.weather(cityId: cityId)
         .sink(receiveCompletion: { error in
             print(error)
         }, receiveValue: { weatherViewModel in
